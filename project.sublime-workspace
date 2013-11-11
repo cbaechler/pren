@@ -1,0 +1,575 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"MOT_DR",
+				"MOT_DIR_FORWARD"
+			],
+			[
+				"MOT_DIR_",
+				"MOT_DIR_BACKWARD"
+			],
+			[
+				"MOT",
+				"MOT_Direction"
+			],
+			[
+				"cur",
+				"curSpeedPercent"
+			],
+			[
+				"MOT_M",
+				"MOT_MotorDevice"
+			],
+			[
+				"Mo",
+				"MOT_MotorDevice"
+			],
+			[
+				"c",
+				"clk"
+			],
+			[
+				"els",
+				"elsif	elsif"
+			],
+			[
+				"pro",
+				"process"
+			],
+			[
+				"RTS_",
+				"RTOS_QUEUE_ITEM_SIZE"
+			],
+			[
+				"G13",
+				"G13_HAS_RTOS"
+			],
+			[
+				"DB",
+				"DBNC_KEY_PRESSED"
+			],
+			[
+				"DBNC_K",
+				"DBNC_KEY_PRESSED"
+			],
+			[
+				"DBNC_KEY",
+				"DBNC_KeySet"
+			],
+			[
+				"KEY",
+				"KEYDBNC_FSMdata"
+			],
+			[
+				"C",
+				"case"
+			],
+			[
+				"d",
+				"doxy_header	doxy_header"
+			],
+			[
+				"in",
+				"inc	#include \"…\""
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"selected_items":
+		[
+			[
+				"lint",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"lin",
+				"SublimeLinter: Show Error List"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"align",
+				"Align Tabular"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Snippet: typedef",
+				"Snippet: Typedef"
+			],
+			[
+				"Snippet: ",
+				"Snippet: #ifndef … #define … #endif"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remove pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"package remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"upda",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"git",
+				"Git: Toggle Annotations"
+			],
+			[
+				"default  ",
+				"Preferences: Key Bindings - Default"
+			]
+		],
+		"width": 536.0
+	},
+	"console":
+	{
+		"height": 155.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/_Daten/PersonalRepo/PREN/C_Code/T15/Sources/Application.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Trigger.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/RTOS.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/RTOS.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Reflectance.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Reflectance.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Shell.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Buzzer.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Motor.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Motor.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/Project_Headers/Platform.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Shell.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Event.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/CommonApplication.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Event.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/KeyDebounce.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Debounce.c",
+		"/C/_Daten/PersonalRepo/VHDL/Assignments/assign_05/vhd/reak_test_rand.vhd",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/src/Debounce.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/Generated_Code/tasks.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/src/Timer.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/src/Trigger.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Trigger.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/src/ShellQueue.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/Generated_Code/CLS1.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/Generated_Code/LED1.c",
+		"/C/Users/chrigu/Desktop/decoder.vhd",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/Alignment/Default (Windows).sublime-keymap",
+		"/C/Users/chrigu/Desktop/RTOS.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/src/Application.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/SRB/Project_Headers/Platform.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Timer.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/CommonApplication.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Source/Keys.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/KeyDebounce.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Debounce.h",
+		"/C/Users/chrigu/AppData/Local/Temp/7zO3AE.tmp/tasks.c",
+		"/C/Users/chrigu/AppData/Local/Temp/7zO15E.tmp/timers.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/doxy/html/_common_application_8c.html",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Keys.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Timer.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/include/Timer.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/include/Debounce.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/include/Keys.h",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/IntroHS2013/CWProj/IntroCommon_Master/include/KeyDebounce.h",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/SublimeLinter/README.md",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/doxy/html/installdox",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/Git/Git.sublime-settings",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/SRB/Sources/Events.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/SRB/Sources/ProcessorExpert.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/Sources/Events.c",
+		"/C/Users/chrigu/Desktop/Database.c",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/Common/Header/Led.h",
+		"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/group13/CWProj/FRDM/doxy/html/_l_e_d1_8c.html",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/User/C.sublime-settings",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/chrigu/Desktop/Database.h",
+		"/C/Users/chrigu/AppData/Roaming/Sublime Text 2/Packages/C/doxy_header.sublime-snippet"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"temp",
+			"curr",
+			"MOTOR_H",
+			"--",
+			"DEL_DONE",
+			"SHELL_RXQueue",
+			"create",
+			"/*",
+			"RTOS_Init",
+			"console",
+			"SYMBOL",
+			"DEBNC",
+			"__DEBOUNCE_H",
+			" {\n	",
+			"{\n",
+			"EVNT_Handle",
+			"event"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 27.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 171.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"reflectance.c",
+				"Common/Source/Reflectance.c"
+			],
+			[
+				"ref",
+				"Common/Header/Reflectance.h"
+			],
+			[
+				"shell.c",
+				"Common/Source/Shell.c"
+			],
+			[
+				"motor.c",
+				"Common/Source/Motor.c"
+			],
+			[
+				"motor.h",
+				"Common/Header/Motor.h"
+			],
+			[
+				"bu",
+				"Common/Header/Buzzer.h"
+			],
+			[
+				"comm",
+				"Common/Source/CommonApplication.c"
+			],
+			[
+				"deb",
+				"Common/Source/Debounce.c"
+			],
+			[
+				"keydeb",
+				"Common/Source/KeyDebounce.c"
+			],
+			[
+				"rtos",
+				"Common/Source/RTOS.c"
+			],
+			[
+				"even",
+				"Common/Header/Event.h"
+			],
+			[
+				"event",
+				"Common/Source/Event.c"
+			],
+			[
+				"rtos.c",
+				"Common/Source/RTOS.c"
+			],
+			[
+				"rots.c",
+				"FRDM/Generated_Code/tasks.c"
+			],
+			[
+				"shell",
+				"Common/Header/Shell.h"
+			],
+			[
+				"shel",
+				"Common/Header/Shell.h"
+			],
+			[
+				"plat",
+				"FRDM/Project_Headers/Platform.h"
+			],
+			[
+				"led1.c",
+				"FRDM/Generated_Code/LED1.c"
+			],
+			[
+				"cls1",
+				"FRDM/Generated_Code/CLS1.c"
+			],
+			[
+				"debou",
+				"Common/Source/Debounce.c"
+			],
+			[
+				"keydebou",
+				"Common/Source/KeyDebounce.c"
+			],
+			[
+				"pl",
+				"SRB/Project_Headers/Platform.h"
+			],
+			[
+				"deboun",
+				"Common/Source/Debounce.c"
+			],
+			[
+				"trigger.c",
+				"Common/Source/Trigger.c"
+			],
+			[
+				"trigger",
+				"Common/Header/Trigger.h"
+			],
+			[
+				"debounce.c",
+				"Common/Source/Debounce.c"
+			],
+			[
+				"co",
+				"Common/Source/CommonApplication.c"
+			],
+			[
+				"timer",
+				"Common/Source/Timer.c"
+			],
+			[
+				"app",
+				"Common/Source/CommonApplication.c"
+			],
+			[
+				"appl",
+				"FRDM/doxy/html/_common_application_8c.html"
+			],
+			[
+				"appli",
+				"Common/Header/CommonApplication.h"
+			],
+			[
+				"",
+				"Common/Source/Trigger.c"
+			],
+			[
+				"trigger.h",
+				"Common/Header/Trigger.h"
+			],
+			[
+				"event.c",
+				"Common/Source/Event.c"
+			],
+			[
+				"keys",
+				"Common/Header/Keys.h"
+			],
+			[
+				"keys.c",
+				"Common/Source/Keys.c"
+			],
+			[
+				"frdmplat",
+				"FRDM/Project_Headers/Platform.h"
+			],
+			[
+				"timer.c",
+				"Common/Source/Timer.c"
+			],
+			[
+				"install",
+				"FRDM/doxy/html/installdox"
+			],
+			[
+				"timer.h",
+				"Common/Header/Timer.h"
+			],
+			[
+				"commonapp",
+				"Common/Source/CommonApplication.c"
+			],
+			[
+				"key",
+				"Common/Source/Keys.c"
+			],
+			[
+				"pla",
+				"SRB/Project_Headers/Platform.h"
+			],
+			[
+				"commona",
+				"Common/Source/CommonApplication.c"
+			],
+			[
+				"keys.h",
+				"Common/Header/Keys.h"
+			],
+			[
+				"key.",
+				"Common/Source/Keys.c"
+			],
+			[
+				"event.h",
+				"Common/Header/Event.h"
+			],
+			[
+				"events.c",
+				"FRDM/Sources/Events.c"
+			],
+			[
+				"led.h",
+				"Common/Header/Led.h"
+			],
+			[
+				"led",
+				"FRDM/doxy/html/_l_e_d1_8c.html"
+			],
+			[
+				"data",
+				"/C/Users/chrigu/Desktop/Database.c"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/master_project.sublime-project"
+			],
+			[
+				"m",
+				"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/master_project.sublime-project"
+			],
+			[
+				"mas",
+				"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/master_project.sublime-project"
+			],
+			[
+				"ma",
+				"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/master_project.sublime-project"
+			],
+			[
+				"master",
+				"/C/_Daten/Hochschule Luzern/5. Semester/INTRO/Repos/master_project.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 191.0,
+	"status_bar_visible": true
+}
