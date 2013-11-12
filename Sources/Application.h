@@ -8,6 +8,5 @@
 
 void APP_Init(void);
 void APP_Loop(void);
-static void APP_HandleEvent(EVNT_Handle event);
 
 #endif /* APP_H_ */
