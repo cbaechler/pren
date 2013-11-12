@@ -2,6 +2,7 @@
  * \file
  * \brief Trigger Module interface.
  * \author Christoph Bächler
+ * \date 12.11.2013
  */
 
 #ifndef TRIGGER_H_

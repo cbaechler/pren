@@ -2,6 +2,7 @@
  * \file
  * \brief Trigger Module implementation.
  * \author Christoph Bächler
+ * \date 12.11.2013
  */
 
 #include "Trigger.h"

@@ -2,6 +2,7 @@
  * \file
  * \brief Main Application Module.
  * \author Christoph Bächler
+ * \date 11.11.2013
  *
  * This file contains the main application code for PREN T15 robot.
  */

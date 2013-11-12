@@ -2,6 +2,7 @@
  * \file
  * \brief Event Module header file.
  * \author Christoph Bächler
+ * \date 11.11.2013
  *
  * This module implements a generic event driver. We are using numbered events starting with zero.
  * EVNT_HandleEvent() can be used to process the pending events. Note that the event with the number zero

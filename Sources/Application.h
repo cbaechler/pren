@@ -1,4 +1,9 @@
-
+/**
+ * \file
+ * \brief Application interface.
+ * \author Christoph Bächler
+ * \date 11.11.2013
+ */
 
 #ifndef APP_H_
 #define APP_H_

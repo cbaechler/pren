@@ -2,6 +2,7 @@
  * \file
  * \brief Event Module.
  * \author Christoph Bächler
+ * \date 11.11.2013
  *
  * This module contains event structure.
  */
