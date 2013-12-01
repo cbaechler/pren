@@ -32,13 +32,18 @@ typedef enum SER_StateKinds {
 	SER_FSM_BUSY
 } SER_StateKinds;
 
-typedef struct SER_FSMData {
-	SER_StateKinds state;
+typedef struct SER_Packet {
 	uint8_t command;
 	uint8_t data[32];
 	uint8_t data_index;
 	uint8_t length;
-	uint8_t checksum;
+	uint8_t checksum;	
+} SER_Packet;
+
+typedef struct SER_FSMData {
+	SER_StateKinds state;
+	SER_Packet input_packet;
+	SER_Packet output_packet;
 	byte (*ReceiveChar)(uint8_t *ch);
 	byte (*SendChar)(uint8_t ch);
 } SER_FSMData;
@@ -49,5 +54,10 @@ uint8_t* SER_GetLength(void);
 uint8_t* SER_GetCommand(void);
 uint8_t* SER_GetData(void);
 bool SER_TestChecksum(void);
+void SER_AddData8(uint8_t d);
+void SER_AddData16(uint16_t d);
+uint8_t SER_BuildChecksum(void);
+void SER_SendChar(uint8_t ch);
+void SER_SendPacket(uint8_t command);
 
 #endif

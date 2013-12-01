@@ -128,12 +128,16 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
         	}
 
-            AS1_SendChar(*SER_GetCommand());
-            AS1_SendChar(SER_GetData()[0]);
-            AS1_SendChar(SER_GetData()[1]);
+            //AS1_SendChar(*SER_GetCommand());
+            //AS1_SendChar(SER_GetData()[0]);
+            //AS1_SendChar(SER_GetData()[1]);
+            
+            SER_AddData8(0x44);
+            SER_AddData8(0x55);
+            SER_AddData16(0x1234);
+            SER_SendPacket(0x27);
 
-
-
+            //SER_SendPacket();
         	SER_SetHandled();
             
         	LED_GREEN_Neg();
