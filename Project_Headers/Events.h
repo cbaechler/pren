@@ -5,13 +5,18 @@
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-11-11, 19:57, # CodeGen: 0
+**     Date/Time   : 2013-11-28, 14:07, # CodeGen: 24
 **     Abstract    :
 **         This is user's event module.
 **         Put your event handler code here.
 **     Settings    :
 **     Contents    :
-**         Cpu_OnNMIINT - void Cpu_OnNMIINT(void);
+**         PWM1_OnEnd      - void PWM1_OnEnd(void);
+**         TI1_OnInterrupt - void TI1_OnInterrupt(void);
+**         AS1_OnError     - void AS1_OnError(void);
+**         AS1_OnRxChar    - void AS1_OnRxChar(void);
+**         AS1_OnTxChar    - void AS1_OnTxChar(void);
+**         Cpu_OnNMIINT    - void Cpu_OnNMIINT(void);
 **
 ** ###################################################################*/
 /*!
@@ -34,21 +39,21 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
-#include "WAIT1.h"
+#include "LED_RED.h"
+#include "LEDpin2.h"
+#include "BitIoLdd1.h"
 #include "LED_GREEN.h"
 #include "LEDpin1.h"
 #include "BitIoLdd2.h"
+#include "WAIT1.h"
 #include "AS1.h"
 #include "ASerialLdd1.h"
 #include "TI1.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
-#include "LED_RED.h"
-#include "LEDpin2.h"
-#include "BitIoLdd1.h"
-#include "LED_BLUE.h"
-#include "LEDpin3.h"
-#include "BitIoLdd3.h"
+#include "TU2.h"
+#include "PWM1.h"
+#include "PwmLdd2.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,19 +61,37 @@ extern "C" {
 
 /*
 ** ===================================================================
-**     Event       :  Cpu_OnNMIINT (module Events)
+**     Event       :  PWM1_OnEnd (module Events)
 **
-**     Component   :  Cpu [MKL25Z128LK4]
+**     Component   :  PWM1 [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
 */
-/*!
-**     @brief
-**         This event is called when the Non maskable interrupt had
-**         occurred. This event is automatically enabled when the [NMI
-**         interrupt] property is set to 'Enabled'.
-*/
-/* ===================================================================*/
-void Cpu_OnNMIINT(void);
+void PWM1_OnEnd(void);
 
+/*
+** ===================================================================
+**     Event       :  TI1_OnInterrupt (module Events)
+**
+**     Component   :  TI1 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void TI1_OnInterrupt(void);
 
 /*
 ** ===================================================================
@@ -119,19 +142,19 @@ void AS1_OnTxChar(void);
 
 /*
 ** ===================================================================
-**     Event       :  TI1_OnInterrupt (module Events)
+**     Event       :  Cpu_OnNMIINT (module Events)
 **
-**     Component   :  TI1 [TimerInt]
-**     Description :
-**         When a timer interrupt occurs this event is called (only
-**         when the component is enabled - <Enable> and the events are
-**         enabled - <EnableEvent>). This event is enabled only if a
-**         <interrupt service/event> is enabled.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
+**     Component   :  Cpu [MKL25Z128LK4]
 */
-void TI1_OnInterrupt(void);
+/*!
+**     @brief
+**         This event is called when the Non maskable interrupt had
+**         occurred. This event is automatically enabled when the [NMI
+**         interrupt] property is set to 'Enabled'.
+*/
+/* ===================================================================*/
+void Cpu_OnNMIINT(void);
+
 
 /* END Events */
 

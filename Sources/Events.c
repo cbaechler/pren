@@ -36,6 +36,8 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "Event.h"
+#include "Serial.h"
 #include "Timer.h"
 /*
 ** ===================================================================
@@ -92,7 +94,8 @@ void AS1_OnError(void)
 */
 void AS1_OnRxChar(void)
 {
-  /* Write your code here ... */
+  SER_Process();
+  //SER_ReceiveChar();
 }
 
 /*
@@ -128,6 +131,28 @@ void AS1_OnTxChar(void)
 void TI1_OnInterrupt(void)
 {
 	TMR_OnInterrupt();
+}
+
+/*
+** ===================================================================
+**     Event       :  PWM1_OnEnd (module Events)
+**
+**     Component   :  PWM1 [PWM]
+**     Description :
+**         This event is called when the specified number of cycles has
+**         been generated. (Only when the component is enabled -
+**         <Enable> and the events are enabled - <EnableEvent>). The
+**         event is available only when the <Interrupt service/event>
+**         property is enabled and selected peripheral supports
+**         appropriate interrupt.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void PWM1_OnEnd(void)
+{
+  /* Write your code here ... */
+	EVNT_SetEvent(EVNT_HEARTBEAT); 
 }
 
 /* END Events */
