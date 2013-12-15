@@ -12,12 +12,11 @@
 #include "Event.h"
 #include "Trigger.h"
 #include "Serial.h"
-#include "LED_RED.h"
-#include "LED_GREEN.h"
-//#include "LED_BLUE.h"
 #include "AS1.h"
 #include "WAIT1.h"
-#include "PWM1.h"
+#include "PWMred.h"
+#include "PWMgreen.h"
+#include "PWMblue.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
@@ -30,11 +29,12 @@ void APP_Init(void) {
 
 void APP_Loop(void) {
 	EVNT_SetEvent(EVNT_INIT);
-	LED_GREEN_Put(0);
+	//LED_GREEN_Put(0);
 	//LED_BLUE_SetRatio16(32768);
 	//Inhr1_SetRatio16(32768);
-	PWM1_SetRatio16(0);
-	
+	PWMred_SetRatio16(0);
+	PWMgreen_SetRatio16(0);
+	PWMblue_SetRatio16(0);
 	
     while(1) {
         // Task 1: Handle Events
@@ -74,10 +74,11 @@ void APP_Loop(void) {
 }
 
 static void APP_HandleEvent(EVNT_Handle event) {
+	uint16_t val;
     switch(event) {
         case EVNT_INIT: 
         	AS1_SendChar('E');
-        	ledB = 0;
+        	//ledB = 0;
             /* todo: fill events */
             break;
             
@@ -91,6 +92,21 @@ static void APP_HandleEvent(EVNT_Handle event) {
 
         case EVNT_SERIAL_CMD:
         	switch(*SER_GetCommand()) {
+        		case 'r': 
+        			val = (SER_GetData()[0]<<8)+SER_GetData()[1];
+        			PWMred_SetRatio16(val);		
+        			break;
+        			
+        		case 'g': 
+					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
+					PWMgreen_SetRatio16(val);  			
+					break;
+        			
+        		case 'b': 
+					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
+					PWMblue_SetRatio16(val);         			
+					break;
+					
                 case SER_START:
                     break;
 
@@ -132,15 +148,15 @@ static void APP_HandleEvent(EVNT_Handle event) {
             //AS1_SendChar(SER_GetData()[0]);
             //AS1_SendChar(SER_GetData()[1]);
             
-            SER_AddData8(0x44);
-            SER_AddData8(0x55);
+            //SER_AddData8(0x44);
+            //SER_AddData8(0x55);
             SER_AddData16(0x1234);
             SER_SendPacket(0x27);
 
             //SER_SendPacket();
         	SER_SetHandled();
             
-        	LED_GREEN_Neg();
+        	//LED_GREEN_Neg();
         	break;
         	
         default:

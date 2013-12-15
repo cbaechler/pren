@@ -1,21 +1,26 @@
 /* ###################################################################
-**     Filename    : Events.c
+**     Filename    : Events.h
 **     Project     : ProcessorExpert
 **     Processor   : MKL25Z128VLK4
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-11-11, 19:57, # CodeGen: 0
+**     Date/Time   : 2013-12-03, 22:04, # CodeGen: 26
 **     Abstract    :
 **         This is user's event module.
 **         Put your event handler code here.
 **     Settings    :
 **     Contents    :
-**         Cpu_OnNMIINT - void Cpu_OnNMIINT(void);
+**         PWM1_OnEnd      - void PWM1_OnEnd(void);
+**         TI1_OnInterrupt - void TI1_OnInterrupt(void);
+**         AS1_OnError     - void AS1_OnError(void);
+**         AS1_OnRxChar    - void AS1_OnRxChar(void);
+**         AS1_OnTxChar    - void AS1_OnTxChar(void);
+**         Cpu_OnNMIINT    - void Cpu_OnNMIINT(void);
 **
 ** ###################################################################*/
 /*!
-** @file Events.c
+** @file Events.h
 ** @version 01.00
 ** @brief
 **         This is user's event module.
@@ -25,41 +30,49 @@
 **  @addtogroup Events_module Events module documentation
 **  @{
 */         
+
+#ifndef __Events_H
+#define __Events_H
 /* MODULE Events */
 
-#include "Cpu.h"
-#include "Events.h"
+#include "PE_Types.h"
+#include "PE_Error.h"
+#include "PE_Const.h"
+#include "IO_Map.h"
+#include "WAIT1.h"
+#include "AS1.h"
+#include "ASerialLdd1.h"
+#include "TI1.h"
+#include "TimerIntLdd1.h"
+#include "TU1.h"
+#include "PWMgreen.h"
+#include "PwmLdd1.h"
+#include "TU3.h"
+#include "PWMred.h"
+#include "PwmLdd3.h"
+#include "PWMblue.h"
+#include "PwmLdd4.h"
+#include "TU4.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif 
 
-
-/* User includes (#include below this line is not maintained by Processor Expert) */
-#include "Event.h"
-#include "Serial.h"
-#include "Timer.h"
-#include "PWMred.h"
-#include "PWMgreen.h"
-#include "PWMblue.h"
-
 /*
 ** ===================================================================
-**     Event       :  Cpu_OnNMIINT (module Events)
+**     Event       :  TI1_OnInterrupt (module Events)
 **
-**     Component   :  Cpu [MKL25Z128LK4]
+**     Component   :  TI1 [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
 */
-/*!
-**     @brief
-**         This event is called when the Non maskable interrupt had
-**         occurred. This event is automatically enabled when the [NMI
-**         interrupt] property is set to 'Enabled'.
-*/
-/* ===================================================================*/
-void Cpu_OnNMIINT(void)
-{
-  /* Write your code here ... */
-}
+void TI1_OnInterrupt(void);
 
 /*
 ** ===================================================================
@@ -76,10 +89,7 @@ void Cpu_OnNMIINT(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnError(void)
-{
-  /* Write your code here ... */
-}
+void AS1_OnError(void);
 
 /*
 ** ===================================================================
@@ -96,11 +106,7 @@ void AS1_OnError(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnRxChar(void)
-{
-  SER_Process();
-  //SER_ReceiveChar();
-}
+void AS1_OnRxChar(void);
 
 /*
 ** ===================================================================
@@ -113,29 +119,23 @@ void AS1_OnRxChar(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnTxChar(void)
-{
-  /* Write your code here ... */
-}
+void AS1_OnTxChar(void);
 
 /*
 ** ===================================================================
-**     Event       :  TI1_OnInterrupt (module Events)
+**     Event       :  Cpu_OnNMIINT (module Events)
 **
-**     Component   :  TI1 [TimerInt]
-**     Description :
-**         When a timer interrupt occurs this event is called (only
-**         when the component is enabled - <Enable> and the events are
-**         enabled - <EnableEvent>). This event is enabled only if a
-**         <interrupt service/event> is enabled.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
+**     Component   :  Cpu [MKL25Z128LK4]
 */
-void TI1_OnInterrupt(void)
-{
-	TMR_OnInterrupt();
-}
+/*!
+**     @brief
+**         This event is called when the Non maskable interrupt had
+**         occurred. This event is automatically enabled when the [NMI
+**         interrupt] property is set to 'Enabled'.
+*/
+/* ===================================================================*/
+void Cpu_OnNMIINT(void);
+
 
 /*
 ** ===================================================================
@@ -153,10 +153,7 @@ void TI1_OnInterrupt(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void PWMblue_OnEnd(void)
-{
-  /* Write your code here ... */
-}
+void PWMblue_OnEnd(void);
 
 /*
 ** ===================================================================
@@ -174,10 +171,7 @@ void PWMblue_OnEnd(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void PWMred_OnEnd(void)
-{
-  /* Write your code here ... */
-}
+void PWMred_OnEnd(void);
 
 /*
 ** ===================================================================
@@ -195,10 +189,7 @@ void PWMred_OnEnd(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void PWMgreen_OnEnd(void)
-{
-  /* Write your code here ... */
-}
+void PWMgreen_OnEnd(void);
 
 /* END Events */
 
@@ -206,6 +197,8 @@ void PWMgreen_OnEnd(void)
 }  /* extern "C" */
 #endif 
 
+#endif 
+/* ifndef __Events_H*/
 /*!
 ** @}
 */
