@@ -77,6 +77,8 @@ void SER_SendPacket(uint8_t command) {
 	}
 	SER_SendChar(data.output_packet.checksum);
 	SER_SendChar(SER_END);
+	
+	data.output_packet.data_index = 0;
 }
 
 /* this FSM is called when ever a char arrives on the uart */ 
