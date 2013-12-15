@@ -39,21 +39,12 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
-#include "LED_RED.h"
-#include "LEDpin2.h"
-#include "BitIoLdd1.h"
-#include "LED_GREEN.h"
-#include "LEDpin1.h"
-#include "BitIoLdd2.h"
 #include "WAIT1.h"
 #include "AS1.h"
 #include "ASerialLdd1.h"
 #include "TI1.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
-#include "TU2.h"
-#include "PWM1.h"
-#include "PwmLdd2.h"
 
 #ifdef __cplusplus
 extern "C" {

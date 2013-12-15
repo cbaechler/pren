@@ -10,6 +10,7 @@
 #include "PE_Types.h"
 #include "Application.h"
 #include "Event.h"
+#include "Motors.h"
 #include "Trigger.h"
 #include "Serial.h"
 #include "AS1.h"
@@ -25,9 +26,11 @@ uint16_t ledB;
 
 void APP_Init(void) {
     EVNT_Init();
+    speed_cntr_Init_Timer1();
 }
 
 void APP_Loop(void) {
+	uint16_t i;
 	EVNT_SetEvent(EVNT_INIT);
 	//LED_GREEN_Put(0);
 	//LED_BLUE_SetRatio16(32768);
@@ -35,6 +38,18 @@ void APP_Loop(void) {
 	PWMred_SetRatio16(0);
 	PWMgreen_SetRatio16(0);
 	PWMblue_SetRatio16(0);
+	
+	speed_cntr_Move(1000, 500, 500, 800);
+	/*
+	for(i = 0; i<1000; i++) {
+		speed_cntr_TIMER1_COMPA_interrupt();
+		WAIT1_Waitms(10);
+	}
+	*/
+	//AS1_SendChar(sizeof(int));
+	//AS1_SendChar(sizeof(long));
+	
+	
 	
     while(1) {
         // Task 1: Handle Events
@@ -77,7 +92,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t val;
     switch(event) {
         case EVNT_INIT: 
-        	AS1_SendChar('E');
+        	//AS1_SendChar('E');
         	//ledB = 0;
             /* todo: fill events */
             break;
@@ -107,6 +122,21 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					PWMblue_SetRatio16(val);         			
 					break;
 					
+        		case 'P':
+        			//SER_AddData16(0x1234);
+        			//SER_SendPacket('P');
+        			speed_cntr_TIMER1_COMPA_interrupt();
+        			break;
+        			
+        		case 'Q': 
+        			speed_cntr_Move(((SER_GetData()[0]<<8)+SER_GetData()[1]), 
+        					((SER_GetData()[2]<<8)+SER_GetData()[3]), 
+        					((SER_GetData()[4]<<8)+SER_GetData()[5]), 
+        					((SER_GetData()[6]<<8)+SER_GetData()[7]));
+        			SER_SendPacket('Q');
+        			break;
+					
+        			/*
                 case SER_START:
                     break;
 
@@ -139,7 +169,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 
                 case SER_ZERO_POSITION:
                     break;
-
+*/
                 default:
                     break;
         	}
@@ -150,8 +180,8 @@ static void APP_HandleEvent(EVNT_Handle event) {
             
             //SER_AddData8(0x44);
             //SER_AddData8(0x55);
-            SER_AddData16(0x1234);
-            SER_SendPacket(0x27);
+            //SER_AddData16(0x1234);
+            //SER_SendPacket(0x27);
 
             //SER_SendPacket();
         	SER_SetHandled();

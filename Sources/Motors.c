@@ -22,6 +22,7 @@
  *****************************************************************************/
 #include "PE_Types.h"
 #include "AS1.h"
+#include "Serial.h"
 #include "Motors.h"
 
 static uint32_t MATH_sqrt(uint32_t x);
@@ -174,10 +175,13 @@ void speed_cntr_TIMER1_COMPA_interrupt( void )
   // Keep track of remainder from new_step-delay calculation to incrase accurancy
   static uint16_t rest = 0;
 
-  uint16_t tmp = OCR1A;
+  //uint16_t tmp = OCR1A;
   
-  AS1_SendChar((uint8_t) (tmp >> 8));
-  AS1_SendChar((uint8_t) (tmp & 0xFF));
+  //AS1_SendChar((uint8_t) (tmp >> 8));
+  //AS1_SendChar((uint8_t) (tmp & 0xFF));
+  
+  SER_AddData16(OCR1A);
+  SER_SendPacket('D');
   //AS1_SendChar("\n");
   
   OCR1A = srd.step_delay;
