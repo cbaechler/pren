@@ -63,11 +63,11 @@ extern MOT_FSMData m;
 
 void MOT_Init(void);
 
-void MOT_CalcValues(uint16_t accel, uint16_t decel, uint16_t speed);
+void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);
 
-void MOT_MoveSteps(int16_t steps);
+void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps);
 
-void MOT_Process(void);
+void MOT_Process(MOT_FSMData* m_);
 
 
 

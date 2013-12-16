@@ -127,7 +127,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         		case 'P':
         			//SER_AddData16(0x1234);
         			//SER_SendPacket('P');
-        			MOT_Process();
+        			MOT_Process(&m);
         			break;
         			
         		case 'Q':
@@ -137,9 +137,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			speed = (SER_GetData()[6]<<8)+SER_GetData()[7];
         			
         			// recalculate motor values based on accel, decel and speed
-        			MOT_CalcValues(accel, decel, speed);
+        			MOT_CalcValues(&m, accel, decel, speed);
         			
-        			MOT_MoveSteps(steps);
+        			MOT_MoveSteps(&m, steps);
         			
         			
         			//speed_cntr_Move(steps, accel, decel, speed);
