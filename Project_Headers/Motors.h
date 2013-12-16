@@ -24,12 +24,12 @@ typedef struct MOT_FSMData {
 	uint16_t decel;				// ok
 	uint16_t speed;				// ok
 
-	/* calced values ... */
+	/* pre-calculated values ... */
 	int16_t min_delay;			// ok
-	uint16_t step_delay;		// ok
 	uint16_t max_s_lim;			// ok
 
 	/* variables */
+	uint16_t step_delay;		// ok
 	uint16_t accel_lim;			// ok
 	int16_t accel_count;		// ok
 	int16_t decel_val;			// ok

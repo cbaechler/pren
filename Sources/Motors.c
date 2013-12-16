@@ -31,12 +31,7 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 	// Set max speed limit, by calc min_delay to use in timer.
 	// min_delay = (alpha / tt)/ w
 	m_->min_delay = A_T_x100 / speed;
-	
-	// Set accelration by calc the first (c0) step delay .
-	// step_delay = 1/tt * sqrt(2*alpha/accel)
-	// step_delay = ( tfreq*0.676/100 )*100 * sqrt( (2*alpha*10000000000) / (accel*100) )/10000
-	m_->step_delay = (T1_FREQ_148 * MATH_sqrt(A_SQ / accel))/100;
-	
+		
 	// Find out after how many steps does the speed hit the max speed limit.
 	// max_s_lim = speed^2 / (2*alpha*accel)
 	m_->max_s_lim = (int32_t)speed*speed/(int32_t)(((int32_t)A_x20000*accel)/100);
@@ -94,6 +89,11 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		
 		// Find step to start decleration.
 		m_->decel_start = steps + m_->decel_val;
+		
+		// Set accelration by calc the first (c0) step delay .
+		// step_delay = 1/tt * sqrt(2*alpha/accel)
+		// step_delay = ( tfreq*0.676/100 )*100 * sqrt( (2*alpha*10000000000) / (accel*100) )/10000
+		m_->step_delay = (T1_FREQ_148 * MATH_sqrt(A_SQ / m_->accel))/100;
 		
 		// If the maximum speed is so low that we dont need to go via accelration state.
 		if(m_->step_delay <= m_->min_delay) {
