@@ -38,6 +38,7 @@ void APP_Loop(void) {
 	PWMblue_SetRatio16(0);
 	
 	MOT_CalcValues(&rotary, 500, 500, 800);
+	MOT_CalcValues(&knee, 100, 100, 2000);
 	
     while(1) {
         // Task 1: Handle Events
@@ -86,7 +87,10 @@ static void APP_HandleEvent(EVNT_Handle event) {
         		case 'P':
         			//SER_AddData16(0x1234);
         			//SER_SendPacket('P');
-        			MOT_Process(&rotary);
+        			SER_AddData16(MOT_Process(&rotary));
+        			SER_AddData16(MOT_Process(&knee));
+        			SER_SendPacket('D');
+        			
         			break;
         			
         		case 'Q':
@@ -98,6 +102,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			// recalculate motor values based on accel, decel and speed
         			
         			MOT_MoveSteps(&rotary, steps);
+        			MOT_MoveSteps(&knee, steps);
         			
         			SER_SendPacket('Q');
         			break;

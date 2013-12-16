@@ -127,12 +127,12 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
  *  on basis of accel/decel parameters.
  */
 
-void MOT_Process(MOT_FSMData* m_)
+uint16_t MOT_Process(MOT_FSMData* m_)
 {
 	uint16_t new_step_delay;
 	
-	SER_AddData16(OCR1A);
-	SER_SendPacket('D');
+	//SER_AddData16(OCR1A);
+	//SER_SendPacket('D');
 	//AS1_SendChar("\n");
 	
 	OCR1A = m_->step_delay;
@@ -197,6 +197,8 @@ void MOT_Process(MOT_FSMData* m_)
 			break;
 	}
 	m_->step_delay = new_step_delay;
+	
+	return OCR1A;
 }
 
 
