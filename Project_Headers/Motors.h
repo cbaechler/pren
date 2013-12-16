@@ -70,7 +70,7 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps);
 
-void MOT_Process(MOT_FSMData* m_);
+uint16_t MOT_Process(MOT_FSMData* m_);
 
 
 
