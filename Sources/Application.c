@@ -26,7 +26,7 @@ uint16_t ledB;
 
 void APP_Init(void) {
     EVNT_Init();
-    speed_cntr_Init_Timer1();
+    MOT_Init();
 }
 
 void APP_Loop(void) {
