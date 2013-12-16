@@ -38,7 +38,7 @@ void APP_Loop(void) {
 	PWMblue_SetRatio16(0);
 	
 	MOT_CalcValues(&rotary, 500, 500, 800);
-	MOT_CalcValues(&knee, 100, 100, 2000);
+	MOT_CalcValues(&knee, 1200, 1200, 2000);
 	
     while(1) {
         // Task 1: Handle Events
@@ -94,10 +94,10 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			break;
         			
         		case 'Q':
-        			steps = (SER_GetData()[0]<<8)+SER_GetData()[1];
-        		    accel = (SER_GetData()[2]<<8)+SER_GetData()[3];
-        			decel = (SER_GetData()[4]<<8)+SER_GetData()[5];
-        			speed = (SER_GetData()[6]<<8)+SER_GetData()[7];
+        			steps = SER_GetData16(0);	//(SER_GetData()[0]<<8)+SER_GetData()[1];
+        		    accel = SER_GetData16(2);	//(SER_GetData()[2]<<8)+SER_GetData()[3];
+        			decel = SER_GetData16(4);	//(SER_GetData()[4]<<8)+SER_GetData()[5];
+        			speed = SER_GetData16(6);	//(SER_GetData()[6]<<8)+SER_GetData()[7];
         			
         			// recalculate motor values based on accel, decel and speed
         			
