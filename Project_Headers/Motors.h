@@ -2,30 +2,6 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
-/*! \brief Holding data used by timer interrupt for speed ramp calculation.
- *
- *  Contains data used by timer interrupt to calculate speed profile.
- *  Data is written to it by move(), when stepper motor is moving (timer
- *  interrupt running) data is read/updated when calculating a new step_delay
- */
-/*
-typedef struct {
-  //! What part of the speed ramp we are in.
-  uint8_t run_state : 3;
-  //! Direction stepper motor should move.
-  uint8_t dir : 1;
-  //! Peroid of next timer delay. At start this value set the accelration rate.
-  uint16_t step_delay;
-  //! What step_pos to start decelaration
-  uint16_t decel_start;
-  //! Sets deceleration rate.
-  int16_t decel_val;
-  //! Minimum time delay (max speed)
-  int16_t min_delay;
-  //! Counter used when accelerateing/decelerateing to calculate step_delay.
-  int16_t accel_count;
-} speedRampData;*/
-
 typedef enum MOT_Dir {
 	CCW, CW
 } MOT_Dir;
@@ -64,9 +40,7 @@ typedef struct MOT_FSMData {
 	uint16_t step_count;		// ok
 } MOT_FSMData;
 
-
-//#define CW  0
-//#define CCW 1
+extern MOT_FSMData m;
 
 /*! \Brief Frequency of timer1 in [Hz].
  *
@@ -87,18 +61,17 @@ typedef struct MOT_FSMData {
 #define A_SQ (int32_t)(ALPHA*2*10000000000)         // ALPHA*2*10000000000
 #define A_x20000 (int16_t)(ALPHA*20000)              // ALPHA*20000
 
-// Speed ramp states
-#define STOP  0
-#define ACCEL 1
-#define DECEL 2
-#define RUN   3
-
 void MOT_Init(void);
 
-void speed_cntr_Move(int16_t step, uint16_t accel, uint16_t decel, uint16_t speed);
+void MOT_CalcValues(uint16_t accel, uint16_t decel, uint16_t speed);
 
-void speed_cntr_TIMER1_COMPA_interrupt(void);
-//static unsigned long MATH_sqrt(unsigned long x);
+void MOT_MoveSteps(int16_t steps);
+
+void MOT_Process(void);
+
+
+
+
 uint16_t min(uint16_t x, uint16_t y);
 
 #endif /* MOTORS_H_ */

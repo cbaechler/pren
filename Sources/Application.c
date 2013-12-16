@@ -30,7 +30,7 @@ void APP_Init(void) {
 }
 
 void APP_Loop(void) {
-	uint16_t i;
+	//uint16_t i;
 	EVNT_SetEvent(EVNT_INIT);
 	//LED_GREEN_Put(0);
 	//LED_BLUE_SetRatio16(32768);
@@ -39,7 +39,7 @@ void APP_Loop(void) {
 	PWMgreen_SetRatio16(0);
 	PWMblue_SetRatio16(0);
 	
-	speed_cntr_Move(1000, 500, 500, 800);
+	//speed_cntr_Move(1000, 500, 500, 800);
 	/*
 	for(i = 0; i<1000; i++) {
 		speed_cntr_TIMER1_COMPA_interrupt();
@@ -90,6 +90,8 @@ void APP_Loop(void) {
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t val;
+	uint16_t accel, decel, speed, steps;
+	
     switch(event) {
         case EVNT_INIT: 
         	//AS1_SendChar('E');
@@ -125,14 +127,32 @@ static void APP_HandleEvent(EVNT_Handle event) {
         		case 'P':
         			//SER_AddData16(0x1234);
         			//SER_SendPacket('P');
-        			speed_cntr_TIMER1_COMPA_interrupt();
+        			MOT_Process();
         			break;
         			
-        		case 'Q': 
+        		case 'Q':
+        			steps = (SER_GetData()[0]<<8)+SER_GetData()[1];
+        		    accel = (SER_GetData()[2]<<8)+SER_GetData()[3];
+        			decel = (SER_GetData()[4]<<8)+SER_GetData()[5];
+        			speed = (SER_GetData()[6]<<8)+SER_GetData()[7];
+        			
+        			// recalculate motor values based on accel, decel and speed
+        			MOT_CalcValues(accel, decel, speed);
+        			
+        			MOT_MoveSteps(steps);
+        			
+        			
+        			//speed_cntr_Move(steps, accel, decel, speed);
+        			
+        			/*
         			speed_cntr_Move(((SER_GetData()[0]<<8)+SER_GetData()[1]), 
         					((SER_GetData()[2]<<8)+SER_GetData()[3]), 
         					((SER_GetData()[4]<<8)+SER_GetData()[5]), 
         					((SER_GetData()[6]<<8)+SER_GetData()[7]));
+        			*/
+        			
+        			
+        			
         			SER_SendPacket('Q');
         			break;
 					
