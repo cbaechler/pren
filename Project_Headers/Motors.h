@@ -7,6 +7,7 @@ typedef enum MOT_Dir {
 } MOT_Dir;
 
 typedef enum MOT_StateKinds {
+	MOT_FSM_IDLE, 
 	MOT_FSM_STOP, 
 	MOT_FSM_ACCEL, 
 	MOT_FSM_RUN, 
@@ -40,7 +41,9 @@ typedef struct MOT_FSMData {
 	uint16_t step_count;		// ok
 } MOT_FSMData;
 
-extern MOT_FSMData m;
+extern MOT_FSMData rotary;	/* Drehachse */
+extern MOT_FSMData knee;	/* Knickgelenk */
+extern MOT_FSMData lift;	/* Hebemechanismus */
 
 /*! \Brief Frequency of timer1 in [Hz].
  *
@@ -72,6 +75,6 @@ void MOT_Process(MOT_FSMData* m_);
 
 
 
-uint16_t min(uint16_t x, uint16_t y);
+
 
 #endif /* MOTORS_H_ */

@@ -1,18 +1,21 @@
 #include "PE_Types.h"
 #include "AS1.h"
 #include "Serial.h"
+#include "Math.h"
 #include "Motors.h"
-
-static uint32_t MATH_sqrt(uint32_t x);
 
 bool running;
 uint16_t OCR1A;	/* emulate atmel register */
 
-MOT_FSMData m;
+MOT_FSMData rotary;	/* Drehachse */
+MOT_FSMData knee;	/* Knickgelenk */
+MOT_FSMData lift;	/* Hebemechanismus */
 
 /* This will initialise the Motor module */
 void MOT_Init(void) {
-  m.state = MOT_FSM_STOP;
+  rotary.state = MOT_FSM_IDLE;
+  knee.state = MOT_FSM_IDLE;
+  lift.state = MOT_FSM_IDLE;
 }
 
 /*! This will calculate the values for the motor to speed
@@ -135,12 +138,17 @@ void MOT_Process(MOT_FSMData* m_)
 	OCR1A = m_->step_delay;
 	
 	switch(m_->state) {
+		case MOT_FSM_IDLE: 
+			// just do nothing. 
+			break; 
+			
 		case MOT_FSM_STOP:
 			m_->step_count = 0;
 			m_->rest = 0;
 			// Stop Timer/Counter 1.
 			//TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));
 			running = FALSE;
+			m_->state = MOT_FSM_IDLE;
 			break;
 		
 		case MOT_FSM_ACCEL:
@@ -191,59 +199,4 @@ void MOT_Process(MOT_FSMData* m_)
 	m_->step_delay = new_step_delay;
 }
 
-/*! \brief Square root routine.
- *
- * sqrt routine 'grupe', from comp.sys.ibm.pc.programmer
- * Subject: Summary: SQRT(int) algorithm (with profiling)
- *    From: warwick@cs.uq.oz.au (Warwick Allison)
- *    Date: Tue Oct 8 09:16:35 1991
- *
- *  \param x  Value to find square root of.
- *  \return  Square root of x.
- */
-static uint32_t MATH_sqrt(uint32_t x)
-{
-  register uint32_t xr;  // result register
-  register uint32_t q2;  // scan-bit register
-  register uint8_t f;    // flag (one bit)
 
-  xr = 0;                     // clear result
-  q2 = 0x40000000L;           // higest possible result bit
-  do
-  {
-    if((xr + q2) <= x)
-    {
-      x -= xr + q2;
-      f = 1;                  // set flag
-    }
-    else{
-      f = 0;                  // clear flag
-    }
-    xr >>= 1;
-    if(f){
-      xr += q2;               // test flag
-    }
-  } while(q2 >>= 2);          // shift twice
-  if(xr < x){
-    return xr +1;             // add for rounding
-  }
-  else{
-    return xr;
-  }
-}
-
-/*! \brief Find minimum value.
- *
- *  Returns the smallest value.
- *
- *  \return  Min(x,y).
- */
-uint16_t min(uint16_t x, uint16_t y)
-{
-  if(x < y){
-    return x;
-  }
-  else{
-    return y;
-  }
-}

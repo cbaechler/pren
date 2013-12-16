@@ -32,59 +32,18 @@ void APP_Init(void) {
 void APP_Loop(void) {
 	//uint16_t i;
 	EVNT_SetEvent(EVNT_INIT);
-	//LED_GREEN_Put(0);
-	//LED_BLUE_SetRatio16(32768);
-	//Inhr1_SetRatio16(32768);
+
 	PWMred_SetRatio16(0);
 	PWMgreen_SetRatio16(0);
 	PWMblue_SetRatio16(0);
 	
-	//speed_cntr_Move(1000, 500, 500, 800);
-	/*
-	for(i = 0; i<1000; i++) {
-		speed_cntr_TIMER1_COMPA_interrupt();
-		WAIT1_Waitms(10);
-	}
-	*/
-	//AS1_SendChar(sizeof(int));
-	//AS1_SendChar(sizeof(long));
-	
-	
+	MOT_CalcValues(&rotary, 500, 500, 800);
 	
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
 
         // Further Tasks...
-
-        // Down here testing PWM only...
-        //Inhr1_SetRatio16(32768);
-        /*
-        LED_BLUE_SetRatio16(1000);
-        WAIT1_Waitms(100);
-        LED_BLUE_SetRatio16(10000);
-        WAIT1_Waitms(100);
-        LED_BLUE_SetRatio16(20000);
-        WAIT1_Waitms(100);
-        LED_BLUE_SetRatio16(35000);
-        WAIT1_Waitms(100);
-        LED_BLUE_SetRatio16(50000);
-        WAIT1_Waitms(100);
-        LED_BLUE_SetRatio16(65000);
-        WAIT1_Waitms(100);
-        */
-        /*
-        LED_BLUE_SetRatio16(ledB);
-        ledB += 100;
-        WAIT1_Waitms(10);
-        */
-        // Testing only...
-        //EVNT_SetEvent(EVNT_INIT);
-        //LED_GREEN_Put(1);
-        //WAIT1_Waitms(200);
-        //LED_GREEN_Put(0);
-        //WAIT1_Waitms(200);
-
     }
 }
 
@@ -127,7 +86,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         		case 'P':
         			//SER_AddData16(0x1234);
         			//SER_SendPacket('P');
-        			MOT_Process(&m);
+        			MOT_Process(&rotary);
         			break;
         			
         		case 'Q':
@@ -137,21 +96,8 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			speed = (SER_GetData()[6]<<8)+SER_GetData()[7];
         			
         			// recalculate motor values based on accel, decel and speed
-        			MOT_CalcValues(&m, accel, decel, speed);
         			
-        			MOT_MoveSteps(&m, steps);
-        			
-        			
-        			//speed_cntr_Move(steps, accel, decel, speed);
-        			
-        			/*
-        			speed_cntr_Move(((SER_GetData()[0]<<8)+SER_GetData()[1]), 
-        					((SER_GetData()[2]<<8)+SER_GetData()[3]), 
-        					((SER_GetData()[4]<<8)+SER_GetData()[5]), 
-        					((SER_GetData()[6]<<8)+SER_GetData()[7]));
-        			*/
-        			
-        			
+        			MOT_MoveSteps(&rotary, steps);
         			
         			SER_SendPacket('Q');
         			break;
@@ -194,19 +140,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
         	}
 
-            //AS1_SendChar(*SER_GetCommand());
-            //AS1_SendChar(SER_GetData()[0]);
-            //AS1_SendChar(SER_GetData()[1]);
-            
-            //SER_AddData8(0x44);
-            //SER_AddData8(0x55);
-            //SER_AddData16(0x1234);
-            //SER_SendPacket(0x27);
 
-            //SER_SendPacket();
         	SER_SetHandled();
-            
-        	//LED_GREEN_Neg();
+
         	break;
         	
         default:
