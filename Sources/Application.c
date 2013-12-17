@@ -31,10 +31,12 @@ void APP_Init(void) {
 }
 
 void APP_Loop(void) {
-	EVNT_SetEvent(EVNT_INIT);
-	
-	MOT_CalcValues(&rotary, 500, 500, 800);
-	MOT_CalcValues(&knee, 1200, 1200, 2000);
+	//EVNT_SetEvent(EVNT_INIT);
+	LED_GREEN_On();
+	MOT_CalcValues(&rotary, 750, 750, 800);
+	MOT_CalcValues(&knee, 500, 500, 800);
+	MOT_CalcValues(&lift, 250, 250, 800);
+	LED_GREEN_Off();
 	
     while(1) {
         // Task 1: Handle Events
@@ -91,6 +93,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			//SER_SendPacket('P');
         			SER_AddData16(MOT_Process(&rotary));
         			SER_AddData16(MOT_Process(&knee));
+        			SER_AddData16(MOT_Process(&lift));
         			SER_SendPacket('D');
         			
         			break;
@@ -105,6 +108,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			
         			MOT_MoveSteps(&rotary, steps);
         			MOT_MoveSteps(&knee, steps);
+        			MOT_MoveSteps(&lift, steps);
         			
         			SER_SendPacket('Q');
         			break;

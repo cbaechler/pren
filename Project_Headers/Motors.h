@@ -19,10 +19,10 @@ typedef struct MOT_FSMData {
 	MOT_Dir dir;				// ok
 	bool running;				// ok (ev. no used)
 
-	/* max speed, max accel, max deccel */
-	uint16_t accel;				// ok
-	uint16_t decel;				// ok
-	uint16_t speed;				// ok
+	/* motor settings */
+	uint16_t accel;				//!<eeprom
+	uint16_t decel;				//!<eeprom
+	uint16_t speed;				//!<eeprom
 
 	/* pre-calculated values ... */
 	int16_t min_delay;			// ok
