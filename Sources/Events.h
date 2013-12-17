@@ -39,20 +39,21 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
+#include "LED_RED.h"
+#include "LEDpin2.h"
+#include "BitIoLdd1.h"
+#include "LED_GREEN.h"
+#include "LEDpin1.h"
+#include "BitIoLdd2.h"
+#include "LED_BLUE.h"
+#include "LEDpin3.h"
+#include "BitIoLdd3.h"
 #include "WAIT1.h"
 #include "AS1.h"
 #include "ASerialLdd1.h"
 #include "TI1.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
-#include "PWMgreen.h"
-#include "PwmLdd1.h"
-#include "TU3.h"
-#include "PWMred.h"
-#include "PwmLdd3.h"
-#include "PWMblue.h"
-#include "PwmLdd4.h"
-#include "TU4.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -136,60 +137,6 @@ void AS1_OnTxChar(void);
 /* ===================================================================*/
 void Cpu_OnNMIINT(void);
 
-
-/*
-** ===================================================================
-**     Event       :  PWMblue_OnEnd (module Events)
-**
-**     Component   :  PWMblue [PWM]
-**     Description :
-**         This event is called when the specified number of cycles has
-**         been generated. (Only when the component is enabled -
-**         <Enable> and the events are enabled - <EnableEvent>). The
-**         event is available only when the <Interrupt service/event>
-**         property is enabled and selected peripheral supports
-**         appropriate interrupt.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void PWMblue_OnEnd(void);
-
-/*
-** ===================================================================
-**     Event       :  PWMred_OnEnd (module Events)
-**
-**     Component   :  PWMred [PWM]
-**     Description :
-**         This event is called when the specified number of cycles has
-**         been generated. (Only when the component is enabled -
-**         <Enable> and the events are enabled - <EnableEvent>). The
-**         event is available only when the <Interrupt service/event>
-**         property is enabled and selected peripheral supports
-**         appropriate interrupt.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void PWMred_OnEnd(void);
-
-/*
-** ===================================================================
-**     Event       :  PWMgreen_OnEnd (module Events)
-**
-**     Component   :  PWMgreen [PWM]
-**     Description :
-**         This event is called when the specified number of cycles has
-**         been generated. (Only when the component is enabled -
-**         <Enable> and the events are enabled - <EnableEvent>). The
-**         event is available only when the <Interrupt service/event>
-**         property is enabled and selected peripheral supports
-**         appropriate interrupt.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void PWMgreen_OnEnd(void);
 
 /* END Events */
 

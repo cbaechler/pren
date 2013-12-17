@@ -15,9 +15,10 @@
 #include "Serial.h"
 #include "AS1.h"
 #include "WAIT1.h"
-#include "PWMred.h"
-#include "PWMgreen.h"
-#include "PWMblue.h"
+
+#include "LED_RED.h"
+#include "LED_GREEN.h"
+#include "LED_BLUE.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
@@ -30,12 +31,7 @@ void APP_Init(void) {
 }
 
 void APP_Loop(void) {
-	//uint16_t i;
 	EVNT_SetEvent(EVNT_INIT);
-
-	PWMred_SetRatio16(0);
-	PWMgreen_SetRatio16(0);
-	PWMblue_SetRatio16(0);
 	
 	MOT_CalcValues(&rotary, 500, 500, 800);
 	MOT_CalcValues(&knee, 1200, 1200, 2000);
@@ -50,12 +46,18 @@ void APP_Loop(void) {
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t val;
-	uint16_t accel, decel, speed, steps;
+	//uint16_t accel; 
+	//uint16_t decel; 
+	//uint16_t speed;	
+	uint16_t steps;
 	
     switch(event) {
         case EVNT_INIT: 
         	//AS1_SendChar('E');
-        	//ledB = 0;
+        	LED_RED_On();
+        	WAIT1_Waitms(200);
+        	LED_RED_Off();
+        	
             /* todo: fill events */
             break;
             
@@ -71,17 +73,17 @@ static void APP_HandleEvent(EVNT_Handle event) {
         	switch(*SER_GetCommand()) {
         		case 'r': 
         			val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-        			PWMred_SetRatio16(val);		
+        			//PWMred_SetRatio16(val);		
         			break;
         			
         		case 'g': 
 					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-					PWMgreen_SetRatio16(val);  			
+					//PWMgreen_SetRatio16(val);  			
 					break;
         			
         		case 'b': 
 					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-					PWMblue_SetRatio16(val);         			
+					//PWMblue_SetRatio16(val);         			
 					break;
 					
         		case 'P':
@@ -95,9 +97,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			
         		case 'Q':
         			steps = SER_GetData16(0);	//(SER_GetData()[0]<<8)+SER_GetData()[1];
-        		    accel = SER_GetData16(2);	//(SER_GetData()[2]<<8)+SER_GetData()[3];
-        			decel = SER_GetData16(4);	//(SER_GetData()[4]<<8)+SER_GetData()[5];
-        			speed = SER_GetData16(6);	//(SER_GetData()[6]<<8)+SER_GetData()[7];
+        		    //accel = SER_GetData16(2);	//(SER_GetData()[2]<<8)+SER_GetData()[3];
+        			//decel = SER_GetData16(4);	//(SER_GetData()[4]<<8)+SER_GetData()[5];
+        			//speed = SER_GetData16(6);	//(SER_GetData()[6]<<8)+SER_GetData()[7];
         			
         			// recalculate motor values based on accel, decel and speed
         			
