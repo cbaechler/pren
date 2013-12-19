@@ -20,6 +20,8 @@
 #include "LED_GREEN.h"
 #include "LED_BLUE.h"
 
+#include "M1.h"
+
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 
@@ -32,9 +34,10 @@ void APP_Init(void) {
 
 void APP_Loop(void) {
 	//EVNT_SetEvent(EVNT_INIT);
+	
 	LED_GREEN_On();
-	MOT_CalcValues(&rotary, 750, 750, 800);
-	MOT_CalcValues(&knee, 500, 500, 800);
+	MOT_CalcValues(&rotary, 2000, 2000, 800);
+	MOT_CalcValues(&knee, 2000, 2000, 500);
 	MOT_CalcValues(&lift, 250, 250, 800);
 	LED_GREEN_Off();
 	

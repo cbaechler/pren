@@ -60,6 +60,7 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->accel_count = -1;
 		m_->state = MOT_FSM_DECEL;
 		m_->step_delay = 1000;
+		m_->running = TRUE;
 		running = TRUE;
 		OCR1A = 10;
 		// Run Timer/Counter 1 with prescaler = 8.
@@ -108,7 +109,9 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->step_count = 0;
 		m_->rest = 0;
 		m_->accel_count = 0;
+		m_->running = TRUE;
 		running = TRUE;
+		
 		OCR1A = 10;
 		// Set Timer/Counter to divide clock by 8
 		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));		
@@ -147,8 +150,8 @@ uint16_t MOT_Process(MOT_FSMData* m_)
 			m_->rest = 0;
 			// Stop Timer/Counter 1.
 			//TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));
+			m_->running = FALSE;
 			running = FALSE;
-			m_->state = MOT_FSM_IDLE;
 			break;
 		
 		case MOT_FSM_ACCEL:

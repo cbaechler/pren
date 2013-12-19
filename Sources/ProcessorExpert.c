@@ -45,6 +45,11 @@
 #include "TI1.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
+#include "SIG.h"
+#include "M1.h"
+#include "BitIoLdd4.h"
+#include "M2.h"
+#include "BitIoLdd5.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

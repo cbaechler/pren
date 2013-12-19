@@ -39,6 +39,11 @@ extern "C" {
 #include "Event.h"
 #include "Serial.h"
 #include "Timer.h"
+#include "SIG.h"
+#include "LED_RED.h"
+#include "Motors.h"
+#include "M1.h"
+#include "M2.h"
 
 /*
 ** ===================================================================
@@ -132,6 +137,86 @@ void AS1_OnTxChar(void)
 void TI1_OnInterrupt(void)
 {
 	TMR_OnInterrupt();
+}
+
+/*
+** ===================================================================
+**     Event       :  SIG_OnChannel0 (module Events)
+**
+**     Component   :  SIG [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel0 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void SIG_OnChannel0(LDD_TUserData *UserDataPtr)
+{
+	if(rotary.running == TRUE) {
+		TPM0_C0V = TPM0_CNT + MOT_Process(&rotary);
+		M1_NegVal();
+		LED_RED_Neg();
+	}
+}
+
+/*
+** ===================================================================
+**     Event       :  SIG_OnChannel1 (module Events)
+**
+**     Component   :  SIG [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel1 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void SIG_OnChannel1(LDD_TUserData *UserDataPtr)
+{
+	if(knee.running == TRUE) {
+		TPM0_C1V = TPM0_CNT + MOT_Process(&knee);
+		M2_NegVal();
+		LED_GREEN_Neg();
+	}
+}
+
+/*
+** ===================================================================
+**     Event       :  SIG_OnCounterRestart (module Events)
+**
+**     Component   :  SIG [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if counter overflow/underflow or counter is
+**         reinitialized by modulo or compare register matching.
+**         OnCounterRestart event and Timer unit must be enabled. See
+**         [SetEventMask] and [GetEventMask] methods. This event is
+**         available only if a [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
 }
 
 /* END Events */
