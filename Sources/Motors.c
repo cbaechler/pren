@@ -4,7 +4,6 @@
 #include "Math.h"
 #include "Motors.h"
 
-bool running;
 uint16_t OCR1A;	/* emulate atmel register */
 
 MOT_FSMData rotary;	/* Drehachse */
@@ -61,7 +60,6 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->state = MOT_FSM_DECEL;
 		m_->step_delay = 1000;
 		m_->running = TRUE;
-		running = TRUE;
 		OCR1A = 10;
 		// Run Timer/Counter 1 with prescaler = 8.
 		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));
@@ -110,34 +108,17 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->rest = 0;
 		m_->accel_count = 0;
 		m_->running = TRUE;
-		running = TRUE;
-		
+
 		OCR1A = 10;
 		// Set Timer/Counter to divide clock by 8
 		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));		
 	}
 }
 
-
-/*! \brief Timer/Counter1 Output Compare A Match Interrupt.
- *
- *  Timer/Counter1 Output Compare A Match Interrupt.
- *  Increments/decrements the position of the stepper motor
- *  exept after last position, when it stops.
- *  The \ref step_delay defines the period of this interrupt
- *  and controls the speed of the stepper motor.
- *  A new step delay is calculated to follow wanted speed profile
- *  on basis of accel/decel parameters.
- */
-
 uint16_t MOT_Process(MOT_FSMData* m_)
 {
 	uint16_t new_step_delay;
-	
-	//SER_AddData16(OCR1A);
-	//SER_SendPacket('D');
-	//AS1_SendChar("\n");
-	
+
 	OCR1A = m_->step_delay;
 	
 	switch(m_->state) {
@@ -151,7 +132,6 @@ uint16_t MOT_Process(MOT_FSMData* m_)
 			// Stop Timer/Counter 1.
 			//TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));
 			m_->running = FALSE;
-			running = FALSE;
 			break;
 		
 		case MOT_FSM_ACCEL:

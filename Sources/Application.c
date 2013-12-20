@@ -21,11 +21,10 @@
 #include "LED_BLUE.h"
 
 #include "M1.h"
+#include "M2.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
-
-uint16_t ledB;
 
 void APP_Init(void) {
     EVNT_Init();
@@ -51,46 +50,21 @@ void APP_Loop(void) {
 
 static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t val;
-	//uint16_t accel; 
-	//uint16_t decel; 
-	//uint16_t speed;	
 	uint16_t steps;
 	
     switch(event) {
         case EVNT_INIT: 
-        	//AS1_SendChar('E');
         	LED_RED_On();
         	WAIT1_Waitms(200);
         	LED_RED_Off();
-        	
-            /* todo: fill events */
             break;
             
         case EVNT_HEARTBEAT:
-        	
-        	//ledB += 100;
-        	//PWM1_SetRatio16(ledB);
-        	
-        	//LED_BLUE_Neg();
+        	LED_BLUE_Neg();
         	break;
 
         case EVNT_SERIAL_CMD:
-        	switch(*SER_GetCommand()) {
-        		case 'r': 
-        			val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-        			//PWMred_SetRatio16(val);		
-        			break;
-        			
-        		case 'g': 
-					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-					//PWMgreen_SetRatio16(val);  			
-					break;
-        			
-        		case 'b': 
-					val = (SER_GetData()[0]<<8)+SER_GetData()[1];
-					//PWMblue_SetRatio16(val);         			
-					break;
-					
+        	switch(*SER_GetCommand()) {					
         		case 'P':
         			//SER_AddData16(0x1234);
         			//SER_SendPacket('P');
@@ -117,12 +91,6 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			break;
 					
         			/*
-                case SER_START:
-                    break;
-
-                case SER_END:
-                    break;
-
                 case SER_MODE:
                     break;
 
@@ -151,12 +119,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 */
                 default:
+                	// send error message
                     break;
         	}
 
-
         	SER_SetHandled();
-
         	break;
         	
         default:
