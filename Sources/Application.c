@@ -72,8 +72,9 @@ void APP_Loop(void) {
  *  \param event  Event handle.
  */
 static void APP_HandleEvent(EVNT_Handle event) {
-	uint16_t val;
-	uint16_t steps;
+	uint16_t accel; 
+	uint16_t decel; 
+	uint16_t speed;
 	
     switch(event) {
         case EVNT_INIT: 
@@ -99,18 +100,36 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			break;
         			
         		case 'Q':
-        			steps = SER_GetData16(0);	//(SER_GetData()[0]<<8)+SER_GetData()[1];
-        		    //accel = SER_GetData16(2);	//(SER_GetData()[2]<<8)+SER_GetData()[3];
-        			//decel = SER_GetData16(4);	//(SER_GetData()[4]<<8)+SER_GetData()[5];
-        			//speed = SER_GetData16(6);	//(SER_GetData()[6]<<8)+SER_GetData()[7];
-        			
-        			// recalculate motor values based on accel, decel and speed
-        			
-        			MOT_MoveSteps(&rotary, steps);
-        			MOT_MoveSteps(&knee, steps);
-        			MOT_MoveSteps(&lift, steps);
-        			
+        			MOT_MoveSteps(&rotary, SER_GetData16(0));
+        			MOT_MoveSteps(&knee, SER_GetData16(2));
+        			//MOT_MoveSteps(&lift, SER_GetData16(4));        			
         			SER_SendPacket('Q');
+        			break;
+        			
+        		case 'm': 
+        			accel = SER_GetData16(1);
+					decel = SER_GetData16(3);
+					speed = SER_GetData16(5);
+        			        			
+        			switch(SER_GetData8(0)) {
+						case '0':
+							MOT_CalcValues(&rotary, accel, decel, speed);
+							SER_SendPacket('m');
+							break;
+							
+						case '1':
+							MOT_CalcValues(&knee, accel, decel, speed);
+							SER_SendPacket('m');
+							break;
+							
+						case '2':
+							MOT_CalcValues(&lift, accel, decel, speed);
+							SER_SendPacket('m');
+							break;
+							
+						default: 
+							break;
+        			}
         			break;
 					
         			/*
@@ -118,27 +137,45 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 
                 case SER_BLOCK_ARRAY:
+                	(get length - constant) modulo num_bytes_per_block
+                	for loop, for each block
+                		get alpha, beta from serial packet
+                		add block to list
+                	next block
+                	send answer packet                	
                     break;
 
                 case SER_RUN:
+                	start the program depending on current mode
                     break;
 
                 case SER_PICK_BLOCK:
+                	enable vaccuum
                     break;
 
                 case SER_RELEASE_BLOCK:
+                	disable vaccuum
                     break;
 
                 case SER_SET_POSITION:
+                	read new position from serial packet
+                	set the steps
+                	wait for end of move
+                	send answer packet
                     break;
 
                 case SER_GET_POSITION:
+                	return current position of the arm (alpha, beta, delta)
                     break;
 
                 case SER_GET_VERSION:
+                	return the current version of the firmware
                     break;
 
                 case SER_ZERO_POSITION:
+                	slowly drive to the limits
+                	set null-pos in motor registers
+                	send answer packet
                     break;
 */
                 default:

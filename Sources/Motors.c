@@ -19,9 +19,12 @@ MOT_FSMData lift;	/* Hebemechanismus */
 
 /* This will initialise the Motor module */
 void MOT_Init(void) {
-  rotary.state = MOT_FSM_IDLE;
-  knee.state = MOT_FSM_IDLE;
-  lift.state = MOT_FSM_IDLE;
+	rotary.running = FALSE;
+	rotary.state = MOT_FSM_STOP;
+	knee.running = FALSE;
+	knee.state = MOT_FSM_STOP;
+	lift.running = FALSE;
+	lift.state = MOT_FSM_STOP;
 }
 
 /*! This will calculate the values for the motor to speed
