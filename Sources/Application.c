@@ -4,7 +4,12 @@
  * \author Christoph Bächler
  * \date 11.11.2013
  *
- * This file contains the main application code for PREN T15 robot.
+ * This file contains the main application code for PREN T15 robot. On 
+ * startup of the microcontroller the \ref APP_Init() and \ref APP_Loop() 
+ * are called from ProcessorExpert.c. 
+ * Here also the Event Handler is implemented which does different actions 
+ * depending on the generated event. Every part of the software can be 
+ * the source of an event. 
  */
 
 #include "PE_Types.h"
@@ -26,11 +31,21 @@
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 
+/*! \brief Application initialisation routine.
+ *
+ * This function does the initialisation of hardware and data structures. 
+ */
 void APP_Init(void) {
     EVNT_Init();
     MOT_Init();
 }
 
+/*! \brief Application main loop.
+ *
+ * This is the main loop of the application. Be sure to implement a 
+ * while(1) loop here, else the function will be left and deinitialisation 
+ * of the components will be started in ProcessorExpert.c. 
+ */
 void APP_Loop(void) {
 	//EVNT_SetEvent(EVNT_INIT);
 	
@@ -48,6 +63,14 @@ void APP_Loop(void) {
     }
 }
 
+/*! \brief Event handler routine.
+ *
+ * This is implemented as described in INTRO script by Erich Styger. Basicly 
+ * all events that can be generated from every part of the software will be 
+ * handled here. 
+ *
+ *  \param event  Event handle.
+ */
 static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t val;
 	uint16_t steps;

@@ -9,6 +9,10 @@
 #include "Event.h"
 #include "Trigger.h"
 
+/*! \brief Periodic timer interrupt.
+ *
+ *  This function is called from timer interrupt (1ms)
+ */
 void TMR_OnInterrupt(void) {
 	/*
 	static uint16_t cnt = 0;	
@@ -17,7 +21,6 @@ void TMR_OnInterrupt(void) {
 		EVNT_SetEvent(EVNT_HEARTBEAT);
 		cnt = 0;
 	}*/
-	
 
 	TRG_IncTick();
 }

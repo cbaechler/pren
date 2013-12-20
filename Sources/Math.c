@@ -1,4 +1,12 @@
-
+/**
+ * \file
+ * \brief Math function implementations.
+ * \author Christoph Bächler
+ *
+ * This module implements different math functions. This is done to 
+ * speed up calculation by using fixed point aritmetics instead of 
+ * float or double calculations (in sqrt function for example).
+ */
 #include "PE_Types.h"
 #include "Math.h"
 
@@ -43,8 +51,9 @@ uint32_t MATH_sqrt(uint32_t x) {
 
 /*! \brief Find minimum value.
  *
- *  Returns the smallest value.
- *
+ *  Returns the smaller value.
+ *  \param x Value y
+ *  \param y Value x
  *  \return  Min(x,y).
  */
 uint16_t MATH_min(uint16_t x, uint16_t y) {
@@ -56,4 +65,18 @@ uint16_t MATH_min(uint16_t x, uint16_t y) {
 	}
 }
 
-
+/*! \brief Find maximum value.
+ *
+ *  Returns the bigger value.
+ *  \param x Value y
+ *  \param y Value x
+ *  \return  Min(x,y).
+ */
+uint16_t MATH_max(uint16_t x, uint16_t y) {
+	if(x > y) {
+		return x;
+	}
+	else {
+		return y;
+	}
+}

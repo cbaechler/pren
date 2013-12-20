@@ -1,3 +1,5 @@
+
+
 #include "PE_Types.h"
 #include "AS1.h"
 #include "Serial.h"
@@ -18,9 +20,10 @@ void MOT_Init(void) {
 }
 
 /*! This will calculate the values for the motor to speed
- *  \param accel  Accelration to use, in 0.01*rad/sec^2.
- *  \param decel  Decelration to use, in 0.01*rad/sec^2.
- *  \param speed  Max speed, in 0.01*rad/sec.
+ * \param m_	 Pointer to the motor object
+ * \param accel  Accelration to use, in 0.01*rad/sec^2.
+ * \param decel  Decelration to use, in 0.01*rad/sec^2.
+ * \param speed  Max speed, in 0.01*rad/sec.
  */
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed) {
 	m_->accel = accel;
@@ -42,7 +45,8 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 }
 
 /*! This tells the motor to drive any number of steps 
- *  \param step  Number of steps to move (pos - CW, neg - CCW).
+ * \param m_	 Pointer to the motor object
+ * \param steps  Number of steps to move (pos - CW, neg - CCW).
  */
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	// Set direction from sign on step value.
@@ -114,6 +118,7 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));		
 	}
 }
+
 
 uint16_t MOT_Process(MOT_FSMData* m_)
 {
