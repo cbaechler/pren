@@ -1,0 +1,33 @@
+/*!
+\mainpage INTRO HS13
+\author Domenic Helfenstein
+\author Philippe Schenker
+\author Christoph Baechler
+
+\section s_Introduction Introduction
+Hello World! This content can be changed in mainpage.txt
+
+Example Dot Graph
+  \dot
+  digraph G {
+    main -> parse -> execute;
+    main -> init;
+    main -> cleanup;
+    execute -> make_string;
+    execute -> printf
+    init -> make_string;
+    main -> printf;
+    execute -> compare;
+  }
+  \enddot
+
+Example Message Sequence:
+\msc
+arcgradient = 8;
+a [label="Client"],b [label="Server"];
+a-xb [label="get accel"];
+a=>b [label="get accel"];
+a<=b [label="ack"];
+a<=b [label="accel data"];
+\endmsc
+*/
