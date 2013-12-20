@@ -1,3 +1,9 @@
+/**
+ * \file
+ * \brief Motor module header file.
+ * \author Christoph Bächler
+ * \date 16.12.2013
+ */
 
 #ifndef MOTORS_H_
 #define MOTORS_H_
@@ -7,7 +13,6 @@ typedef enum MOT_Dir {
 } MOT_Dir;
 
 typedef enum MOT_StateKinds {
-	MOT_FSM_IDLE, 
 	MOT_FSM_STOP, 
 	MOT_FSM_ACCEL, 
 	MOT_FSM_RUN, 
@@ -65,16 +70,8 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 #define A_x20000 (int16_t)(ALPHA*20000)              // ALPHA*20000
 
 void MOT_Init(void);
-
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);
-
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps);
-
 uint16_t MOT_Process(MOT_FSMData* m_);
-
-
-
-
-
 
 #endif /* MOTORS_H_ */
