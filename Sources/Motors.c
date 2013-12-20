@@ -1,4 +1,9 @@
-
+/**
+ * \file
+ * \brief Motor module implementation.
+ * \author Christoph Bächler
+ * \date 16.12.2013
+ */
 
 #include "PE_Types.h"
 #include "AS1.h"
@@ -65,8 +70,6 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->step_delay = 1000;
 		m_->running = TRUE;
 		OCR1A = 10;
-		// Run Timer/Counter 1 with prescaler = 8.
-		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));
 	}
 	else if(steps != 0) {		
 		// Find out after how many steps we must start deceleration.
@@ -114,28 +117,19 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		m_->running = TRUE;
 
 		OCR1A = 10;
-		// Set Timer/Counter to divide clock by 8
-		//TCCR1B |= ((0<<CS12)|(1<<CS11)|(0<<CS10));		
 	}
 }
 
 
-uint16_t MOT_Process(MOT_FSMData* m_)
-{
+uint16_t MOT_Process(MOT_FSMData* m_) {
 	uint16_t new_step_delay;
 
 	OCR1A = m_->step_delay;
 	
-	switch(m_->state) {
-		case MOT_FSM_IDLE: 
-			// just do nothing. 
-			break; 
-			
+	switch(m_->state) {	
 		case MOT_FSM_STOP:
 			m_->step_count = 0;
 			m_->rest = 0;
-			// Stop Timer/Counter 1.
-			//TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));
 			m_->running = FALSE;
 			break;
 		
@@ -145,12 +139,12 @@ uint16_t MOT_Process(MOT_FSMData* m_)
 			m_->accel_count++;
 			new_step_delay = m_->step_delay - (((2 * (int32_t)m_->step_delay) + m_->rest)/(4 * m_->accel_count + 1));
 			m_->rest = ((2 * (int32_t)m_->step_delay)+m_->rest)%(4 * m_->accel_count + 1);
-			// Chech if we should start decelration.
+			// Chech if we should start deceleration.
 			if(m_->step_count >= m_->decel_start) {
 				m_->accel_count = m_->decel_val;
 				m_->state = MOT_FSM_DECEL;
 			}
-			// Chech if we hitted max speed.
+			// Check if we hitted max speed.
 			else if(new_step_delay <= m_->min_delay) {
 				m_->last_accel_delay = new_step_delay;
 				new_step_delay = m_->min_delay;
@@ -163,10 +157,10 @@ uint16_t MOT_Process(MOT_FSMData* m_)
 			//sm_driver_StepCounter(srd.dir);
 			m_->step_count++;
 			new_step_delay = m_->min_delay;
-			// Chech if we should start decelration.
+			// Check if we should start deceleration.
 			if(m_->step_count >= m_->decel_start) {
 				m_->accel_count = m_->decel_val;
-				// Start decelration with same delay as accel ended with.
+				// Start deceleration with same delay as accel ended with.
 				new_step_delay = m_->last_accel_delay;
 				m_->state = MOT_FSM_DECEL;
 			}
