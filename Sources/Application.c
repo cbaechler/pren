@@ -102,7 +102,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         		case 'Q':
         			MOT_MoveSteps(&rotary, SER_GetData16(0));
         			MOT_MoveSteps(&knee, SER_GetData16(2));
-        			//MOT_MoveSteps(&lift, SER_GetData16(4));        			
+        			//MOT_MoveSteps(&lift, SER_GetData16(4));
         			SER_SendPacket('Q');
         			break;
         			
@@ -132,6 +132,12 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			}
         			break;
 					
+				case 'd': 
+					SER_AddData16(rotary.step_count);
+					SER_AddData16(rotary.step_delay);
+					SER_SendPacket('d');
+					break;
+        				
         			/*
                 case SER_MODE:
                     break;
