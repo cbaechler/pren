@@ -14,9 +14,11 @@
 
 #include "PE_Types.h"
 #include "Application.h"
+#include "Robot.h"
 #include "Event.h"
 #include "Motors.h"
 #include "Trigger.h"
+#include "BlockStack.h"
 #include "Serial.h"
 #include "AS1.h"
 #include "WAIT1.h"
@@ -65,7 +67,7 @@ void APP_Loop(void) {
 
 /*! \brief Event handler routine.
  *
- * This is implemented as described in INTRO script by Erich Styger. Basicly 
+ * This is implemented as described in INTRO script by Erich Styger. Basically 
  * all events that can be generated from every part of the software will be 
  * handled here. 
  *
@@ -135,14 +137,31 @@ static void APP_HandleEvent(EVNT_Handle event) {
 				case 'd': 
 					SER_AddData16(rotary.step_count);
 					SER_AddData16(rotary.step_delay);
+					SER_AddData16((uint16_t) BLOCK_GetSize());
 					SER_SendPacket('d');
 					break;
         				
-        			/*
+					
+				case 'a':	// push 
+					BLOCK_Push(SER_GetData8(0));
+					SER_SendPacket('a');
+					break;
+					
+				case 'b': 	// pop
+					SER_AddData8(BLOCK_Pop());
+					SER_SendPacket('b');
+					break;
+					
                 case SER_MODE:
+                    ROB_SetRunMode(SER_GetData8(0));
                     break;
 
+                case SER_RUN:
+                    ROB_Run();
+                    break;
+/*
                 case SER_BLOCK_ARRAY:
+                									use size_of(BLOCK_Object) here.
                 	(get length - constant) modulo num_bytes_per_block
                 	for loop, for each block
                 		get alpha, beta from serial packet
@@ -150,11 +169,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
                 	next block
                 	send answer packet                	
                     break;
-
-                case SER_RUN:
-                	start the program depending on current mode
-                    break;
-
+*/
+                
+/*
                 case SER_PICK_BLOCK:
                 	enable vaccuum
                     break;
