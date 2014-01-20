@@ -12,6 +12,7 @@
 #define ROB_COLLECT 	'C'
 #define ROB_DEBUG 		'D'
 #define ROB_SCAN 		'S'
+#define ROB_IDLE		'P'
 
 typedef uint8_t ROB_RunMode;
 
@@ -22,6 +23,6 @@ typedef struct ROB_Position {
 void ROB_Init(void);
 void ROB_SetRunMode(ROB_RunMode mode);
 void ROB_Run(void);
-
+bool ROB_Moving(void);
 
 #endif /* ROBOT_H_ */

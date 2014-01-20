@@ -30,9 +30,6 @@
 #include "M1.h"
 #include "M2.h"
 
-bool picking_started; 
-uint8_t handled_blocks;
-
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 
@@ -43,7 +40,6 @@ static void APP_HandleEvent(EVNT_Handle event);
 void APP_Init(void) {
     EVNT_Init();
     MOT_Init();
-    picking_started = FALSE;
 }
 
 /*! \brief Application main loop.
@@ -54,8 +50,7 @@ void APP_Init(void) {
  */
 void APP_Loop(void) {
 	//EVNT_SetEvent(EVNT_INIT);
-	BLOCK_Object block;
-	
+
 	LED_GREEN_On();
 	MOT_CalcValues(&rotary, 2000, 2000, 800);
 	MOT_CalcValues(&knee, 2000, 2000, 500);
@@ -67,19 +62,7 @@ void APP_Loop(void) {
         EVNT_HandleEvent(APP_HandleEvent);
 
         // Task 2: Handle Picking 
-        if(picking_started) {
-        	if(!(rotary.running) & !(knee.running)) {
-        		if(BLOCK_GetSize() > 0) {
-        			block = BLOCK_Pop();
-					MOT_MoveSteps(&rotary, (int16_t) (block.x-rotary.position));
-					MOT_MoveSteps(&knee, (int16_t) (block.y-knee.position));
-					handled_blocks++;
-        		}
-        		else if(BLOCK_GetSize() == 0) {
-        			picking_started = FALSE;
-        		}
-        	}
-        }
+        ROB_Run();
         
         // Further Tasks...
     }
@@ -190,8 +173,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 
                 case SER_RUN:
-                	handled_blocks = 0;
-                	picking_started = TRUE;
+                	ROB_SetRunMode(ROB_COLLECT);
                 	SER_SendPacket(SER_RUN);
                     //ROB_Run();
                     break;
