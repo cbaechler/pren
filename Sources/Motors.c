@@ -37,6 +37,7 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 	m_->accel = accel;
 	m_->decel = decel; 
 	m_->speed = speed;
+	m_->position = 0;
 	
 	// Set max speed limit, by calc min_delay to use in timer.
 	// min_delay = (alpha / tt)/ w
@@ -128,6 +129,15 @@ uint16_t MOT_Process(MOT_FSMData* m_) {
 	uint16_t new_step_delay;
 
 	OCR1A = m_->step_delay;
+	
+	if(m_->running) {
+		if(m_->dir == CW) {
+			m_->position++;
+		}
+		else {
+			m_->position--;
+		}
+	}
 	
 	switch(m_->state) {	
 		case MOT_FSM_STOP:

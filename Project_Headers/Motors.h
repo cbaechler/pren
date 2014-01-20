@@ -41,6 +41,7 @@ typedef struct MOT_FSMData {
 	uint16_t decel_start;		// ok
 	int16_t last_accel_delay;
 	uint16_t rest;
+	uint16_t position;
 
 	/* setpoints */
 	uint16_t step_count;		// ok

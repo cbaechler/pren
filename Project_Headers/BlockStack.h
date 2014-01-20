@@ -7,12 +7,12 @@
 
 #include "PE_Types.h"
 
-/*
 typedef struct BLOCK_Object {
-	uint8_t x;
-} BLOCK_Object;*/
+	uint16_t x;
+	uint16_t y;
+} BLOCK_Object;
 
-typedef uint8_t BLOCK_Object;
+//typedef uint8_t BLOCK_Object;
 
 #define BLOCK_STACK_MAX_SIZE	10
 
