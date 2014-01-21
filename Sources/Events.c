@@ -197,6 +197,33 @@ void SIG_OnChannel1(LDD_TUserData *UserDataPtr)
 
 /*
 ** ===================================================================
+**     Event       :  SIG_OnChannel2 (module Events)
+**
+**     Component   :  SIG [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel2 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void SIG_OnChannel2(LDD_TUserData *UserDataPtr)
+{
+	if(lift.running == TRUE) {
+		TPM0_C2V = TPM0_CNT + MOT_Process(&lift);
+		M3_NegVal();
+	}
+}
+
+/*
+** ===================================================================
 **     Event       :  SIG_OnCounterRestart (module Events)
 **
 **     Component   :  SIG [TimerUnit_LDD]

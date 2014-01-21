@@ -10,10 +10,10 @@
 
 #define ROB_INIT 				'I'
 #define ROB_COLLECT 			'C'
-#define ROB_COLLECT_PICK		240
-#define ROB_COLLECT_PICKED		241
-#define ROB_COLLECT_RELEASE		242
-#define ROB_COLLECT_RELEASED	243
+#define ROB_COLLECT_PICK		120
+#define ROB_COLLECT_PICKED		140
+#define ROB_COLLECT_RELEASE		160
+#define ROB_COLLECT_RELEASED	180
 #define ROB_DEBUG 				'D'
 #define ROB_SCAN 				'S'
 #define ROB_IDLE				'P'
@@ -26,6 +26,7 @@ typedef struct ROB_Position {
 
 void ROB_Init(void);
 void ROB_SetRunMode(ROB_RunMode mode);
+uint8_t ROB_GetRunMode(void);
 void ROB_Run(void);
 bool ROB_Moving(void);
 void ROB_MoveTo(uint16_t x, uint16_t y);

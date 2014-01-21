@@ -54,7 +54,8 @@ void APP_Loop(void) {
 	LED_GREEN_On();
 	MOT_CalcValues(&rotary, 2000, 2000, 800);
 	MOT_CalcValues(&knee, 2000, 2000, 500);
-	MOT_CalcValues(&lift, 250, 250, 800);
+	MOT_CalcValues(&lift, 2000, 2000, 800);
+	lift.position = 500;
 	LED_GREEN_Off();
 	
     while(1) {
@@ -145,7 +146,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					//SER_AddData16(rotary.step_delay);
 					SER_AddData16(rotary.position);
 					SER_AddData16(knee.position);
+                    SER_AddData16(lift.position);                    
 					SER_AddData16((uint16_t) BLOCK_GetSize());
+					SER_AddData16((uint16_t) ROB_GetRunMode());
 					SER_SendPacket('d');
 					break;
         				

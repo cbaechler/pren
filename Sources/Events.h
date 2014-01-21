@@ -59,6 +59,8 @@
 #include "BitIoLdd4.h"
 #include "M2.h"
 #include "BitIoLdd5.h"
+#include "M3.h"
+#include "BitIoLdd6.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -205,6 +207,27 @@ void SIG_OnChannel1(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  SIG_OnChannel2 (module Events)
+**
+**     Component   :  SIG [TimerUnit_LDD]
+*/
+/*!
+**     @brief
+**         Called if compare register match the counter registers or
+**         capture register has a new content. OnChannel2 event and
+**         Timer unit must be enabled. See [SetEventMask] and
+**         [GetEventMask] methods. This event is available only if a
+**         [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
+*/
+/* ===================================================================*/
+void SIG_OnChannel2(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 
