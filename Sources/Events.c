@@ -163,7 +163,7 @@ void SIG_OnChannel0(LDD_TUserData *UserDataPtr)
 	if(rotary.running == TRUE) {
 		TPM0_C0V = TPM0_CNT + MOT_Process(&rotary);
 		M1_NegVal();
-		LED_RED_Neg();
+		//LED_RED_Neg();
 	}
 }
 
@@ -191,7 +191,7 @@ void SIG_OnChannel1(LDD_TUserData *UserDataPtr)
 	if(knee.running == TRUE) {
 		TPM0_C1V = TPM0_CNT + MOT_Process(&knee);
 		M2_NegVal();
-		LED_GREEN_Neg();
+		//LED_GREEN_Neg();
 	}
 }
 

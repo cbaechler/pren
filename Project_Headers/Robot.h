@@ -8,11 +8,15 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
-#define ROB_INIT 		'I'
-#define ROB_COLLECT 	'C'
-#define ROB_DEBUG 		'D'
-#define ROB_SCAN 		'S'
-#define ROB_IDLE		'P'
+#define ROB_INIT 				'I'
+#define ROB_COLLECT 			'C'
+#define ROB_COLLECT_PICK		240
+#define ROB_COLLECT_PICKED		241
+#define ROB_COLLECT_RELEASE		242
+#define ROB_COLLECT_RELEASED	243
+#define ROB_DEBUG 				'D'
+#define ROB_SCAN 				'S'
+#define ROB_IDLE				'P'
 
 typedef uint8_t ROB_RunMode;
 
@@ -24,5 +28,6 @@ void ROB_Init(void);
 void ROB_SetRunMode(ROB_RunMode mode);
 void ROB_Run(void);
 bool ROB_Moving(void);
+void ROB_MoveTo(uint16_t x, uint16_t y);
 
 #endif /* ROBOT_H_ */

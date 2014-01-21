@@ -10,6 +10,7 @@
  */
 
 #include "PE_Types.h"
+#include "Cpu.h"
 #include "BlockStack.h"
 
 static BLOCK_Object block_storage[BLOCK_STACK_MAX_SIZE];
@@ -29,14 +30,18 @@ bool BLOCK_IsFull(void) {
 
 void BLOCK_Push(BLOCK_Object obj) {
 	if(!BLOCK_IsFull()) {
+		EnterCritical();
 		block_storage[++block_index] = obj;
+		ExitCritical();
 	}	
 }
 
 BLOCK_Object BLOCK_Pop(void) {
 	BLOCK_Object obj;
 	if(!BLOCK_IsEmtpy()) {
+		EnterCritical();
 		obj = BLOCK_GetSingle(block_index--);
+		ExitCritical();
 	}
 	return obj;
 }
