@@ -42,8 +42,8 @@ extern "C" {
 #include "SIG.h"
 #include "LED_RED.h"
 #include "Motors.h"
-#include "M1.h"
-#include "M2.h"
+#include "M1_STEP.h"
+#include "M2_STEP.h"
 
 /*
 ** ===================================================================
@@ -162,7 +162,7 @@ void SIG_OnChannel0(LDD_TUserData *UserDataPtr)
 {
 	if(rotary.running == TRUE) {
 		TPM0_C0V = TPM0_CNT + MOT_Process(&rotary);
-		M1_NegVal();
+		M1_STEP_NegVal();
 		//LED_RED_Neg();
 	}
 }
@@ -190,7 +190,7 @@ void SIG_OnChannel1(LDD_TUserData *UserDataPtr)
 {
 	if(knee.running == TRUE) {
 		TPM0_C1V = TPM0_CNT + MOT_Process(&knee);
-		M2_NegVal();
+		M2_STEP_NegVal();
 		//LED_GREEN_Neg();
 	}
 }
@@ -218,7 +218,7 @@ void SIG_OnChannel2(LDD_TUserData *UserDataPtr)
 {
 	if(lift.running == TRUE) {
 		TPM0_C2V = TPM0_CNT + MOT_Process(&lift);
-		M3_NegVal();
+		M3_STEP_NegVal();
 	}
 }
 
