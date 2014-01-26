@@ -20,15 +20,12 @@
 #include "Trigger.h"
 #include "BlockStack.h"
 #include "Serial.h"
-#include "AS1.h"
-#include "WAIT1.h"
+#include "DBG.h"
+#include "WAIT.h"
 
 #include "LED_RED.h"
 #include "LED_GREEN.h"
 #include "LED_BLUE.h"
-
-#include "M1.h"
-#include "M2.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
@@ -81,14 +78,12 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	uint16_t accel; 
 	uint16_t decel; 
 	uint16_t speed;
-	uint8_t pack;
-	uint8_t i;
 	BLOCK_Object block;
 	
     switch(event) {
         case EVNT_INIT: 
         	LED_RED_On();
-        	WAIT1_Waitms(200);
+        	WAIT_Waitms(200);
         	LED_RED_Off();
             break;
             

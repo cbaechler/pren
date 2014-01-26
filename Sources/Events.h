@@ -5,18 +5,21 @@
 **     Component   : Events
 **     Version     : Driver 01.00
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2013-12-03, 22:04, # CodeGen: 26
+**     Date/Time   : 2014-01-26, 23:16, # CodeGen: 78
 **     Abstract    :
 **         This is user's event module.
 **         Put your event handler code here.
 **     Settings    :
 **     Contents    :
-**         PWM1_OnEnd      - void PWM1_OnEnd(void);
-**         TI1_OnInterrupt - void TI1_OnInterrupt(void);
-**         AS1_OnError     - void AS1_OnError(void);
-**         AS1_OnRxChar    - void AS1_OnRxChar(void);
-**         AS1_OnTxChar    - void AS1_OnTxChar(void);
-**         Cpu_OnNMIINT    - void Cpu_OnNMIINT(void);
+**         SIG_OnCounterRestart - void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr);
+**         SIG_OnChannel0       - void SIG_OnChannel0(LDD_TUserData *UserDataPtr);
+**         SIG_OnChannel1       - void SIG_OnChannel1(LDD_TUserData *UserDataPtr);
+**         SIG_OnChannel2       - void SIG_OnChannel2(LDD_TUserData *UserDataPtr);
+**         SYS_TICK_OnInterrupt - void SYS_TICK_OnInterrupt(void);
+**         DBG_OnError          - void DBG_OnError(void);
+**         DBG_OnRxChar         - void DBG_OnRxChar(void);
+**         DBG_OnTxChar         - void DBG_OnTxChar(void);
+**         Cpu_OnNMIINT         - void Cpu_OnNMIINT(void);
 **
 ** ###################################################################*/
 /*!
@@ -48,10 +51,10 @@
 #include "LED_BLUE.h"
 #include "LEDpin3.h"
 #include "BitIoLdd3.h"
-#include "WAIT1.h"
-#include "AS1.h"
+#include "WAIT.h"
+#include "DBG.h"
 #include "ASerialLdd1.h"
-#include "TI1.h"
+#include "SYS_TICK.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
 #include "SIG.h"
@@ -105,82 +108,24 @@ extern "C" {
 
 /*
 ** ===================================================================
-**     Event       :  TI1_OnInterrupt (module Events)
+**     Event       :  SIG_OnCounterRestart (module Events)
 **
-**     Component   :  TI1 [TimerInt]
-**     Description :
-**         When a timer interrupt occurs this event is called (only
-**         when the component is enabled - <Enable> and the events are
-**         enabled - <EnableEvent>). This event is enabled only if a
-**         <interrupt service/event> is enabled.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void TI1_OnInterrupt(void);
-
-/*
-** ===================================================================
-**     Event       :  AS1_OnError (module Events)
-**
-**     Component   :  AS1 [AsynchroSerial]
-**     Description :
-**         This event is called when a channel error (not the error
-**         returned by a given method) occurs. The errors can be read
-**         using <GetError> method.
-**         The event is available only when the <Interrupt
-**         service/event> property is enabled.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void AS1_OnError(void);
-
-/*
-** ===================================================================
-**     Event       :  AS1_OnRxChar (module Events)
-**
-**     Component   :  AS1 [AsynchroSerial]
-**     Description :
-**         This event is called after a correct character is received.
-**         The event is available only when the <Interrupt
-**         service/event> property is enabled and either the <Receiver>
-**         property is enabled or the <SCI output mode> property (if
-**         supported) is set to Single-wire mode.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void AS1_OnRxChar(void);
-
-/*
-** ===================================================================
-**     Event       :  AS1_OnTxChar (module Events)
-**
-**     Component   :  AS1 [AsynchroSerial]
-**     Description :
-**         This event is called after a character is transmitted.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void AS1_OnTxChar(void);
-
-/*
-** ===================================================================
-**     Event       :  Cpu_OnNMIINT (module Events)
-**
-**     Component   :  Cpu [MKL25Z128LK4]
+**     Component   :  SIG [TimerUnit_LDD]
 */
 /*!
 **     @brief
-**         This event is called when the Non maskable interrupt had
-**         occurred. This event is automatically enabled when the [NMI
-**         interrupt] property is set to 'Enabled'.
+**         Called if counter overflow/underflow or counter is
+**         reinitialized by modulo or compare register matching.
+**         OnCounterRestart event and Timer unit must be enabled. See
+**         [SetEventMask] and [GetEventMask] methods. This event is
+**         available only if a [Interrupt] is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. The pointer passed as
+**                           the parameter of Init method.
 */
 /* ===================================================================*/
-void Cpu_OnNMIINT(void);
-
+void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr);
 
 /*
 ** ===================================================================
@@ -226,27 +171,6 @@ void SIG_OnChannel1(LDD_TUserData *UserDataPtr);
 
 /*
 ** ===================================================================
-**     Event       :  SIG_OnCounterRestart (module Events)
-**
-**     Component   :  SIG [TimerUnit_LDD]
-*/
-/*!
-**     @brief
-**         Called if counter overflow/underflow or counter is
-**         reinitialized by modulo or compare register matching.
-**         OnCounterRestart event and Timer unit must be enabled. See
-**         [SetEventMask] and [GetEventMask] methods. This event is
-**         available only if a [Interrupt] is enabled.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. The pointer passed as
-**                           the parameter of Init method.
-*/
-/* ===================================================================*/
-void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr);
-
-/*
-** ===================================================================
 **     Event       :  SIG_OnChannel2 (module Events)
 **
 **     Component   :  SIG [TimerUnit_LDD]
@@ -265,6 +189,85 @@ void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void SIG_OnChannel2(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  SYS_TICK_OnInterrupt (module Events)
+**
+**     Component   :  SYS_TICK [TimerInt]
+**     Description :
+**         When a timer interrupt occurs this event is called (only
+**         when the component is enabled - <Enable> and the events are
+**         enabled - <EnableEvent>). This event is enabled only if a
+**         <interrupt service/event> is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void SYS_TICK_OnInterrupt(void);
+
+/*
+** ===================================================================
+**     Event       :  DBG_OnError (module Events)
+**
+**     Component   :  DBG [AsynchroSerial]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DBG_OnError(void);
+
+/*
+** ===================================================================
+**     Event       :  DBG_OnRxChar (module Events)
+**
+**     Component   :  DBG [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DBG_OnRxChar(void);
+
+/*
+** ===================================================================
+**     Event       :  DBG_OnTxChar (module Events)
+**
+**     Component   :  DBG [AsynchroSerial]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void DBG_OnTxChar(void);
+
+/*
+** ===================================================================
+**     Event       :  Cpu_OnNMIINT (module Events)
+**
+**     Component   :  Cpu [MKL25Z128LK4]
+*/
+/*!
+**     @brief
+**         This event is called when the Non maskable interrupt had
+**         occurred. This event is automatically enabled when the [NMI
+**         interrupt] property is set to 'Enabled'.
+*/
+/* ===================================================================*/
+void Cpu_OnNMIINT(void);
+
 
 /* END Events */
 

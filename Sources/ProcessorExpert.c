@@ -39,10 +39,10 @@
 #include "LED_BLUE.h"
 #include "LEDpin3.h"
 #include "BitIoLdd3.h"
-#include "WAIT1.h"
-#include "AS1.h"
+#include "WAIT.h"
+#include "DBG.h"
 #include "ASerialLdd1.h"
-#include "TI1.h"
+#include "SYS_TICK.h"
 #include "TimerIntLdd1.h"
 #include "TU1.h"
 #include "SIG.h"
@@ -114,10 +114,10 @@ int main(void)
   /*
   while(1) {
 	  LED_GREEN_Put(1);
-	  WAIT1_Waitms(1000);
+	  WAIT_Waitms(1000);
 	  LED_GREEN_Put(0);
-	  WAIT1_Waitms(1000);
-	  AS1_SendChar('a');
+	  WAIT_Waitms(1000);
+	  DBG_SendChar('a');
   }*/
   /* For example: for(;;) { } */
 

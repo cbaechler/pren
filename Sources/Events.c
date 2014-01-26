@@ -65,9 +65,9 @@ void Cpu_OnNMIINT(void)
 
 /*
 ** ===================================================================
-**     Event       :  AS1_OnError (module Events)
+**     Event       :  DBG_OnError (module Events)
 **
-**     Component   :  AS1 [AsynchroSerial]
+**     Component   :  DBG [AsynchroSerial]
 **     Description :
 **         This event is called when a channel error (not the error
 **         returned by a given method) occurs. The errors can be read
@@ -78,16 +78,16 @@ void Cpu_OnNMIINT(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnError(void)
+void DBG_OnError(void)
 {
   /* Write your code here ... */
 }
 
 /*
 ** ===================================================================
-**     Event       :  AS1_OnRxChar (module Events)
+**     Event       :  DBG_OnRxChar (module Events)
 **
-**     Component   :  AS1 [AsynchroSerial]
+**     Component   :  DBG [AsynchroSerial]
 **     Description :
 **         This event is called after a correct character is received.
 **         The event is available only when the <Interrupt
@@ -98,7 +98,7 @@ void AS1_OnError(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnRxChar(void)
+void DBG_OnRxChar(void)
 {
   SER_Process();
   //SER_ReceiveChar();
@@ -106,25 +106,25 @@ void AS1_OnRxChar(void)
 
 /*
 ** ===================================================================
-**     Event       :  AS1_OnTxChar (module Events)
+**     Event       :  DBG_OnTxChar (module Events)
 **
-**     Component   :  AS1 [AsynchroSerial]
+**     Component   :  DBG [AsynchroSerial]
 **     Description :
 **         This event is called after a character is transmitted.
 **     Parameters  : None
 **     Returns     : Nothing
 ** ===================================================================
 */
-void AS1_OnTxChar(void)
+void DBG_OnTxChar(void)
 {
   /* Write your code here ... */
 }
 
 /*
 ** ===================================================================
-**     Event       :  TI1_OnInterrupt (module Events)
+**     Event       :  SYS_TICK_OnInterrupt (module Events)
 **
-**     Component   :  TI1 [TimerInt]
+**     Component   :  SYS_TICK [TimerInt]
 **     Description :
 **         When a timer interrupt occurs this event is called (only
 **         when the component is enabled - <Enable> and the events are
@@ -134,7 +134,7 @@ void AS1_OnTxChar(void)
 **     Returns     : Nothing
 ** ===================================================================
 */
-void TI1_OnInterrupt(void)
+void SYS_TICK_OnInterrupt(void)
 {
 	TMR_OnInterrupt();
 }

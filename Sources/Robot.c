@@ -13,7 +13,7 @@
 #include "BlockStack.h"
 #include "Motors.h"
 #include "LED_RED.h"
-#include "WAIT1.h"
+#include "WAIT.h"
 
 static ROB_RunMode runmode;
 
@@ -65,7 +65,7 @@ void ROB_Run(void) {
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
 				MOT_MoveSteps(&lift,   (int16_t) (100-lift.position));
-				WAIT1_Waitms(100);
+				WAIT_Waitms(100);
 				runmode = ROB_COLLECT_PICKED;
 			}	
 			break;
@@ -89,7 +89,7 @@ void ROB_Run(void) {
 				// set Z target
 				MOT_MoveSteps(&lift,   (int16_t) (150-lift.position));
 				
-				WAIT1_Waitms(100);
+				WAIT_Waitms(100);
 				runmode = ROB_COLLECT_RELEASED;
 			}
 			break;

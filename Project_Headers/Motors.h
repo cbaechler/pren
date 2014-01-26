@@ -8,10 +8,20 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
+// Define Step Modes
+#define MOT_STEP_1		0	//!< Full step mode
+#define MOT_STEP_2		1	//!< Half step mode
+#define MOT_STEP_4		2	//!< Quarter step mode
+#define MOT_STEP_8		3	//!< 1/8 step mode
+#define MOT_STEP_16		4	//!< 1/16 step mode
+#define MOT_STEP_32		5	//!< 1/32 step mode
+
+// Define Motor Directions
 typedef enum MOT_Dir {
 	CCW, CW
 } MOT_Dir;
 
+// Define Motor FSM States
 typedef enum MOT_StateKinds {
 	MOT_FSM_STOP, 
 	MOT_FSM_ACCEL, 
@@ -19,11 +29,15 @@ typedef enum MOT_StateKinds {
 	MOT_FSM_DECEL
 } MOT_StateKinds;
 
+// Define Motor Data Cluster
 typedef struct MOT_FSMData {
 	MOT_StateKinds state;		// ok
 	MOT_Dir dir;				// ok
-	bool running;				// ok (ev. no used)
-
+	bool running;				// ok
+	
+	/* motor hardware function pointers */
+	/* TODO: define pointers here */
+	
 	/* motor settings */
 	uint16_t accel;				//!<eeprom
 	uint16_t decel;				//!<eeprom
@@ -57,18 +71,18 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
  * the timer1 frequency is the clock frequency divided by 8.
  */
 // Timer/Counter 1 running on 3,686MHz / 8 = 460,75kHz (2,17uS). (T1-FREQ 460750)
-#define T1_FREQ 460750
+#define T1_FREQ 460750	/* TODO: check if that is correct */
 
 //! Number of (full)steps per round on stepper motor in use.
 #define FSPR 200
-#define SPR FSPR
+#define SPR FSPR	/* TODO: when chaning step mode... also change SPR, recalc! */
 
-// Maths constants. To simplify maths when calculating in speed_cntr_Move().
-#define ALPHA (2*3.14159/SPR)                    // 2*pi/spr
-#define A_T_x100 ((int32_t)(ALPHA*T1_FREQ*100))     // (ALPHA / T1_FREQ)*100
-#define T1_FREQ_148 ((int16_t)((T1_FREQ*0.676)/100)) // divided by 100 and scaled by 0.676
-#define A_SQ (int32_t)(ALPHA*2*10000000000)         // ALPHA*2*10000000000
-#define A_x20000 (int16_t)(ALPHA*20000)              // ALPHA*20000
+// Maths constants
+#define ALPHA (2*3.14159/SPR)                    		// 2*pi/spr
+#define A_T_x100 ((int32_t)(ALPHA*T1_FREQ*100))     	// (ALPHA / T1_FREQ)*100
+#define T1_FREQ_148 ((int16_t)((T1_FREQ*0.676)/100)) 	// divided by 100 and scaled by 0.676
+#define A_SQ (int32_t)(ALPHA*2*10000000000)         	// ALPHA*2*10000000000
+#define A_x20000 (int16_t)(ALPHA*20000)              	// ALPHA*20000
 
 void MOT_Init(void);
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);

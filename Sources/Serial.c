@@ -13,14 +13,14 @@
 #include "PE_Types.h"
 #include "Event.h"
 #include "Serial.h"
-#include "AS1.h"
+#include "DBG.h"
 
 static SER_FSMData data = {
 	SER_FSM_START,
 	{0,{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},0,0,0},	// input packet (request)
 	{0,{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},0,0,0},	// output packet (answer)
-	AS1_RecvChar,
-	AS1_SendChar
+	DBG_RecvChar,
+	DBG_SendChar
 };
 
 void SER_Init(void) {
