@@ -16,10 +16,24 @@
 #define MOT_STEP_16		4	//!< 1/16 step mode
 #define MOT_STEP_32		5	//!< 1/32 step mode
 
+// Define Motor Index
+#define	ROTARY	1
+#define KNEE	2
+#define LIFT	3
+
 // Define Motor Directions
 typedef enum MOT_Dir {
 	CCW, CW
 } MOT_Dir;
+
+typedef enum MOT_Pins {
+	MOT_PIN_MODE0, 
+	MOT_PIN_MODE1, 
+	MOT_PIN_MODE2, 
+	MOT_PIN_NRST, 
+	MOT_PIN_DIR, 
+	MOT_PIN_FAULT
+} MOT_Pins;
 
 // Define Motor FSM States
 typedef enum MOT_StateKinds {
@@ -31,12 +45,10 @@ typedef enum MOT_StateKinds {
 
 // Define Motor Data Cluster
 typedef struct MOT_FSMData {
+	uint8_t index;				// ok
 	MOT_StateKinds state;		// ok
 	MOT_Dir dir;				// ok
 	bool running;				// ok
-	
-	/* motor hardware function pointers */
-	/* TODO: define pointers here */
 	
 	/* motor settings */
 	uint16_t accel;				//!<eeprom
@@ -85,6 +97,10 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 #define A_x20000 (int16_t)(ALPHA*20000)              	// ALPHA*20000
 
 void MOT_Init(void);
+void MOT_SetILim(uint16_t i_max);
+void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode);
+bool MOT_GetFaultState(MOT_FSMData* m_);
+uint8_t MOT_GetState(MOT_FSMData* m_);
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps);
 uint16_t MOT_Process(MOT_FSMData* m_);

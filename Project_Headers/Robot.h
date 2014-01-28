@@ -27,6 +27,7 @@ typedef struct ROB_Position {
 void ROB_Init(void);
 void ROB_SetRunMode(ROB_RunMode mode);
 uint8_t ROB_GetRunMode(void);
+uint16_t ROB_GetStateArray(void);
 void ROB_Run(void);
 bool ROB_Moving(void);
 void ROB_MoveTo(uint16_t x, uint16_t y);

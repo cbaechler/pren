@@ -14,6 +14,9 @@
 #include "Motors.h"
 #include "LED_RED.h"
 #include "WAIT.h"
+#include "M1_MODE0.h"
+#include "M1_MODE1.h"
+#include "M1_MODE2.h"
 
 static ROB_RunMode runmode;
 
@@ -27,6 +30,17 @@ void ROB_SetRunMode(ROB_RunMode mode) {
 
 uint8_t ROB_GetRunMode(void) {
 	return (uint8_t) runmode;
+}
+
+uint16_t ROB_GetStateArray(void) {
+	/*
+	uint16_t array;
+	array = 0;
+	array |= (M1_MODE0_GetVal()<<0);
+	array |= (M1_MODE1_GetVal()<<1);
+	array |= (M1_MODE2_GetVal()<<2);
+	return array;*/
+	return (uint16_t) MOT_GetState(&rotary);
 }
 
 void ROB_MoveTo(uint16_t x, uint16_t y) {

@@ -22,6 +22,9 @@
 #include "Serial.h"
 #include "DBG.h"
 #include "WAIT.h"
+#include "M1_MODE0.h"
+#include "M1_MODE1.h"
+#include "M1_MODE2.h"
 
 #include "LED_RED.h"
 #include "LED_GREEN.h"
@@ -144,11 +147,13 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     SER_AddData16(lift.position);                    
 					SER_AddData16((uint16_t) BLOCK_GetSize());
 					SER_AddData16((uint16_t) ROB_GetRunMode());
+					SER_AddData16((uint16_t) ROB_GetStateArray());
 					SER_SendPacket('d');
 					break;
         				
 					
 				case 'a':	// push 
+					MOT_SetStepMode(&rotary, MOT_STEP_2);
 					block.x = SER_GetData16(0);
 					block.y = SER_GetData16(2);
 					BLOCK_Push(block);
@@ -158,6 +163,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					break;
 					
 				case 'b': 	// pop
+					MOT_SetStepMode(&rotary, MOT_STEP_16);
 					block = BLOCK_Pop();
 					SER_AddData16(block.x);
 					SER_AddData16(block.y);

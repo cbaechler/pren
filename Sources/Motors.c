@@ -8,6 +8,30 @@
 #include "PE_Types.h"
 #include "Math.h"
 #include "Motors.h"
+#include "ILIM.h"
+
+#include "M1_MODE0.h"
+#include "M1_MODE1.h"
+#include "M1_MODE2.h"
+#include "M1_FAULT.h"
+#include "M1_NRST.h"
+#include "M1_DIR.h"
+
+#include "M2_MODE0.h"
+#include "M2_MODE1.h"
+#include "M2_MODE2.h"
+#include "M2_FAULT.h"
+#include "M2_NRST.h"
+#include "M2_DIR.h"
+
+#include "M3_MODE0.h"
+#include "M3_MODE1.h"
+#include "M3_MODE2.h"
+#include "M3_FAULT.h"
+#include "M3_NRST.h"
+#include "M3_DIR.h"
+
+#include "LED_RED.h"
 
 uint16_t OCR1A;	/* emulate atmel register */
 
@@ -15,14 +39,111 @@ MOT_FSMData rotary;	/* Drehachse */
 MOT_FSMData knee;	/* Knickgelenk */
 MOT_FSMData lift;	/* Hebemechanismus */
 
+static LDD_TDeviceData *ILIM_Ptr;
+
 /* This will initialise the Motor module */
 void MOT_Init(void) {
+	// M1
+	rotary.index = ROTARY;
 	rotary.running = FALSE;
 	rotary.state = MOT_FSM_STOP;
+	MOT_SetStepMode(&rotary, MOT_STEP_1);
+	
+	// M2
+	knee.index = KNEE;
 	knee.running = FALSE;
 	knee.state = MOT_FSM_STOP;
+	MOT_SetStepMode(&knee, MOT_STEP_1);
+
+	// M3
+	lift.index = LIFT;
 	lift.running = FALSE;
 	lift.state = MOT_FSM_STOP;
+	MOT_SetStepMode(&lift, MOT_STEP_1);
+	
+	// I Limit
+	ILIM_Ptr = ILIM_Init(NULL);
+	MOT_SetILim(1000);
+}
+
+void MOT_SetILim(uint16_t i_max) {
+	// V_ref = 
+	// i_max = 2 * v_out
+	// --> v_out = i_max/2
+	// 1 A -> 1000/2 -> 500 mV
+	ILIM_SetValue(ILIM_Ptr, (uint16_t) (i_max/2)*(4096/7200));
+}
+
+void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
+	// set new step mode
+	LED_RED_On();	// use this to determine the duration of following code
+	switch(m_->index) {
+		case ROTARY: 
+			M1_MODE0_PutVal((step_mode & 1)>>0);
+			M1_MODE1_PutVal((step_mode & 2)>>1);
+			M1_MODE2_PutVal((step_mode & 4)>>2);
+			// TODO: recalc all values!
+			break;
+			
+		case KNEE: 
+			M2_MODE0_PutVal((step_mode & 1)>>0);
+			M2_MODE1_PutVal((step_mode & 2)>>1);
+			M2_MODE2_PutVal((step_mode & 4)>>2);
+			// TODO: recalc all values!
+			break;
+			
+		case LIFT: 
+			M3_MODE0_PutVal((step_mode & 1)>>0);
+			M3_MODE1_PutVal((step_mode & 2)>>1);
+			M3_MODE2_PutVal((step_mode & 4)>>2);
+			// TODO: recalc all values!
+			break;
+	}	
+	LED_RED_Off();
+}
+
+bool MOT_GetFaultState(MOT_FSMData* m_) {
+	switch(m_->index) {
+		case ROTARY:	return M1_FAULT_GetVal();		break;
+		case KNEE:		return M2_FAULT_GetVal();		break;
+		case LIFT:		return M3_FAULT_GetVal();		break;
+	}
+	return TRUE;
+}
+
+uint8_t MOT_GetState(MOT_FSMData* m_) {
+	uint8_t result;
+	result = 0;
+	
+	switch(m_->index) {
+		case ROTARY:
+			result |= (M1_FAULT_GetVal()<<0);
+			result |= (M1_MODE0_GetVal()<<1);
+			result |= (M1_MODE1_GetVal()<<2);
+			result |= (M1_MODE2_GetVal()<<3);
+			result |= (M1_DIR_GetVal()<<4);
+			result |= (M1_nRST_GetVal()<<5);
+			break;
+			
+		case KNEE:
+			result |= (M2_FAULT_GetVal()<<0);
+			result |= (M2_MODE0_GetVal()<<1);
+			result |= (M2_MODE1_GetVal()<<2);
+			result |= (M2_MODE2_GetVal()<<3);
+			result |= (M2_DIR_GetVal()<<4);
+			result |= (M2_nRST_GetVal()<<5);
+			break;
+			
+		case LIFT:
+			result |= (M3_FAULT_GetVal()<<0);
+			result |= (M3_MODE0_GetVal()<<1);
+			result |= (M3_MODE1_GetVal()<<2);
+			result |= (M3_MODE2_GetVal()<<3);
+			result |= (M3_DIR_GetVal()<<4);
+			result |= (M3_nRST_GetVal()<<5);
+			break;
+	}
+	return result;
 }
 
 /*! This will calculate the values for the motor to speed
