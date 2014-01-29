@@ -14,6 +14,7 @@
 #include "Event.h"
 #include "Serial.h"
 #include "DBG.h"
+#include "Serial1.h"
 
 static SER_FSMData data = {
 	SER_FSM_START,
@@ -34,7 +35,7 @@ void SER_Init(void) {
 void SER_SendChar(uint8_t ch) {
 	while(data.SendChar(ch)==ERR_TXFULL){}
 }
-
+ 
 /*! \brief Sets the packet to handled state.
  */
 void SER_SetHandled(void) {

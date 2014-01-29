@@ -59,7 +59,7 @@ void MOT_Init(void) {
 	lift.index = LIFT;
 	lift.running = FALSE;
 	lift.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&lift, MOT_STEP_1);
+	MOT_SetStepMode(&lift, MOT_STEP_32);
 	
 	// I Limit
 	ILIM_Ptr = ILIM_Init(NULL);
@@ -180,10 +180,12 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	// Set direction from sign on step value.
 	if(steps < 0) {
 		m_->dir = CCW;
+		M3_DIR_PutVal(0);
 		steps = -steps;
 	}
 	else {
 		m_->dir = CW;
+		M3_DIR_PutVal(1);
 	}
 	
 	// If moving only 1 step.

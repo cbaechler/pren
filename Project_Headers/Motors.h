@@ -83,11 +83,11 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
  * the timer1 frequency is the clock frequency divided by 8.
  */
 // Timer/Counter 1 running on 3,686MHz / 8 = 460,75kHz (2,17uS). (T1-FREQ 460750)
-#define T1_FREQ 460750	/* TODO: check if that is correct */
+#define T1_FREQ 187500	/* TODO: check if that is correct */
 
 //! Number of (full)steps per round on stepper motor in use.
 #define FSPR 200
-#define SPR FSPR	/* TODO: when chaning step mode... also change SPR, recalc! */
+#define SPR (FSPR*32)	/* TODO: when chaning step mode... also change SPR, recalc! */
 
 // Maths constants
 #define ALPHA (2*3.14159/SPR)                    		// 2*pi/spr

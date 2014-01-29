@@ -54,7 +54,7 @@ void APP_Loop(void) {
 	LED_GREEN_On();
 	MOT_CalcValues(&rotary, 2000, 2000, 800);
 	MOT_CalcValues(&knee, 2000, 2000, 500);
-	MOT_CalcValues(&lift, 2000, 2000, 800);
+	MOT_CalcValues(&lift, 5000, 5000, 2500);
 	lift.position = 500;
 	LED_GREEN_Off();
 	
@@ -107,8 +107,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			break;
         			
         		case 'Q':
-        			MOT_MoveSteps(&rotary, SER_GetData16(0));
-        			MOT_MoveSteps(&knee, SER_GetData16(2));
+        			//MOT_MoveSteps(&rotary, SER_GetData16(0));
+        			//MOT_MoveSteps(&knee, SER_GetData16(2));
+        			MOT_MoveSteps(&lift,   (int16_t) (SER_GetData16(4)-lift.position));
         			//MOT_MoveSteps(&lift, SER_GetData16(4));
         			SER_SendPacket('Q');
         			break;

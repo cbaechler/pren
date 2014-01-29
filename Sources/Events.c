@@ -246,6 +246,27 @@ void SIG_OnCounterRestart(LDD_TUserData *UserDataPtr)
   /* Write your code here ... */
 }
 
+/*
+** ===================================================================
+**     Event       :  Serial1_OnRxChar (module Events)
+**
+**     Component   :  Serial1 [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void Serial1_OnRxChar(void)
+{
+	SER_Process();
+  /* Write your code here ... */
+}
+
 /* END Events */
 
 #ifdef __cplusplus

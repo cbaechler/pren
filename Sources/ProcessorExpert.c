@@ -89,6 +89,10 @@
 #include "BitIoLdd23.h"
 #include "M3_FAULT.h"
 #include "BitIoLdd24.h"
+#include "BT.h"
+#include "Serial1.h"
+#include "ASerialLdd2.h"
+#include "UTIL.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

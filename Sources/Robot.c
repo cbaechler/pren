@@ -40,7 +40,7 @@ uint16_t ROB_GetStateArray(void) {
 	array |= (M1_MODE1_GetVal()<<1);
 	array |= (M1_MODE2_GetVal()<<2);
 	return array;*/
-	return (uint16_t) MOT_GetState(&rotary);
+	return (uint16_t) MOT_GetState(&lift);
 }
 
 void ROB_MoveTo(uint16_t x, uint16_t y) {
@@ -56,7 +56,7 @@ void ROB_Run(void) {
 			/* initialise the robot, startup and system test, go to zero pos */
 			rotary.position = 0;
 			knee.position   = 0;
-			lift.position   = 500;
+			lift.position   = 25000;
 			break;
 
 		case ROB_COLLECT:
@@ -65,7 +65,7 @@ void ROB_Run(void) {
 				if(BLOCK_GetSize() > 0) {			// if there are blocks in blockstack
 					block = BLOCK_Pop();			// pop next block and set new target position
 					ROB_MoveTo(block.x, block.y);
-					MOT_MoveSteps(&lift,   (int16_t) (150-lift.position));
+					MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
 					runmode = ROB_COLLECT_PICK;
 				}
 				else if(BLOCK_GetSize() == 0) {
@@ -78,7 +78,7 @@ void ROB_Run(void) {
 			/* wait until arm is at block location, then pick */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (100-lift.position));
+				MOT_MoveSteps(&lift,   (int16_t) (1000-lift.position));
 				WAIT_Waitms(100);
 				runmode = ROB_COLLECT_PICKED;
 			}	
@@ -92,7 +92,7 @@ void ROB_Run(void) {
 				
 				// Move to center
 				ROB_MoveTo(750, 750);
-				MOT_MoveSteps(&lift,   (int16_t) (500-lift.position));
+				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
 				runmode = ROB_COLLECT_RELEASE;
 			}
 			break;
@@ -101,7 +101,7 @@ void ROB_Run(void) {
 			/* wait until arm is at center location, then set z location */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (150-lift.position));
+				MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
 				
 				WAIT_Waitms(100);
 				runmode = ROB_COLLECT_RELEASED;
@@ -115,7 +115,7 @@ void ROB_Run(void) {
 				LED_RED_Off();
 				
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (500-lift.position));
+				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
 				runmode = ROB_COLLECT;
 			}
 			break;
