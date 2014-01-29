@@ -147,7 +147,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					SER_AddData16(knee.position);
                     SER_AddData16(lift.position);                    
 					SER_AddData16((uint16_t) BLOCK_GetSize());
-					SER_AddData16((uint16_t) ROB_GetRunMode());
+					//SER_AddData16((uint16_t) ROB_GetRunMode());
 					SER_SendPacket('d');
 					break;
         				

@@ -14,6 +14,7 @@
 #include "BlockStack.h"
 
 static BLOCK_Object block_storage[BLOCK_STACK_MAX_SIZE];
+static BLOCK_Object nullblock = {0,0};
 static uint8_t block_index;
 
 void BLOCK_Init(void) {
@@ -37,7 +38,7 @@ void BLOCK_Push(BLOCK_Object obj) {
 }
 
 BLOCK_Object BLOCK_Pop(void) {
-	BLOCK_Object obj;
+	BLOCK_Object obj = nullblock;
 	if(!BLOCK_IsEmtpy()) {
 		EnterCritical();
 		obj = BLOCK_GetSingle(block_index--);
