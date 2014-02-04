@@ -105,17 +105,25 @@ void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 void MOT_SetDirection(MOT_FSMData* m_, bool dir) {
 	m_->dir = dir;
 	switch(m_->index) {
-		case ROTARY:	return M1_DIR_PutVal(m_->dir);		break;
-		case KNEE:		return M2_DIR_PutVal(m_->dir);		break;
-		case LIFT:		return M3_DIR_PutVal(m_->dir);		break;
+		case ROTARY:	return M1_DIR_PutVal(dir);			break;
+		case KNEE:		return M2_DIR_PutVal(dir);			break;
+		case LIFT:		return M3_DIR_PutVal(dir);			break;
+	}
+}
+
+void MOT_SetResetState(MOT_FSMData* m_, bool state) {
+	switch(m_->index) {
+		case ROTARY:	return M1_nRST_PutVal(state);		break;
+		case KNEE:		return M2_nRST_PutVal(state);		break;
+		case LIFT:		return M3_nRST_PutVal(state);		break;
 	}
 }
 
 bool MOT_GetFaultState(MOT_FSMData* m_) {
 	switch(m_->index) {
-		case ROTARY:	return M1_FAULT_GetVal();		break;
-		case KNEE:		return M2_FAULT_GetVal();		break;
-		case LIFT:		return M3_FAULT_GetVal();		break;
+		case ROTARY:	return M1_FAULT_GetVal();			break;
+		case KNEE:		return M2_FAULT_GetVal();			break;
+		case LIFT:		return M3_FAULT_GetVal();			break;
 	}
 	return TRUE;
 }
@@ -252,9 +260,8 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	}
 }
 
-
 uint16_t MOT_Process(MOT_FSMData* m_) {
-	uint16_t new_step_delay;
+	uint16_t new_step_delay = 0;
 
 	OCR1A = m_->step_delay;
 	
@@ -275,12 +282,11 @@ uint16_t MOT_Process(MOT_FSMData* m_) {
 			break;
 		
 		case MOT_FSM_ACCEL:
-			//sm_driver_StepCounter(srd.dir);
 			m_->step_count++;
 			m_->accel_count++;
 			new_step_delay = m_->step_delay - (((2 * (int32_t)m_->step_delay) + m_->rest)/(4 * m_->accel_count + 1));
 			m_->rest = ((2 * (int32_t)m_->step_delay)+m_->rest)%(4 * m_->accel_count + 1);
-			// Chech if we should start deceleration.
+			// Check if we should start deceleration.
 			if(m_->step_count >= m_->decel_start) {
 				m_->accel_count = m_->decel_val;
 				m_->state = MOT_FSM_DECEL;
@@ -295,7 +301,6 @@ uint16_t MOT_Process(MOT_FSMData* m_) {
 			break;
 		
 		case MOT_FSM_RUN:
-			//sm_driver_StepCounter(srd.dir);
 			m_->step_count++;
 			new_step_delay = m_->min_delay;
 			// Check if we should start deceleration.
@@ -308,7 +313,6 @@ uint16_t MOT_Process(MOT_FSMData* m_) {
 			break;
 			
 		case MOT_FSM_DECEL:
-			//sm_driver_StepCounter(srd.dir);
 			m_->step_count++;
 			m_->accel_count++;
 			new_step_delay = m_->step_delay - (((2 * (int32_t)m_->step_delay) + m_->rest)/(4 * m_->accel_count + 1));
