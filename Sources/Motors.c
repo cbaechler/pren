@@ -102,6 +102,15 @@ void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 	LED_RED_Off();
 }
 
+void MOT_SetDirection(MOT_FSMData* m_, bool dir) {
+	m_->dir = dir;
+	switch(m_->index) {
+		case ROTARY:	return M1_DIR_PutVal(m_->dir);		break;
+		case KNEE:		return M2_DIR_PutVal(m_->dir);		break;
+		case LIFT:		return M3_DIR_PutVal(m_->dir);		break;
+	}
+}
+
 bool MOT_GetFaultState(MOT_FSMData* m_) {
 	switch(m_->index) {
 		case ROTARY:	return M1_FAULT_GetVal();		break;
@@ -179,13 +188,11 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	// Set direction from sign on step value.
 	if(steps < 0) {
-		m_->dir = CCW;
-		M3_DIR_PutVal(0);
+		MOT_SetDirection(m_, CCW);
 		steps = -steps;
 	}
 	else {
-		m_->dir = CW;
-		M3_DIR_PutVal(1);
+		MOT_SetDirection(m_, CW);
 	}
 	
 	// If moving only 1 step.

@@ -22,9 +22,8 @@
 #define LIFT	3
 
 // Define Motor Directions
-typedef enum MOT_Dir {
-	CCW, CW
-} MOT_Dir;
+#define CCW		0
+#define CW		1
 
 typedef enum MOT_Pins {
 	MOT_PIN_MODE0, 
@@ -47,7 +46,7 @@ typedef enum MOT_StateKinds {
 typedef struct MOT_FSMData {
 	uint8_t index;				// ok
 	MOT_StateKinds state;		// ok
-	MOT_Dir dir;				// ok
+	bool dir;					// ok
 	bool running;				// ok
 	
 	/* motor settings */
@@ -99,6 +98,7 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 void MOT_Init(void);
 void MOT_SetILim(uint16_t i_max);
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode);
+void MOT_SetDirection(MOT_FSMData* m_, bool dir);
 bool MOT_GetFaultState(MOT_FSMData* m_);
 uint8_t MOT_GetState(MOT_FSMData* m_);
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);

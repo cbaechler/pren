@@ -28597,7 +28597,6 @@
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
                     <Value>ASerialLdd2_OnTxComplete</Value>
-                    <ItemWasNeverEnabledInChgScript>true</ItemWasNeverEnabledInChgScript>
                   </ItemState>
                   <ItemState>
                     <ItemSymbol>NonRtosOthrEvntsGrp</ItemSymbol>
