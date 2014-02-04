@@ -4,7 +4,7 @@
     <Name>ProcessorExpert</Name>
     <SavedBy>chrigu</SavedBy>
     <ModificationStamp>56</ModificationStamp>
-    <Date>2014-01-29</Date>
+    <Date>2014-02-04</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.8.0.RT5_b1335-1805</PEversion>
   </Header>
@@ -4628,7 +4628,7 @@
     <UserFolderName>LEDs</UserFolderName>
     <Comment lines_count="0" />
     <Template />
-    <BeanVersion>01.061</BeanVersion>
+    <BeanVersion>01.062</BeanVersion>
     <LightErrorsIgnored>false</LightErrorsIgnored>
     <Properties>
       <ItemState>
@@ -5416,7 +5416,7 @@
     <UserFolderName>LEDs</UserFolderName>
     <Comment lines_count="0" />
     <Template />
-    <BeanVersion>01.061</BeanVersion>
+    <BeanVersion>01.062</BeanVersion>
     <LightErrorsIgnored>false</LightErrorsIgnored>
     <Properties>
       <ItemState>
@@ -6204,7 +6204,7 @@
     <UserFolderName>LEDs</UserFolderName>
     <Comment lines_count="0" />
     <Template />
-    <BeanVersion>01.061</BeanVersion>
+    <BeanVersion>01.062</BeanVersion>
     <LightErrorsIgnored>false</LightErrorsIgnored>
     <Properties>
       <ItemState>
@@ -27674,7 +27674,7 @@
                     <ItemSymbol>BdRate</ItemSymbol>
                     <ReadOnly>false</ReadOnly>
                     <UserReadOnly>false</UserReadOnly>
-                    <Value>init:;prec:1.5%;RTS:none</Value>
+                    <Value>init:57600 baud;prec:0.5%;RTS:none</Value>
                     <RuntimeSetting>0</RuntimeSetting>
                     <ReqDevPrescHigh>-1</ReqDevPrescHigh>
                     <ReqDevPrescLow>-1</ReqDevPrescLow>
@@ -30392,7 +30392,7 @@
       <ItemState>
         <ItemSymbol>btResetDevice</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30414,7 +30414,7 @@
       <ItemState>
         <ItemSymbol>btRestoreFactoryDefault</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30425,7 +30425,7 @@
       <ItemState>
         <ItemSymbol>btQueryBluetoothAddressStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30436,7 +30436,7 @@
       <ItemState>
         <ItemSymbol>btQueryDeviceName</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30458,7 +30458,7 @@
       <ItemState>
         <ItemSymbol>btQueryRemoteBluetoothDeviceName</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30469,7 +30469,7 @@
       <ItemState>
         <ItemSymbol>btQueryRole</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30480,7 +30480,7 @@
       <ItemState>
         <ItemSymbol>btSetRole</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30491,7 +30491,7 @@
       <ItemState>
         <ItemSymbol>btQueryCoDStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30502,7 +30502,7 @@
       <ItemState>
         <ItemSymbol>btSetCoDStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30513,7 +30513,7 @@
       <ItemState>
         <ItemSymbol>btQueryIACStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30524,7 +30524,7 @@
       <ItemState>
         <ItemSymbol>btSetIACStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30535,7 +30535,7 @@
       <ItemState>
         <ItemSymbol>btQueryIAMStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30546,7 +30546,7 @@
       <ItemState>
         <ItemSymbol>btSetIAMStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30557,7 +30557,7 @@
       <ItemState>
         <ItemSymbol>btQueryPairingPasskey</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30579,7 +30579,7 @@
       <ItemState>
         <ItemSymbol>btQueryUARTParametersStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30590,7 +30590,7 @@
       <ItemState>
         <ItemSymbol>btSetUARTParameterStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30612,7 +30612,7 @@
       <ItemState>
         <ItemSymbol>btQueryConnectionMethod</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30623,7 +30623,7 @@
       <ItemState>
         <ItemSymbol>btSetConnectionMethod</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30634,7 +30634,7 @@
       <ItemState>
         <ItemSymbol>btQueryBindingBluetoothAddress</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30645,7 +30645,7 @@
       <ItemState>
         <ItemSymbol>btSetBindingBluetoothStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30656,7 +30656,7 @@
       <ItemState>
         <ItemSymbol>btQueryLEDOutputPolarityStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30667,7 +30667,7 @@
       <ItemState>
         <ItemSymbol>btSetLEDOutputPolarityStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30678,7 +30678,7 @@
       <ItemState>
         <ItemSymbol>btSetUserPinIO</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30689,7 +30689,7 @@
       <ItemState>
         <ItemSymbol>btSetMultipleUserIOPins</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30700,7 +30700,7 @@
       <ItemState>
         <ItemSymbol>btQueryMultipleUserIOPinsStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30711,7 +30711,7 @@
       <ItemState>
         <ItemSymbol>btQueryMultipleUserIOPins</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30722,7 +30722,7 @@
       <ItemState>
         <ItemSymbol>btQueryScanningParametersStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30733,7 +30733,7 @@
       <ItemState>
         <ItemSymbol>btSetScanningParameterStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30744,7 +30744,7 @@
       <ItemState>
         <ItemSymbol>btQuerySNIFFParametersStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30755,7 +30755,7 @@
       <ItemState>
         <ItemSymbol>btSetSNIFFParameterStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30766,7 +30766,7 @@
       <ItemState>
         <ItemSymbol>btQuerySecurityEncryptionModesStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30777,7 +30777,7 @@
       <ItemState>
         <ItemSymbol>btSetSecurityEncryptionModesStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30788,7 +30788,7 @@
       <ItemState>
         <ItemSymbol>btDeleteAuthenticatedDeviceFromListStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30799,7 +30799,7 @@
       <ItemState>
         <ItemSymbol>btFindDeviceFromAuthenticatedDeviceListStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30810,7 +30810,7 @@
       <ItemState>
         <ItemSymbol>btQueryTotalNumberOfDeviceFromAuthenticationListStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30821,7 +30821,7 @@
       <ItemState>
         <ItemSymbol>btQueryTotalNumberOfDeviceFromAuthenticationList</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30832,7 +30832,7 @@
       <ItemState>
         <ItemSymbol>btQueryMostRecentlyUsedAuthenticatedDevice</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30843,7 +30843,7 @@
       <ItemState>
         <ItemSymbol>btQueryCurrentStateOfDeviceStr</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30854,7 +30854,7 @@
       <ItemState>
         <ItemSymbol>ParseCommand</ItemSymbol>
         <ReadOnly>true</ReadOnly>
-        <UserReadOnly>true</UserReadOnly>
+        <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
         <Index>1</Index>
         <Value>false</Value>
@@ -30941,7 +30941,7 @@
     <UserFolderName>Referenced_Components</UserFolderName>
     <Comment lines_count="0" />
     <Template />
-    <BeanVersion>01.091</BeanVersion>
+    <BeanVersion>01.092</BeanVersion>
     <LightErrorsIgnored>false</LightErrorsIgnored>
     <Properties>
       <ItemState>
@@ -31504,6 +31504,39 @@
         <LastSelection>true</LastSelection>
         <LastUserSel>yes</LastUserSel>
         <UsrMethodName>strCutTail</UsrMethodName>
+      </ItemState>
+      <ItemState>
+        <ItemSymbol>ScanDecimal8sNumber</ItemSymbol>
+        <ReadOnly>false</ReadOnly>
+        <UserReadOnly>false</UserReadOnly>
+        <Index>0</Index>
+        <Value>true</Value>
+        <LastSelection>false</LastSelection>
+        <LastUserSel>always</LastUserSel>
+        <UsrMethodName>ScanDecimal8sNumber</UsrMethodName>
+        <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
+      </ItemState>
+      <ItemState>
+        <ItemSymbol>ScanDecimal16sNumber</ItemSymbol>
+        <ReadOnly>false</ReadOnly>
+        <UserReadOnly>false</UserReadOnly>
+        <Index>0</Index>
+        <Value>true</Value>
+        <LastSelection>false</LastSelection>
+        <LastUserSel>always</LastUserSel>
+        <UsrMethodName>ScanDecimal16sNumber</UsrMethodName>
+        <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
+      </ItemState>
+      <ItemState>
+        <ItemSymbol>ScanDecimal32sNumber</ItemSymbol>
+        <ReadOnly>false</ReadOnly>
+        <UserReadOnly>false</UserReadOnly>
+        <Index>0</Index>
+        <Value>true</Value>
+        <LastSelection>false</LastSelection>
+        <LastUserSel>always</LastUserSel>
+        <UsrMethodName>ScanDecimal32sNumber</UsrMethodName>
+        <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
       </ItemState>
     </Methods>
     <Events />
