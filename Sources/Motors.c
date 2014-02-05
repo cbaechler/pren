@@ -71,7 +71,14 @@ void MOT_SetILim(uint16_t i_max) {
 	// i_max = 2 * v_out
 	// --> v_out = i_max/2
 	// 1 A -> 1000/2 -> 500 mV
-	ILIM_SetValue(ILIM_Ptr, (uint16_t) (i_max/2)*(4096/7200));
+	uint32_t tmp;
+	uint16_t val;
+	
+	tmp  = i_max * 4096;
+	tmp /= 2910;			// vref = 2.91
+	tmp /= 2;
+	val = (uint16_t) (tmp);
+	ILIM_SetValue(ILIM_Ptr, val);
 }
 
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {

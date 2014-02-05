@@ -97,8 +97,6 @@ static void APP_HandleEvent(EVNT_Handle event) {
         case EVNT_SERIAL_CMD:
         	switch(*SER_GetCommand()) {					
         		case 'P':
-        			//SER_AddData16(0x1234);
-        			//SER_SendPacket('P');
         			SER_AddData16(MOT_Process(&rotary));
         			SER_AddData16(MOT_Process(&knee));
         			SER_AddData16(MOT_Process(&lift));
