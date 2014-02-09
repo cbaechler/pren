@@ -12,11 +12,26 @@ typedef struct BLOCK_Object {
 	uint16_t y;
 } BLOCK_Object;
 
-//typedef uint8_t BLOCK_Object;
+typedef enum BLOCK_StateKinds {
+	BLOCK_IDLE,
+	BLOCK_NEXT,
+	BLOCK_PICK,
+	BLOCK_PICKED,
+	BLOCK_RELEASE,
+	BLOCK_RELEASED
+} BLOCK_StateKinds;
+
+typedef struct BLOCK_FSMData {
+	BLOCK_StateKinds state;
+	bool started;
+} BLOCK_FSMData;
 
 #define BLOCK_STACK_MAX_SIZE	10
 
 void BLOCK_Init(void);
+void BLOCK_StartPickPlace(void);
+uint8_t BLOCK_PickPlace_GetState(void);
+void BLOCK_PickPlace_Process(void);
 bool BLOCK_IsEmtpy(void);
 bool BLOCK_IsFull(void);
 void BLOCK_Push(BLOCK_Object obj);

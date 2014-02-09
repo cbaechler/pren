@@ -176,7 +176,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 
                 case SER_RUN:
-                	ROB_SetRunMode(ROB_COLLECT);
+                	ROB_SetRunMode(ROB_PICKPLACE);
                 	SER_SendPacket(SER_RUN);
                     //ROB_Run();
                     break;

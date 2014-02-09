@@ -49,74 +49,28 @@ void ROB_MoveTo(uint16_t x, uint16_t y) {
 }
 
 void ROB_Run(void) {
-	BLOCK_Object block;
-	
 	switch(runmode) {
 		case ROB_INIT:
 			/* initialise the robot, startup and system test, go to zero pos */
 			rotary.position = 0;
 			knee.position   = 0;
 			lift.position   = 25000;
+			
+			runmode = ROB_IDLE;
 			break;
 
 		case ROB_COLLECT:
-			/* collect all blocks from block stack */
-			if(!(ROB_Moving())) {
-				if(BLOCK_GetSize() > 0) {			// if there are blocks in blockstack
-					block = BLOCK_Pop();			// pop next block and set new target position
-					ROB_MoveTo(block.x, block.y);
-					MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
-					runmode = ROB_COLLECT_PICK;
-				}
-				else if(BLOCK_GetSize() == 0) {
-					runmode = ROB_IDLE;
-				}
-			}
 			break;
-			
-		case ROB_COLLECT_PICK:
-			/* wait until arm is at block location, then pick */
-			if(!(ROB_Moving())) {					// wait for the last move to be finished
-				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (1000-lift.position));
-				WAIT_Waitms(100);
-				runmode = ROB_COLLECT_PICKED;
-			}	
+
+		case ROB_PICKPLACE:
+			BLOCK_StartPickPlace();
+			runmode = ROB_PICKPLACE_PROCESS;
 			break;
-			
-		case ROB_COLLECT_PICKED: 
-			/* wait for the lift to be lowered, switch vaccuum on and move to center */
-			if(!(ROB_Moving())) {					// wait for the last move to be finished
-				// vacuum on
-				LED_RED_On();
-				
-				// Move to center
-				ROB_MoveTo(750, 750);
-				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
-				runmode = ROB_COLLECT_RELEASE;
-			}
-			break;
-			
-		case ROB_COLLECT_RELEASE:
-			/* wait until arm is at center location, then set z location */
-			if(!(ROB_Moving())) {					// wait for the last move to be finished
-				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
-				
-				WAIT_Waitms(100);
-				runmode = ROB_COLLECT_RELEASED;
-			}
-			break;
-			
-		case ROB_COLLECT_RELEASED:
-			/* wait for the lift to be lowered, switch vaccum off and move arm up */
-			if(!(ROB_Moving())) {					// wait for the last move to be finished
-				// vacuum off
-				LED_RED_Off();
-				
-				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
-				runmode = ROB_COLLECT;
+
+		case ROB_PICKPLACE_PROCESS:
+			BLOCK_PickPlace_Process();
+			if(BLOCK_PickPlace_GetState() == BLOCK_IDLE) {
+				runmode = ROB_IDLE;
 			}
 			break;
 
