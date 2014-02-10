@@ -3,6 +3,7 @@
 
 typedef enum {		/*   ID   Description        */
 	DB_GUGUS,		/*!<  0   Testvariable       */
+	DB_GUGUS2,
 	DB_TEST,
 	DB_NOF_VARS		/*!< Sentinel, must be last! */
 } DB_VarID;
@@ -18,10 +19,14 @@ typedef struct DB_Var {
 	bool ee;
 } DB_Var;
 
+#define DB_NVM_BASE_ADDR		0x1FC00
+
 void DB_Init(void);
 void DB_RegisterVar(uint8_t varID, void* adr, DB_DataType type, bool eeprom);
 DB_DataType DB_GetType(uint8_t varID);
 void* DB_GetVar(uint8_t varID);
 uint8_t DB_GetVar_u8(uint8_t varID);
+void DB_LoadEEPROM(void);
+void DB_SaveEEPROM(void); 
 
 #endif

@@ -21,6 +21,8 @@
 #define SER_GET_POSITION	'T'
 #define SER_GET_VERSION		'V'
 #define SER_ZERO_POSITION	'Z'
+#define SER_READ_VARIABLE	'r'
+#define SER_WRITE_VARIABLE	'w'
 
 typedef enum SER_StateKinds {
 	SER_FSM_START, 

@@ -14,6 +14,7 @@
 
 #include "PE_Types.h"
 #include "Application.h"
+#include "Database.h"
 #include "Robot.h"
 #include "Event.h"
 #include "Motors.h"
@@ -33,11 +34,15 @@
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 
+uint8_t gugus;
+uint16_t gugus2;
+
 /*! \brief Application initialisation routine.
  *
  * This function does the initialisation of hardware and data structures. 
  */
 void APP_Init(void) {
+	DB_Init();
     EVNT_Init();
     MOT_Init();
 }
@@ -50,14 +55,20 @@ void APP_Init(void) {
  */
 void APP_Loop(void) {
 	//EVNT_SetEvent(EVNT_INIT);
-
+	gugus = 0;
+	gugus2 = 0;
+	DB_RegisterVar(DB_GUGUS, &gugus, U8, TRUE);
+	DB_RegisterVar(DB_GUGUS2, &gugus2, U16, TRUE);
+	DB_LoadEEPROM();
+	
 	LED_GREEN_On();
 	MOT_CalcValues(&rotary, 2000, 2000, 800);
 	MOT_CalcValues(&knee, 2000, 2000, 500);
 	MOT_CalcValues(&lift, 5000, 5000, 2500);
 	lift.position = 500;
 	LED_GREEN_Off();
-	
+	EVNT_SetEvent(EVNT_INIT);
+
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
@@ -85,9 +96,17 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	
     switch(event) {
         case EVNT_INIT: 
-        	LED_RED_On();
-        	WAIT_Waitms(200);
-        	LED_RED_Off();
+        	
+        	if(DB_GetVar_u8(DB_GUGUS) == 5) {
+        		LED_BLUE_On();
+				WAIT_Waitms(500);
+				LED_BLUE_Off();
+        	}
+        	else {
+        		LED_RED_On();
+				WAIT_Waitms(200);
+				LED_RED_Off();
+        	}
             break;
             
         case EVNT_HEARTBEAT:
@@ -223,6 +242,39 @@ static void APP_HandleEvent(EVNT_Handle event) {
                 	SER_AddData16(knee.position);
                 	SER_SendPacket(SER_GET_POSITION);
                     break;
+                    
+                case SER_READ_VARIABLE: 
+                	SER_AddData8(SER_GetData8(0));
+                	switch(DB_GetType(SER_GetData8(0))) {
+						case U8: {
+							SER_AddData8(*((uint8_t*) DB_GetVar(SER_GetData8(0))));
+							break;
+						}
+						case U16: {
+							SER_AddData16(*((uint16_t*) DB_GetVar(SER_GetData8(0))));
+						}
+					}
+					
+					SER_SendPacket(SER_WRITE_VARIABLE);
+                	break;
+                	
+                case SER_WRITE_VARIABLE: 
+                	switch(DB_GetType(SER_GetData8(0))) {
+                		case U8: {
+                			(*(uint8_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData8(1);
+                			break;
+                		}
+                		case U16: {
+							(*(uint16_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData16(1);
+							break;
+						}
+                	}
+
+                	SER_SendPacket(SER_WRITE_VARIABLE);
+                	DB_SaveEEPROM();                	
+                	break;
+                    
+                    
 /*
                 case SER_GET_VERSION:
                 	return the current version of the firmware

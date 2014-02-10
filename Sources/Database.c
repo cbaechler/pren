@@ -13,7 +13,7 @@
 
 #include "PE_Types.h"
 #include "Database.h"
-#include "WAIT.h"
+#include "NVM.h"
 
 DB_Var database[DB_NOF_VARS];
 
@@ -37,12 +37,62 @@ DB_DataType DB_GetType(uint8_t varID) {
 	return database[varID].type;
 }
 
+uint8_t DB_GetTypeSize(DB_DataType type) {
+	switch(type) {
+		case U8: 	return sizeof(uint8_t);
+		case U16:	return sizeof(uint16_t);
+	}
+	
+	return 0;
+}
+
 void* DB_GetVar(uint8_t varID) {
 	return database[varID].var_ptr;
 }
 
 uint8_t DB_GetVar_u8(uint8_t varID) {
 	return *(uint8_t*) DB_GetVar(varID);
+}
+
+void DB_LoadEEPROM(void) {
+	uint8_t i;
+	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
+	for(i=0; i<DB_NOF_VARS; i++) {
+		if(database[i].ee) {
+			switch(database[i].type) {
+				case U8: {
+					NVM_GetByteFlash((NVM_TAddress)nvm_pos, (uint8_t*) database[i].var_ptr);
+					break;
+				}
+				case U16: {
+					NVM_GetWordFlash((NVM_TAddress)nvm_pos, (uint16_t*) database[i].var_ptr);				
+					break;
+				}
+			}
+
+			nvm_pos += DB_GetTypeSize(database[i].type);
+		}
+	}
+}
+
+void DB_SaveEEPROM(void) {
+	uint8_t i;
+	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
+	for(i=0; i<DB_NOF_VARS; i++) {
+		if(database[i].ee) {
+			switch(database[i].type) {
+				case U8: {
+					NVM_SetByteFlash((NVM_TAddress)nvm_pos, *(uint8_t*) database[i].var_ptr);
+				}
+				case U16: {
+					NVM_SetWordFlash((NVM_TAddress)nvm_pos, *(uint16_t*) database[i].var_ptr);
+					break;
+				}
+			}
+			
+			nvm_pos += DB_GetTypeSize(database[i].type);
+		}
+	}
 }
 
 // function: all to eeprom

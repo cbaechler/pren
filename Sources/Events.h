@@ -105,6 +105,8 @@
 #include "Serial1.h"
 #include "ASerialLdd2.h"
 #include "UTIL.h"
+#include "NVM.h"
+#include "IntFlashLdd1.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -289,6 +291,21 @@ void Cpu_OnNMIINT(void);
 ** ===================================================================
 */
 void Serial1_OnRxChar(void);
+
+/*
+** ===================================================================
+**     Event       :  NVM_OnWriteEnd (module Events)
+**
+**     Component   :  NVM [IntFLASH]
+*/
+/*!
+**     @brief
+**         Event is called after a write operation to FLASH memory is
+**         finished (except [SetPage]). This event is available only if
+**         an [Interrupt service/event] is selected.
+*/
+/* ===================================================================*/
+void NVM_OnWriteEnd(void);
 
 /* END Events */
 

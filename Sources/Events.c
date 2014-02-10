@@ -267,6 +267,24 @@ void Serial1_OnRxChar(void)
   /* Write your code here ... */
 }
 
+/*
+** ===================================================================
+**     Event       :  NVM_OnWriteEnd (module Events)
+**
+**     Component   :  NVM [IntFLASH]
+*/
+/*!
+**     @brief
+**         Event is called after a write operation to FLASH memory is
+**         finished (except [SetPage]). This event is available only if
+**         an [Interrupt service/event] is selected.
+*/
+/* ===================================================================*/
+void NVM_OnWriteEnd(void)
+{
+  /* Write your code here ... */
+}
+
 /* END Events */
 
 #ifdef __cplusplus
