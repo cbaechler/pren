@@ -33,6 +33,8 @@
 
 #include "LED_RED.h"
 
+#include "Database.h"
+
 uint16_t OCR1A;	/* emulate atmel register */
 
 MOT_FSMData rotary;	/* Drehachse */
@@ -48,18 +50,21 @@ void MOT_Init(void) {
 	rotary.running = FALSE;
 	rotary.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&rotary, MOT_STEP_1);
+	MOT_CalcValues(&rotary, rotary.p.accel, rotary.p.decel, rotary.p.speed);
 	
 	// M2
 	knee.index = KNEE;
 	knee.running = FALSE;
 	knee.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&knee, MOT_STEP_1);
+	MOT_CalcValues(&knee, knee.p.accel, knee.p.decel, knee.p.speed);
 
 	// M3
 	lift.index = LIFT;
 	lift.running = FALSE;
 	lift.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&lift, MOT_STEP_32);
+	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
 	// I Limit
 	ILIM_Ptr = ILIM_Init(NULL);
@@ -177,9 +182,9 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
  * \param speed  Max speed, in 0.01*rad/sec.
  */
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed) {
-	m_->accel = accel;
-	m_->decel = decel; 
-	m_->speed = speed;
+	m_->p.accel = accel;
+	m_->p.decel = decel; 
+	m_->p.speed = speed;
 	m_->position = 0;
 	
 	// Set max speed limit, by calc min_delay to use in timer.
@@ -221,7 +226,7 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	else if(steps != 0) {		
 		// Find out after how many steps we must start deceleration.
 		// n1 = (n1+n2)decel / (accel + decel)
-		m_->accel_lim = ((long)steps*m_->decel) / (m_->accel+m_->decel);
+		m_->accel_lim = ((long)steps*m_->p.decel) / (m_->p.accel+m_->p.decel);
 		// We must accelrate at least 1 step before we can start deceleration.
 		if(m_->accel_lim == 0) {
 			m_->accel_lim = 1;
@@ -232,7 +237,7 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 			m_->decel_val = m_->accel_lim - steps;
 		}
 		else {
-			m_->decel_val = -((int32_t)m_->max_s_lim*m_->accel)/m_->decel;
+			m_->decel_val = -((int32_t)m_->max_s_lim*m_->p.accel)/m_->p.decel;
 		}
 		
 		// We must decelrate at least 1 step to stop.
@@ -246,7 +251,7 @@ void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 		// Set accelration by calc the first (c0) step delay .
 		// step_delay = 1/tt * sqrt(2*alpha/accel)
 		// step_delay = ( tfreq*0.676/100 )*100 * sqrt( (2*alpha*10000000000) / (accel*100) )/10000
-		m_->step_delay = (T1_FREQ_148 * MATH_sqrt(A_SQ / m_->accel))/100;
+		m_->step_delay = (T1_FREQ_148 * MATH_sqrt(A_SQ / m_->p.accel))/100;
 		
 		// If the maximum speed is so low that we dont need to go via accelration state.
 		if(m_->step_delay <= m_->min_delay) {

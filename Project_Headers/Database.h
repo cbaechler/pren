@@ -2,15 +2,14 @@
 #define DATABASE_H_
 
 typedef enum {		/*   ID   Description        */
-	DB_GUGUS,		/*!<  0   Testvariable       */
-	DB_GUGUS2,
-	DB_TEST,
+	DB_MOT_ROTARY,
 	DB_NOF_VARS		/*!< Sentinel, must be last! */
 } DB_VarID;
 
 typedef enum {
 	U8, 
-	U16
+	U16, 
+	MOT
 } DB_DataType;
 
 typedef struct DB_Var {

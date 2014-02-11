@@ -22,6 +22,7 @@
 #define SER_GET_VERSION		'V'
 #define SER_ZERO_POSITION	'Z'
 #define SER_READ_VARIABLE	'r'
+#define SER_SAVE_NVM 		's'
 #define SER_WRITE_VARIABLE	'w'
 
 typedef enum SER_StateKinds {

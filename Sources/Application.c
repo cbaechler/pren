@@ -34,9 +34,6 @@
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 
-uint8_t gugus;
-uint16_t gugus2;
-
 /*! \brief Application initialisation routine.
  *
  * This function does the initialisation of hardware and data structures. 
@@ -54,21 +51,12 @@ void APP_Init(void) {
  * of the components will be started in ProcessorExpert.c. 
  */
 void APP_Loop(void) {
-	//EVNT_SetEvent(EVNT_INIT);
-	gugus = 0;
-	gugus2 = 0;
-	DB_RegisterVar(DB_GUGUS, &gugus, U8, TRUE);
-	DB_RegisterVar(DB_GUGUS2, &gugus2, U16, TRUE);
-	DB_LoadEEPROM();
-	
 	LED_GREEN_On();
-	MOT_CalcValues(&rotary, 2000, 2000, 800);
-	MOT_CalcValues(&knee, 2000, 2000, 500);
-	MOT_CalcValues(&lift, 5000, 5000, 2500);
 	lift.position = 500;
 	LED_GREEN_Off();
+	
 	EVNT_SetEvent(EVNT_INIT);
-
+		
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
@@ -96,17 +84,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 	
     switch(event) {
         case EVNT_INIT: 
-        	
-        	if(DB_GetVar_u8(DB_GUGUS2) == 5) {
-        		LED_BLUE_On();
-				WAIT_Waitms(500);
-				LED_BLUE_Off();
-        	}
-        	else {
-        		LED_RED_On();
-				WAIT_Waitms(200);
-				LED_RED_Off();
-        	}
+			LED_BLUE_On();
+			WAIT_Waitms(500);
+			LED_BLUE_Off();
             break;
             
         case EVNT_HEARTBEAT:
@@ -253,6 +233,12 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						case U16: {
 							SER_AddData16(*((uint16_t*) DB_GetVar(SER_GetData8(0))));
 						}
+						case MOT: {
+                            MOT_PubData* t = (MOT_PubData*) DB_GetVar(SER_GetData8(0));
+							SER_AddData16(t->accel);
+                            SER_AddData16(t->decel);
+                            SER_AddData16(t->speed);
+						}
 					}
 					
 					SER_SendPacket(SER_WRITE_VARIABLE);
@@ -268,11 +254,22 @@ static void APP_HandleEvent(EVNT_Handle event) {
 							(*(uint16_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData16(1);
 							break;
 						}
+                		case MOT: {
+                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->accel = SER_GetData16(1);	
+                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->decel = SER_GetData16(3);
+                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->speed = SER_GetData16(5);
+							break;
+						}
                 	}
 
                 	SER_SendPacket(SER_WRITE_VARIABLE);
                 	DB_SaveEEPROM();                	
                 	break;
+                	
+				case SER_SAVE_NVM:
+					DB_SaveEEPROM();
+					SER_SendPacket(SER_SAVE_NVM);
+					break;
                     
                     
 /*

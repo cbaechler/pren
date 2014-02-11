@@ -12,7 +12,9 @@
  */
 
 #include "PE_Types.h"
+#include "Application.h"
 #include "Database.h"
+#include "Motors.h"
 #include "NVM.h"
 
 DB_Var database[DB_NOF_VARS];
@@ -23,6 +25,12 @@ void DB_Init(void) {
 		database[i].var_ptr = NULL;		// empty pointer
 		database[i].ee = FALSE;			// do not store to eeprom
 	}
+	
+	// Register Global Variables
+	DB_RegisterVar(DB_MOT_ROTARY, &(rotary.p), MOT, TRUE);
+	
+	// Load registered globals from NVM
+	DB_LoadEEPROM();
 }
 
 void DB_RegisterVar(uint8_t varID, void* adr, DB_DataType type, bool eeprom) {
@@ -41,6 +49,7 @@ uint8_t DB_GetTypeSize(DB_DataType type) {
 	switch(type) {
 		case U8: 	return sizeof(uint8_t);
 		case U16:	return sizeof(uint16_t);
+		case MOT:	return sizeof(MOT_PubData);
 	}
 	
 	return 0;
@@ -100,6 +109,14 @@ void DB_SaveEEPROM(void) {
 				}
 				case U16: {
 					NVM_SetWordFlash((NVM_TAddress)nvm_pos, *(uint16_t*) database[i].var_ptr);
+					break;
+				}
+				case MOT: {
+					MOT_PubData t;
+					t = *(MOT_PubData*) database[i].var_ptr;
+					NVM_SetWordFlash((NVM_TAddress)nvm_pos, t.accel);
+					NVM_SetWordFlash((NVM_TAddress)nvm_pos+2, t.decel);
+					NVM_SetWordFlash((NVM_TAddress)nvm_pos+4, t.speed);
 					break;
 				}
 			}

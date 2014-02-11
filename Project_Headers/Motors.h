@@ -31,7 +31,8 @@ typedef enum MOT_Pins {
 	MOT_PIN_MODE2, 
 	MOT_PIN_NRST, 
 	MOT_PIN_DIR, 
-	MOT_PIN_FAULT
+	MOT_PIN_FAULT, 
+	MOT_PIN_LIM
 } MOT_Pins;
 
 // Define Motor FSM States
@@ -42,7 +43,14 @@ typedef enum MOT_StateKinds {
 	MOT_FSM_DECEL
 } MOT_StateKinds;
 
-// Define Motor Data Cluster
+// Define Public Motor Data Cluster (used for communication)
+typedef struct MOT_PubData {
+	uint16_t accel;
+	uint16_t decel;
+	uint16_t speed;
+} MOT_PubData;
+
+// Define Internal Motor Data Cluster
 typedef struct MOT_FSMData {
 	uint8_t index;				// ok
 	MOT_StateKinds state;		// ok
@@ -50,10 +58,12 @@ typedef struct MOT_FSMData {
 	bool running;				// ok
 	
 	/* motor settings */
+	MOT_PubData p;
+	/*
 	uint16_t accel;				//!<eeprom
 	uint16_t decel;				//!<eeprom
 	uint16_t speed;				//!<eeprom
-
+	*/
 	/* pre-calculated values ... */
 	int16_t min_delay;			// ok
 	uint16_t max_s_lim;			// ok
@@ -86,7 +96,8 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 
 //! Number of (full)steps per round on stepper motor in use.
 #define FSPR 200
-#define SPR (FSPR*32)	/* TODO: when chaning step mode... also change SPR, recalc! */
+#define SPR  FSPR
+//#define SPR (FSPR*32)	/* TODO: when chaning step mode... also change SPR, recalc! */
 
 // Maths constants
 #define ALPHA (2*3.14159/SPR)                    		// 2*pi/spr
