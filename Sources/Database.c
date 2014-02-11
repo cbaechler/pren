@@ -55,10 +55,17 @@ uint8_t DB_GetVar_u8(uint8_t varID) {
 }
 
 void DB_LoadEEPROM(void) {
-	uint8_t i;
+	uint8_t i, j;
 	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
 	for(i=0; i<DB_NOF_VARS; i++) {
 		if(database[i].ee) {
+			for(j=0; j<DB_GetTypeSize(database[i].type); j++) {
+				NVM_GetByteFlash((NVM_TAddress)(nvm_pos+j), (uint8_t*) (database[i].var_ptr+j));
+			}
+
+			nvm_pos += DB_GetTypeSize(database[i].type);
+
+			/* == first version of the code:
 			switch(database[i].type) {
 				case U8: {
 					NVM_GetByteFlash((NVM_TAddress)nvm_pos, (uint8_t*) database[i].var_ptr);
@@ -70,16 +77,23 @@ void DB_LoadEEPROM(void) {
 				}
 			}
 
-			nvm_pos += DB_GetTypeSize(database[i].type);
+			nvm_pos += DB_GetTypeSize(database[i].type);*/
 		}
 	}
 }
 
 void DB_SaveEEPROM(void) {
-	uint8_t i;
+	uint8_t i, j;
 	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
 	for(i=0; i<DB_NOF_VARS; i++) {
 		if(database[i].ee) {
+			for(j=0; j<DB_GetTypeSize(database[i].type); j++) {
+				NVM_SetByteFlash((NVM_TAddress)(nvm_pos+j), *(uint8_t*) (database[i].var_ptr+j));
+			}
+
+			nvm_pos += DB_GetTypeSize(database[i].type);
+			
+			/* == first version of the code:
 			switch(database[i].type) {
 				case U8: {
 					NVM_SetByteFlash((NVM_TAddress)nvm_pos, *(uint8_t*) database[i].var_ptr);
@@ -90,7 +104,7 @@ void DB_SaveEEPROM(void) {
 				}
 			}
 			
-			nvm_pos += DB_GetTypeSize(database[i].type);
+			nvm_pos += DB_GetTypeSize(database[i].type);*/
 		}
 	}
 }

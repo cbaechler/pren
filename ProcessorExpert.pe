@@ -4,9 +4,9 @@
     <Name>ProcessorExpert</Name>
     <SavedBy>chrigu</SavedBy>
     <ModificationStamp>61</ModificationStamp>
-    <Date>2014-02-10</Date>
+    <Date>2014-02-11</Date>
     <IDE>Eclipse IDE</IDE>
-    <PEversion>1.8.0.RT5_b1335-1805</PEversion>
+    <PEversion>1.8.1.RT5_b1349-1839</PEversion>
   </Header>
   <Options>
     <EventsDirectory>Sources</EventsDirectory>
@@ -3501,6 +3501,8 @@
         <ItemSymbol>I2S0_MclkPinSourceSpeedMode0</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
+        <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
+        <Value>Auto select</Value>
       </ItemState>
     </Properties>
     <Methods>

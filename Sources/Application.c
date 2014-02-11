@@ -97,7 +97,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
     switch(event) {
         case EVNT_INIT: 
         	
-        	if(DB_GetVar_u8(DB_GUGUS) == 5) {
+        	if(DB_GetVar_u8(DB_GUGUS2) == 5) {
         		LED_BLUE_On();
 				WAIT_Waitms(500);
 				LED_BLUE_Off();
