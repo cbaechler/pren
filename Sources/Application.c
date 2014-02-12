@@ -262,12 +262,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						}
                 	}
 
-                	SER_SendPacket(SER_WRITE_VARIABLE);
-                	DB_SaveEEPROM();                	
+                	SER_SendPacket(SER_WRITE_VARIABLE);            	
                 	break;
                 	
 				case SER_SAVE_NVM:
-					DB_SaveEEPROM();
+					DB_SaveNVM();
 					SER_SendPacket(SER_SAVE_NVM);
 					break;
                     

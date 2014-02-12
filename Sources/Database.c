@@ -23,21 +23,23 @@ void DB_Init(void) {
 	uint8_t i;
 	for(i=0; i<DB_NOF_VARS; i++) {		// set defaults for each varaible in database
 		database[i].var_ptr = NULL;		// empty pointer
-		database[i].ee = FALSE;			// do not store to eeprom
+		database[i].nvm = FALSE;			// do not store to eeprom
 	}
 	
-	// Register Global Variables
+	// Register Global Variables (all nvm variables must be registered here)
 	DB_RegisterVar(DB_MOT_ROTARY, &(rotary.p), MOT, TRUE);
+	DB_RegisterVar(DB_MOT_KNEE, &(knee.p), MOT, TRUE);
+	DB_RegisterVar(DB_MOT_LIFT, &(lift.p), MOT, TRUE);
 	
 	// Load registered globals from NVM
-	DB_LoadEEPROM();
+	DB_LoadNVM();
 }
 
 void DB_RegisterVar(uint8_t varID, void* adr, DB_DataType type, bool eeprom) {
 	EnterCritical();
 	database[varID].var_ptr = adr;
 	database[varID].type = type;
-	database[varID].ee = eeprom;
+	database[varID].nvm = eeprom;
 	ExitCritical();
 }
 
@@ -63,67 +65,30 @@ uint8_t DB_GetVar_u8(uint8_t varID) {
 	return *(uint8_t*) DB_GetVar(varID);
 }
 
-void DB_LoadEEPROM(void) {
+void DB_LoadNVM(void) {
 	uint8_t i, j;
 	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
 	for(i=0; i<DB_NOF_VARS; i++) {
-		if(database[i].ee) {
+		if(database[i].nvm) {
 			for(j=0; j<DB_GetTypeSize(database[i].type); j++) {
 				NVM_GetByteFlash((NVM_TAddress)(nvm_pos+j), (uint8_t*) (database[i].var_ptr+j));
 			}
 
 			nvm_pos += DB_GetTypeSize(database[i].type);
-
-			/* == first version of the code:
-			switch(database[i].type) {
-				case U8: {
-					NVM_GetByteFlash((NVM_TAddress)nvm_pos, (uint8_t*) database[i].var_ptr);
-					break;
-				}
-				case U16: {
-					NVM_GetWordFlash((NVM_TAddress)nvm_pos, (uint16_t*) database[i].var_ptr);				
-					break;
-				}
-			}
-
-			nvm_pos += DB_GetTypeSize(database[i].type);*/
 		}
 	}
 }
 
-void DB_SaveEEPROM(void) {
+void DB_SaveNVM(void) {
 	uint8_t i, j;
 	uint32_t nvm_pos = (uint32_t) DB_NVM_BASE_ADDR;
 	for(i=0; i<DB_NOF_VARS; i++) {
-		if(database[i].ee) {
+		if(database[i].nvm) {
 			for(j=0; j<DB_GetTypeSize(database[i].type); j++) {
 				NVM_SetByteFlash((NVM_TAddress)(nvm_pos+j), *(uint8_t*) (database[i].var_ptr+j));
 			}
 
 			nvm_pos += DB_GetTypeSize(database[i].type);
-			
-			/* == first version of the code:
-			switch(database[i].type) {
-				case U8: {
-					NVM_SetByteFlash((NVM_TAddress)nvm_pos, *(uint8_t*) database[i].var_ptr);
-				}
-				case U16: {
-					NVM_SetWordFlash((NVM_TAddress)nvm_pos, *(uint16_t*) database[i].var_ptr);
-					break;
-				}
-				case MOT: {
-					MOT_PubData t;
-					t = *(MOT_PubData*) database[i].var_ptr;
-					NVM_SetWordFlash((NVM_TAddress)nvm_pos, t.accel);
-					NVM_SetWordFlash((NVM_TAddress)nvm_pos+2, t.decel);
-					NVM_SetWordFlash((NVM_TAddress)nvm_pos+4, t.speed);
-					break;
-				}
-			}
-			
-			nvm_pos += DB_GetTypeSize(database[i].type);*/
 		}
 	}
 }
-
-// function: all to eeprom
