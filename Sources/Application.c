@@ -33,6 +33,7 @@
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
+static void APP_Blink(void *p);
 
 /*! \brief Application initialisation routine.
  *
@@ -41,6 +42,7 @@ static void APP_HandleEvent(EVNT_Handle event);
 void APP_Init(void) {
 	DB_Init();
     EVNT_Init();
+    TRG_Init();
     MOT_Init();
 }
 
@@ -56,7 +58,7 @@ void APP_Loop(void) {
 	LED_GREEN_Off();
 	
 	EVNT_SetEvent(EVNT_INIT);
-		
+			
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
@@ -66,6 +68,11 @@ void APP_Loop(void) {
         
         // Further Tasks...
     }
+}
+
+static void APP_Blink(void *p) {
+	LED_GREEN_Neg();
+	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 }
 
 /*! \brief Event handler routine.
@@ -87,6 +94,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			LED_BLUE_On();
 			WAIT_Waitms(500);
 			LED_BLUE_Off();
+			TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
             break;
             
         case EVNT_HEARTBEAT:
@@ -140,7 +148,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
 				case 'd': 
 					//SER_AddData16(rotary.step_count);
 					//SER_AddData16(rotary.step_delay);
-					SER_AddData16((uint16_t) ROB_GetStateArray());
+					//SER_AddData16((uint16_t) ROB_GetStateArray());
+					SER_AddData16((uint16_t) MOT_GetState(&rotary));
+					SER_AddData16((uint16_t) MOT_GetState(&knee));
+					SER_AddData16((uint16_t) MOT_GetState(&lift));
+					
 					SER_AddData16(rotary.position);
 					SER_AddData16(knee.position);
                     SER_AddData16(lift.position);                    

@@ -31,7 +31,7 @@ void DB_Init(void) {
 	DB_RegisterVar(DB_MOT_KNEE, &(knee.p), MOT, TRUE);
 	DB_RegisterVar(DB_MOT_LIFT, &(lift.p), MOT, TRUE);
 	
-	// Load registered globals from NVM
+	// Load values of registered globals from NVM
 	DB_LoadNVM();
 }
 

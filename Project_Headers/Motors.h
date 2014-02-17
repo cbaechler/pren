@@ -25,16 +25,6 @@
 #define CCW		0
 #define CW		1
 
-typedef enum MOT_Pins {
-	MOT_PIN_MODE0, 
-	MOT_PIN_MODE1, 
-	MOT_PIN_MODE2, 
-	MOT_PIN_NRST, 
-	MOT_PIN_DIR, 
-	MOT_PIN_FAULT, 
-	MOT_PIN_LIM
-} MOT_Pins;
-
 // Define Motor FSM States
 typedef enum MOT_StateKinds {
 	MOT_FSM_STOP, 
