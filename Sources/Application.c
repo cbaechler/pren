@@ -102,7 +102,15 @@ static void APP_HandleEvent(EVNT_Handle event) {
         	break;
 
         case EVNT_SERIAL_CMD:
-        	switch(*SER_GetCommand()) {					
+        	switch(*SER_GetCommand()) {	
+                case '1':
+                    LED_RED_On();
+                    break;
+
+                case '2':
+                    LED_RED_Off();
+                    break;
+
         		case 'P':
         			SER_AddData16(MOT_Process(&rotary));
         			SER_AddData16(MOT_Process(&knee));
