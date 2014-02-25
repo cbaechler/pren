@@ -16,6 +16,7 @@
 #include "M1_FAULT.h"
 #include "M1_NRST.h"
 #include "M1_DIR.h"
+#include "M1_LIM.h"
 
 #include "M2_MODE0.h"
 #include "M2_MODE1.h"
@@ -23,6 +24,7 @@
 #include "M2_FAULT.h"
 #include "M2_NRST.h"
 #include "M2_DIR.h"
+#include "M2_LIM.h"
 
 #include "M3_MODE0.h"
 #include "M3_MODE1.h"
@@ -30,6 +32,7 @@
 #include "M3_FAULT.h"
 #include "M3_NRST.h"
 #include "M3_DIR.h"
+#include "M3_LIM.h"
 
 #include "LED_RED.h"
 
@@ -152,6 +155,7 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M1_MODE2_GetVal()<<3);
 			result |= (M1_DIR_GetVal()<<4);
 			result |= (M1_nRST_GetVal()<<5);
+			result |= (M1_LIM_GetVal()<<6);
 			break;
 			
 		case KNEE:
@@ -161,6 +165,7 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M2_MODE2_GetVal()<<3);
 			result |= (M2_DIR_GetVal()<<4);
 			result |= (M2_nRST_GetVal()<<5);
+			result |= (M2_LIM_GetVal()<<6);
 			break;
 			
 		case LIFT:
@@ -170,6 +175,7 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M3_MODE2_GetVal()<<3);
 			result |= (M3_DIR_GetVal()<<4);
 			result |= (M3_nRST_GetVal()<<5);
+			result |= (M3_LIM_GetVal()<<6);
 			break;
 	}
 	return result;
