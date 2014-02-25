@@ -95,6 +95,12 @@
 #include "UTIL.h"
 #include "NVM.h"
 #include "IntFlashLdd1.h"
+#include "M1_LIM.h"
+#include "BitIoLdd25.h"
+#include "M2_LIM.h"
+#include "BitIoLdd26.h"
+#include "M3_LIM.h"
+#include "BitIoLdd27.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
