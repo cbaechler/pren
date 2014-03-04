@@ -43,6 +43,7 @@ void APP_Init(void) {
 	DB_Init();
     EVNT_Init();
     TRG_Init();
+    SER_Init();
     MOT_Init();
 }
 
@@ -105,12 +106,16 @@ static void APP_HandleEvent(EVNT_Handle event) {
         	switch(*SER_GetCommand()) {	
                 case '1':
                     LED_RED_On();
+                    DB_SaveNVM();
+                    SER_SendPacket('1');
                     break;
 
                 case '2':
                     LED_RED_Off();
+                    DB_SaveNVM();
+                    SER_SendPacket('2');
                     break;
-
+                    
         		case 'P':
         			SER_AddData16(MOT_Process(&rotary));
         			SER_AddData16(MOT_Process(&knee));
@@ -252,12 +257,17 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						}
 						case U16: {
 							SER_AddData16(*((uint16_t*) DB_GetVar(SER_GetData8(0))));
+							break;
 						}
 						case MOT: {
                             MOT_PubData* t = (MOT_PubData*) DB_GetVar(SER_GetData8(0));
 							SER_AddData16(t->accel);
                             SER_AddData16(t->decel);
                             SER_AddData16(t->speed);
+                            break;
+						}
+						case T_DBGBUFFER: {
+							break;
 						}
 					}
 					
@@ -280,6 +290,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
                 			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->speed = SER_GetData16(5);
 							break;
 						}
+                		case T_DBGBUFFER: {
+                			break;
+                		}
                 	}
 
                 	SER_SendPacket(SER_WRITE_VARIABLE);            	

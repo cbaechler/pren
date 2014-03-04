@@ -54,6 +54,9 @@ typedef struct SER_FSMData {
 #define SER_GetData8(i)		(SER_GetData()[i])
 #define	SER_GetData16(i)	((SER_GetData()[i]<<8)+SER_GetData()[i+1])
 
+extern uint8_t debugBuffer[20];
+
+void SER_Init(void);
 void SER_Process(void);
 void SER_SetHandled(void);
 uint8_t* SER_GetLength(void);

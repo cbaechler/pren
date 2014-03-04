@@ -15,6 +15,7 @@
 #include "Application.h"
 #include "Database.h"
 #include "Motors.h"
+#include "Serial.h"
 #include "NVM.h"
 
 DB_Var database[DB_NOF_VARS];
@@ -27,6 +28,7 @@ void DB_Init(void) {
 	}
 	
 	// Register Global Variables (all nvm variables must be registered here)
+	DB_RegisterVar(DB_DBGBUFFER, debugBuffer, T_DBGBUFFER, TRUE);
 	DB_RegisterVar(DB_MOT_ROTARY, &(rotary.p), MOT, TRUE);
 	DB_RegisterVar(DB_MOT_KNEE, &(knee.p), MOT, TRUE);
 	DB_RegisterVar(DB_MOT_LIFT, &(lift.p), MOT, TRUE);
@@ -52,6 +54,7 @@ uint8_t DB_GetTypeSize(DB_DataType type) {
 		case U8: 	return sizeof(uint8_t);
 		case U16:	return sizeof(uint16_t);
 		case MOT:	return sizeof(MOT_PubData);
+		case T_DBGBUFFER: return 20;
 	}
 	
 	return 0;

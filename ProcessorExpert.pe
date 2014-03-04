@@ -4,7 +4,7 @@
     <Name>ProcessorExpert</Name>
     <SavedBy>chrigu</SavedBy>
     <ModificationStamp>65</ModificationStamp>
-    <Date>2014-02-27</Date>
+    <Date>2014-03-04</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.8.1.RT5_b1349-1839</PEversion>
   </Header>
@@ -42855,9 +42855,10 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value />
         <ItemWasNeverEnabledInChgScript>true</ItemWasNeverEnabledInChgScript>
         <CustomValue />
+        <Index>0</Index>
+        <EnumSymbVal>0</EnumSymbVal>
       </ItemState>
       <ItemState>
         <ItemSymbol>IntPortPExPriorityFeatureGroup</ItemSymbol>
@@ -50423,6 +50424,7 @@
         <Index>0</Index>
         <EnumSymbVal>0</EnumSymbVal>
         <CustomValue />
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>IntPortPExPriorityFeatureGroup</ItemSymbol>

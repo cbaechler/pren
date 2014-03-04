@@ -5,13 +5,15 @@ typedef enum {		/*   ID   Description        */
 	DB_MOT_ROTARY,
 	DB_MOT_KNEE,
 	DB_MOT_LIFT,
+	DB_DBGBUFFER,
 	DB_NOF_VARS		/*!< Sentinel, must be last! */
 } DB_VarID;
 
 typedef enum {
 	U8, 
 	U16, 
-	MOT
+	MOT,
+	T_DBGBUFFER
 } DB_DataType;
 
 typedef struct DB_Var {

@@ -113,6 +113,8 @@
 #include "BitIoLdd26.h"
 #include "M3_LIM.h"
 #include "BitIoLdd27.h"
+#include "GPIO_PTB.h"
+#include "GPIO_PTE.h"
 
 #ifdef __cplusplus
 extern "C" {

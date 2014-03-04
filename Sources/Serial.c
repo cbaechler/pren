@@ -16,6 +16,8 @@
 #include "DBG.h"
 #include "Serial1.h"
 
+#define SER_DEBUG 
+
 static SER_FSMData data = {
 	SER_FSM_START,
 	{0,{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},0,0,0},	// input packet (request)
@@ -24,8 +26,11 @@ static SER_FSMData data = {
 	DBG_SendChar
 };
 
+uint8_t debugBuffer[20];
+static uint8_t debugBuffer_cnt;
+
 void SER_Init(void) {
-	
+	debugBuffer_cnt = 0;
 }
 
 /*! \brief Sends a single char to the uart.
@@ -136,6 +141,16 @@ void SER_Process(void) {
 	uint8_t in = 0;
 	uint8_t* inp = &in;
 	data.ReceiveChar(inp);
+
+#ifdef SER_DEBUG
+	debugBuffer[debugBuffer_cnt] = in;
+	if(debugBuffer_cnt >= 20) {
+		debugBuffer_cnt = 0;
+	}
+	else {
+		debugBuffer_cnt++;
+	}
+#endif
 	
 	switch(data.state) {
 		case SER_FSM_START:

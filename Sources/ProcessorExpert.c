@@ -101,6 +101,8 @@
 #include "BitIoLdd26.h"
 #include "M3_LIM.h"
 #include "BitIoLdd27.h"
+#include "GPIO_PTB.h"
+#include "GPIO_PTE.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
