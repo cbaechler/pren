@@ -267,6 +267,10 @@ static void APP_HandleEvent(EVNT_Handle event) {
                             break;
 						}
 						case T_DBGBUFFER: {
+							uint8_t i;
+							for(i=0; i<=20; i++) {
+								SER_AddData8(debugBuffer[i]);
+							}
 							break;
 						}
 					}
@@ -291,6 +295,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
 							break;
 						}
                 		case T_DBGBUFFER: {
+                			// we're using this just do delete variable content...
+                			uint8_t i;
+                			for(i=0; i<=20; i++) {
+                				debugBuffer[i] = 0x00;
+                			}
                 			break;
                 		}
                 	}

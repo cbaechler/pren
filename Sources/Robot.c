@@ -48,6 +48,10 @@ void ROB_MoveTo(uint16_t x, uint16_t y) {
 	MOT_MoveSteps(&knee,   (int16_t) (y-knee.position));
 }
 
+/*bool ROB_CheckSystemValidity(void) {
+
+}*/
+
 void ROB_Run(void) {
 	switch(runmode) {
 		case ROB_INIT:
@@ -55,6 +59,8 @@ void ROB_Run(void) {
 			rotary.position = 0;
 			knee.position   = 0;
 			lift.position   = 25000;
+
+			/* move each axis until MOTx_LIM is reached */
 			
 			runmode = ROB_IDLE;
 			break;

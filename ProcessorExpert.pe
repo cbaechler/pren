@@ -4,7 +4,7 @@
     <Name>ProcessorExpert</Name>
     <SavedBy>chrigu</SavedBy>
     <ModificationStamp>65</ModificationStamp>
-    <Date>2014-03-04</Date>
+    <Date>2014-03-05</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.8.1.RT5_b1349-1839</PEversion>
   </Header>
@@ -42859,6 +42859,7 @@
         <CustomValue />
         <Index>0</Index>
         <EnumSymbVal>0</EnumSymbVal>
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>IntPortPExPriorityFeatureGroup</ItemSymbol>

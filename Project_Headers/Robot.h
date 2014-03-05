@@ -19,7 +19,8 @@
 typedef uint8_t ROB_RunMode;
 
 typedef struct ROB_Position {
-
+	uint16_t alpha;
+	uint16_t beta;
 } ROB_Position;
 
 void ROB_Init(void);
