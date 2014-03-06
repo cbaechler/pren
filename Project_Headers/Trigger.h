@@ -17,9 +17,8 @@
 /*! \brief Triggers which can be used from the application */
 typedef enum {
 	TRG_LED_BLINK, 	    /*!< LED blinking */
-	TRG_BTNLED_OFF, 	/*!< Turn LED off */
-	TRG_BTNSND_OFF, 	/*!< Switch sounder off  */
-	TRG_KEYPRESS, 	    /*!< Trigger for debouncing */
+	TRG_KEY_POLL,		/*!< Key Poll */
+	TRG_BLUE_LED_OFF,
 	TRG_NOF_TRIGGERS 	/*!< Must be last! */
 } TRG_TriggerKind;
 

@@ -18,6 +18,7 @@ typedef enum EVNT_Handle {
 	EVNT_INIT,						/*!< System Initialisation Event */
 	EVNT_HEARTBEAT,
 	EVNT_SERIAL_CMD,
+	EVNT_SAVE_NVM,
 	EVNT_NOF_EVENTS					/*!< Sentinel only, must be last one */
 
 } EVNT_Handle;

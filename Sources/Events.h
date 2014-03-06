@@ -115,6 +115,8 @@
 #include "BitIoLdd27.h"
 #include "GPIO_PTB.h"
 #include "GPIO_PTE.h"
+#include "SW1.h"
+#include "BitIoLdd28.h"
 
 #ifdef __cplusplus
 extern "C" {

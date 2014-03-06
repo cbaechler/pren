@@ -103,6 +103,8 @@
 #include "BitIoLdd27.h"
 #include "GPIO_PTB.h"
 #include "GPIO_PTE.h"
+#include "SW1.h"
+#include "BitIoLdd28.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

@@ -30,10 +30,13 @@
 #include "LED_RED.h"
 #include "LED_GREEN.h"
 #include "LED_BLUE.h"
+#include "SW1.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
 static void APP_Blink(void *p);
+static void APP_KeyPoll(void *p);
+static void APP_BlueLedOff(void *p);
 
 /*! \brief Application initialisation routine.
  *
@@ -72,8 +75,29 @@ void APP_Loop(void) {
 }
 
 static void APP_Blink(void *p) {
-	LED_GREEN_Neg();
+	//LED_GREEN_Neg();
 	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
+}
+
+static void APP_KeyPoll(void *p) {
+	static uint8_t debounce_cnt;
+	
+	if(!SW1_GetVal()) {
+		debounce_cnt++;
+		if(debounce_cnt >= 100) {
+			EVNT_SetEvent(EVNT_SAVE_NVM);
+			debounce_cnt = 0;
+		}
+	}
+	else {
+		debounce_cnt = 0;
+	}
+	
+	TRG_SetTrigger(TRG_KEY_POLL, 10, APP_KeyPoll, NULL);
+}
+
+static void APP_BlueLedOff(void *p) {
+	LED_BLUE_Off();
 }
 
 /*! \brief Event handler routine.
@@ -96,23 +120,31 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			WAIT_Waitms(500);
 			LED_BLUE_Off();
 			TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
+			TRG_SetTrigger(TRG_KEY_POLL, 10, APP_KeyPoll, NULL);
             break;
             
         case EVNT_HEARTBEAT:
         	LED_BLUE_Neg();
+        	break;
+        	
+        case EVNT_SAVE_NVM:
+        	LED_BLUE_On();
+        	DB_SaveNVM();
+        	TRG_SetTrigger(TRG_BLUE_LED_OFF, 1000, APP_BlueLedOff, NULL);
+        	//LED_BLUE_Off();
         	break;
 
         case EVNT_SERIAL_CMD:
         	switch(*SER_GetCommand()) {	
                 case '1':
                     LED_RED_On();
-                    DB_SaveNVM();
+                    //DB_SaveNVM();
                     SER_SendPacket('1');
                     break;
 
                 case '2':
                     LED_RED_Off();
-                    DB_SaveNVM();
+                    //DB_SaveNVM();
                     SER_SendPacket('2');
                     break;
                     
