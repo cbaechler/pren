@@ -297,6 +297,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                 		case T_DBGBUFFER: {
                 			// we're using this just do delete variable content...
                 			SER_ResetDebugBuffer();
+                			DB_SaveNVM();
                 			break;
                 		}
                 	}
