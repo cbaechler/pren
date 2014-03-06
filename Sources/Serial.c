@@ -26,10 +26,18 @@ static SER_FSMData data = {
 	DBG_SendChar
 };
 
-uint8_t debugBuffer[20];
+uint8_t debugBuffer[SER_DEBUGBUFFER_LENGTH+1];
 static uint8_t debugBuffer_cnt;
 
 void SER_Init(void) {
+	debugBuffer_cnt = 0;
+}
+
+void SER_ResetDebugBuffer(void) {
+	uint8_t i;
+	for(i=0; i<=SER_DEBUGBUFFER_LENGTH; i++) {
+		debugBuffer[i] = 0x00;
+	}
 	debugBuffer_cnt = 0;
 }
 
@@ -144,7 +152,7 @@ void SER_Process(void) {
 
 #ifdef SER_DEBUG
 	debugBuffer[debugBuffer_cnt] = in;
-	if(debugBuffer_cnt >= 20) {
+	if(debugBuffer_cnt >= SER_DEBUGBUFFER_LENGTH) {
 		debugBuffer_cnt = 0;
 	}
 	else {

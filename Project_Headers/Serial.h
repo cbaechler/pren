@@ -25,6 +25,8 @@
 #define SER_SAVE_NVM 		's'
 #define SER_WRITE_VARIABLE	'w'
 
+#define SER_DEBUGBUFFER_LENGTH	30
+
 typedef enum SER_StateKinds {
 	SER_FSM_START, 
 	SER_FSM_LENGTH,
@@ -54,10 +56,11 @@ typedef struct SER_FSMData {
 #define SER_GetData8(i)		(SER_GetData()[i])
 #define	SER_GetData16(i)	((SER_GetData()[i]<<8)+SER_GetData()[i+1])
 
-extern uint8_t debugBuffer[20];
+extern uint8_t debugBuffer[SER_DEBUGBUFFER_LENGTH+1];
 
 void SER_Init(void);
 void SER_Process(void);
+void SER_ResetDebugBuffer(void);
 void SER_SetHandled(void);
 uint8_t* SER_GetLength(void);
 uint8_t* SER_GetCommand(void);

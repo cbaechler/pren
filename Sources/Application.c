@@ -268,7 +268,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						}
 						case T_DBGBUFFER: {
 							uint8_t i;
-							for(i=0; i<=20; i++) {
+							for(i=0; i<=SER_DEBUGBUFFER_LENGTH; i++) {
 								SER_AddData8(debugBuffer[i]);
 							}
 							break;
@@ -296,10 +296,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						}
                 		case T_DBGBUFFER: {
                 			// we're using this just do delete variable content...
-                			uint8_t i;
-                			for(i=0; i<=20; i++) {
-                				debugBuffer[i] = 0x00;
-                			}
+                			SER_ResetDebugBuffer();
                 			break;
                 		}
                 	}
