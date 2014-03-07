@@ -75,7 +75,8 @@ void APP_Loop(void) {
 }
 
 static void APP_Blink(void *p) {
-	//LED_GREEN_Neg();
+	LED_GREEN_Neg();
+	//SER_SendChar('5');
 	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 }
 
