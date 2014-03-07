@@ -51,6 +51,7 @@ void MOT_Init(void) {
 	// M1
 	rotary.index = ROTARY;
 	rotary.running = FALSE;
+	rotary.invert = FALSE;
 	rotary.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&rotary, MOT_STEP_1);
 	MOT_CalcValues(&rotary, rotary.p.accel, rotary.p.decel, rotary.p.speed);
@@ -58,6 +59,7 @@ void MOT_Init(void) {
 	// M2
 	knee.index = KNEE;
 	knee.running = FALSE;
+	knee.invert = FALSE;
 	knee.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&knee, MOT_STEP_1);
 	MOT_CalcValues(&knee, knee.p.accel, knee.p.decel, knee.p.speed);
@@ -65,6 +67,7 @@ void MOT_Init(void) {
 	// M3
 	lift.index = LIFT;
 	lift.running = FALSE;
+	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&lift, MOT_STEP_32);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
@@ -154,8 +157,9 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M1_MODE1_GetVal()<<2);
 			result |= (M1_MODE2_GetVal()<<3);
 			result |= (M1_DIR_GetVal()<<4);
-			result |= (M1_nRST_GetVal()<<5);
-			result |= (M1_LIM_GetVal()<<6);
+			result |= (m_->invert<<5);
+			result |= (M1_nRST_GetVal()<<6);
+			result |= (M1_LIM_GetVal()<<7);
 			break;
 			
 		case KNEE:
@@ -164,8 +168,9 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M2_MODE1_GetVal()<<2);
 			result |= (M2_MODE2_GetVal()<<3);
 			result |= (M2_DIR_GetVal()<<4);
-			result |= (M2_nRST_GetVal()<<5);
-			result |= (M2_LIM_GetVal()<<6);
+			result |= (m_->invert<<5);
+			result |= (M2_nRST_GetVal()<<6);
+			result |= (M2_LIM_GetVal()<<7);
 			break;
 			
 		case LIFT:
@@ -174,8 +179,9 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 			result |= (M3_MODE1_GetVal()<<2);
 			result |= (M3_MODE2_GetVal()<<3);
 			result |= (M3_DIR_GetVal()<<4);
-			result |= (M3_nRST_GetVal()<<5);
-			result |= (M3_LIM_GetVal()<<6);
+			result |= (m_->invert<<5);
+			result |= (M3_nRST_GetVal()<<6);
+			result |= (M3_LIM_GetVal()<<7);
 			break;
 	}
 	return result;
@@ -214,11 +220,17 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	// Set direction from sign on step value.
 	if(steps < 0) {
-		MOT_SetDirection(m_, CCW);
+		if(!m_->invert)
+			MOT_SetDirection(m_, CCW);
+		else
+			MOT_SetDirection(m_, CW);
 		steps = -steps;
 	}
 	else {
-		MOT_SetDirection(m_, CW);
+		if(!m_->invert)
+			MOT_SetDirection(m_, CW);
+		else
+			MOT_SetDirection(m_, CCW);
 	}
 	
 	// If moving only 1 step.

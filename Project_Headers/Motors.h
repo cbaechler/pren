@@ -46,14 +46,11 @@ typedef struct MOT_FSMData {
 	MOT_StateKinds state;		// ok
 	bool dir;					// ok
 	bool running;				// ok
+	bool invert;
 	
 	/* motor settings */
 	MOT_PubData p;
-	/*
-	uint16_t accel;				//!<eeprom
-	uint16_t decel;				//!<eeprom
-	uint16_t speed;				//!<eeprom
-	*/
+
 	/* pre-calculated values ... */
 	int16_t min_delay;			// ok
 	uint16_t max_s_lim;			// ok
