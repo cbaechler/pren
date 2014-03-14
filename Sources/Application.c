@@ -21,11 +21,7 @@
 #include "Trigger.h"
 #include "BlockStack.h"
 #include "Serial.h"
-#include "DBG.h"
 #include "WAIT.h"
-#include "M1_MODE0.h"
-#include "M1_MODE1.h"
-#include "M1_MODE2.h"
 
 #include "LED_RED.h"
 #include "LED_GREEN.h"

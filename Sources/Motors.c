@@ -3,6 +3,8 @@
  * \brief Motor module implementation.
  * \author Christoph Bächler
  * \date 16.12.2013
+ *
+ * Part of this code is based on the atmel application note AVR446.
  */
 
 #include "PE_Types.h"
@@ -69,16 +71,16 @@ void MOT_Init(void) {
 	lift.running = FALSE;
 	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&lift, MOT_STEP_32);
+	MOT_SetStepMode(&lift, MOT_STEP_1);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
-	// I Limit
+	// Current Limit
 	ILIM_Ptr = ILIM_Init(NULL);
-	MOT_SetILim(1000);
+	MOT_SetILim(1000);				// Set Limit to 1V (equals 1A)
 }
 
 void MOT_SetILim(uint16_t i_max) {
-	// V_ref = 
+	// V_ref = ...
 	// i_max = 2 * v_out
 	// --> v_out = i_max/2
 	// 1 A -> 1000/2 -> 500 mV
@@ -95,7 +97,7 @@ void MOT_SetILim(uint16_t i_max) {
 /*! \brief Sets mode pins for the specified step mode (full-, half-, quarter, ... step).
  *
  *  \param	_m			Pointer to the motor struct
- *  \param	step_mode	Mode to set
+ *  \param	step_mode	Mode to set (MOT_STEP_1, MOT_STEP_2, MOT_STEP_4, ...)
  */
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 	// set new step mode

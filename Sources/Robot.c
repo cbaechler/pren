@@ -92,11 +92,10 @@ void HW_LED(uint8_t led, bool state) {
 	}
 }
 
-
 void ROB_Run(void) {
 	switch(runmode) {
 		case ROB_INIT:
-			/* initialise the robot, startup and system test, go to zero pos */
+			/* initialize the robot, startup and system test, go to zero pos */
 			rotary.position = 0;
 			knee.position   = 0;
 			lift.position   = 25000;
