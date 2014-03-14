@@ -92,9 +92,13 @@ void MOT_SetILim(uint16_t i_max) {
 	ILIM_SetValue(ILIM_Ptr, val);
 }
 
+/*! \brief Sets mode pins for the specified step mode (full-, half-, quarter, ... step).
+ *
+ *  \param	_m			Pointer to the motor struct
+ *  \param	step_mode	Mode to set
+ */
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 	// set new step mode
-	LED_RED_On();	// use this to determine the duration of following code
 	switch(m_->index) {
 		case ROTARY: 
 			M1_MODE0_PutVal((step_mode & 1)>>0);
@@ -116,10 +120,14 @@ void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 			M3_MODE2_PutVal((step_mode & 4)>>2);
 			// TODO: recalc all values!
 			break;
-	}	
-	LED_RED_Off();
+	}
 }
 
+/*! \brief Sets the direction pin to the specified direction (CW, CCW).
+ *
+ *  \param	_m			Pointer to the motor struct
+ *  \param	dir			Direction of the motor (CW, CCW)
+ */
 void MOT_SetDirection(MOT_FSMData* m_, bool dir) {
 	m_->dir = dir;
 	switch(m_->index) {
@@ -129,6 +137,11 @@ void MOT_SetDirection(MOT_FSMData* m_, bool dir) {
 	}
 }
 
+/*! \brief Sets the reset state of the motor driver.
+ *
+ *  \param	_m			Pointer to the motor struct
+ *  \param	state		State to set (true=disable motor driver, false=enable motor driver)
+ */
 void MOT_SetResetState(MOT_FSMData* m_, bool state) {
 	switch(m_->index) {
 		case ROTARY:	return M1_nRST_PutVal(state);		break;
@@ -137,6 +150,11 @@ void MOT_SetResetState(MOT_FSMData* m_, bool state) {
 	}
 }
 
+/*! \brief Reads the fault state pin of the motor driver.
+ *
+ *  \param	_m			Pointer to the motor struct
+ *  \return				Value of the pin (true=ok, false=fault)
+ */
 bool MOT_GetFaultState(MOT_FSMData* m_) {
 	switch(m_->index) {
 		case ROTARY:	return M1_FAULT_GetVal();			break;
@@ -146,6 +164,11 @@ bool MOT_GetFaultState(MOT_FSMData* m_) {
 	return TRUE;
 }
 
+/*! \brief Collects motor driver pin states to a uint8 (bool array).
+ *
+ *  \param	_m			Pointer to the motor struct
+ *  \return				Array of pin states
+ */
 uint8_t MOT_GetState(MOT_FSMData* m_) {
 	uint8_t result;
 	result = 0;
@@ -187,7 +210,8 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 	return result;
 }
 
-/*! This will calculate the values for the motor to speed
+/*! \brief This will calculate the values for the motor to speed.
+ *
  * \param m_	 Pointer to the motor object
  * \param accel  Accelration to use, in 0.01*rad/sec^2.
  * \param decel  Decelration to use, in 0.01*rad/sec^2.
@@ -213,9 +237,12 @@ void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t sp
 	}
 }
 
-/*! This tells the motor to drive any number of steps 
+/*! \brief This tells the motor to drive any number of steps.
+ *
  * \param m_	 Pointer to the motor object
- * \param steps  Number of steps to move (pos - CW, neg - CCW).
+ * \param accel  Accelration to use, in 0.01*rad/sec^2.
+ * \param decel  Decelration to use, in 0.01*rad/sec^2.
+ * \param speed  Max speed, in 0.01*rad/sec.
  */
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps) {
 	// Set direction from sign on step value.
