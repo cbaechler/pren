@@ -101,9 +101,6 @@
 #include "BitIoLdd23.h"
 #include "M3_FAULT.h"
 #include "BitIoLdd24.h"
-#include "BT.h"
-#include "Serial1.h"
-#include "ASerialLdd2.h"
 #include "UTIL.h"
 #include "NVM.h"
 #include "IntFlashLdd1.h"
@@ -117,6 +114,17 @@
 #include "GPIO_PTE.h"
 #include "SW1.h"
 #include "BitIoLdd28.h"
+#include "LED_S1.h"
+#include "LEDpin4.h"
+#include "BitIoLdd29.h"
+#include "LED_S2.h"
+#include "LEDpin5.h"
+#include "BitIoLdd30.h"
+#include "LED_ER.h"
+#include "LEDpin6.h"
+#include "BitIoLdd31.h"
+#include "VALVE.h"
+#include "BitIoLdd32.h"
 
 #ifdef __cplusplus
 extern "C" {

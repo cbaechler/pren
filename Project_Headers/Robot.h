@@ -16,6 +16,15 @@
 #define ROB_SCAN 				'S'
 #define ROB_IDLE				'P'
 
+typedef enum {
+	RED, 
+	BLUE, 
+	GREEN, 
+	S1, 
+	S2, 
+	ER
+} LED;
+
 typedef uint8_t ROB_RunMode;
 
 typedef struct ROB_Position {
@@ -30,5 +39,9 @@ uint16_t ROB_GetStateArray(void);
 void ROB_Run(void);
 bool ROB_Moving(void);
 void ROB_MoveTo(uint16_t x, uint16_t y);
+
+/* These are direct hardware access commands */
+void HW_VALVE(bool state);
+void HW_LED(uint8_t led, bool state);
 
 #endif /* ROBOT_H_ */

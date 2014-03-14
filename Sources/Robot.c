@@ -5,7 +5,8 @@
  * \date 04.01.2014
  *
  * This file contains the main code for the robot. It 
- * implements the different run modes (init, collect, debug, ...)
+ * implements the different run modes (init, collect, debug, ...) 
+ * and connects the hardware. 
  */
 
 #include "PE_Types.h"
@@ -17,6 +18,13 @@
 #include "M1_MODE0.h"
 #include "M1_MODE1.h"
 #include "M1_MODE2.h"
+#include "VALVE.h"
+#include "LED_RED.h"
+#include "LED_BLUE.h"
+#include "LED_GREEN.h"
+#include "LED_S1.h"
+#include "LED_S2.h"
+#include "LED_ER.h"
 
 static ROB_RunMode runmode;
 
@@ -51,6 +59,39 @@ void ROB_MoveTo(uint16_t x, uint16_t y) {
 /*bool ROB_CheckSystemValidity(void) {
 
 }*/
+
+void HW_VALVE(bool state) {
+	VALVE_PutVal(state);
+}
+
+void HW_LED(uint8_t led, bool state) {
+	switch(led) {
+		case RED:
+			LED_RED_Put(state);
+			break;
+
+		case BLUE:
+			LED_BLUE_Put(state);
+			break;
+
+		case GREEN:
+			LED_GREEN_Put(state);
+			break;
+
+		case S1:
+			LED_S1_Put(state);
+			break;
+
+		case S2:
+			LED_S2_Put(state);
+			break;
+
+		case ER:
+			LED_ER_Put(state);
+			break;
+	}
+}
+
 
 void ROB_Run(void) {
 	switch(runmode) {

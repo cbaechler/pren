@@ -14,7 +14,6 @@
 #include "Robot.h"
 #include "Motors.h"
 #include "BlockStack.h"
-#include "LED_RED.h"
 #include "WAIT.h"
 
 static BLOCK_Object block_storage[BLOCK_STACK_MAX_SIZE];
@@ -77,8 +76,9 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait for the lift to be lowered, switch vaccuum on and move to center */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// vacuum on
-				LED_RED_On();
-				
+				HW_LED(RED, TRUE);
+				HW_VALVE(TRUE);
+
 				// Move to center
 				ROB_MoveTo(750, 750);
 				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
@@ -101,7 +101,8 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait for the lift to be lowered, switch vaccum off and move arm up */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// vacuum off
-				LED_RED_Off();
+				HW_LED(RED, FALSE);
+				HW_VALVE(FALSE);
 				
 				// set Z target
 				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
