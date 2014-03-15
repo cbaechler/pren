@@ -24,9 +24,14 @@ typedef enum BLOCK_StateKinds {
 typedef struct BLOCK_FSMData {
 	BLOCK_StateKinds state;
 	bool started;
+	uint8_t nof_processed_blocks;
 } BLOCK_FSMData;
 
 #define BLOCK_STACK_MAX_SIZE	10
+
+extern uint16_t zBlockHeight;		/* Height of one single block */
+extern uint16_t zTargetSurface;		/* Distance to Target Surface (center) */
+extern uint16_t zGroundSurface;		/* Distance to Ground Surface (maximum) */
 
 void BLOCK_Init(void);
 void BLOCK_StartPickPlace(void);

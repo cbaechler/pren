@@ -6,6 +6,9 @@ typedef enum {		/*   ID   Description        */
 	DB_MOT_KNEE,
 	DB_MOT_LIFT,
 	DB_DBGBUFFER,
+	DB_BLOCK_ZBLOCKHEIGHT,
+	DB_BLOCK_ZTARGETSURFACE,
+	DB_BLOCK_ZGROUNDSURFACE,
 	DB_NOF_VARS		/*!< Sentinel, must be last! */
 } DB_VarID;
 

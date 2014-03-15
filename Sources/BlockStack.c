@@ -19,13 +19,18 @@
 static BLOCK_Object block_storage[BLOCK_STACK_MAX_SIZE];
 static BLOCK_Object nullblock = {0,0};
 static uint8_t block_index;
-static BLOCK_FSMData data = {BLOCK_IDLE, FALSE};
+static BLOCK_FSMData data = {BLOCK_IDLE, FALSE, 0};
+
+uint16_t zBlockHeight;		/* Height of one single block */
+uint16_t zTargetSurface;	/* Distance to Target Surface (center) */
+uint16_t zGroundSurface;	/* Distance to Ground Surface (maximum) */
 
 void BLOCK_Init(void) {
 	BLOCK_Clear();
 }
 
 void BLOCK_StartPickPlace(void) {
+	data.nof_processed_blocks = 0;
 	data.started = TRUE;
 	data.state = BLOCK_NEXT;
 }
@@ -51,8 +56,8 @@ void BLOCK_PickPlace_Process(void) {
 			if(!(ROB_Moving())) {
 				if(BLOCK_GetSize() > 0) {			// if there are blocks in blockstack
 					block = BLOCK_Pop();			// pop next block and set new target position
-					ROB_MoveTo(block.x, block.y);
-					MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
+					ROB_MoveToXY(block.x, block.y);
+					ROB_MoveToZ(zGroundSurface - 2*zBlockHeight);
 					data.state = BLOCK_PICK;
 				}
 				else if(BLOCK_GetSize() == 0) {
@@ -66,8 +71,8 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait until arm is at block location, then pick */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (1000-lift.position));
-				WAIT_Waitms(100);
+				ROB_MoveToZ(zGroundSurface - zBlockHeight);				// go down to the block
+				WAIT_Waitms(500);
 				data.state = BLOCK_PICKED;
 			}	
 			break;
@@ -80,8 +85,8 @@ void BLOCK_PickPlace_Process(void) {
 				HW_VALVE(TRUE);
 
 				// Move to center
-				ROB_MoveTo(750, 750);
-				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
+				ROB_MoveToXY(750, 750);
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+1) * zBlockHeight);
 				data.state = BLOCK_RELEASE;
 			}
 			break;
@@ -90,9 +95,8 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait until arm is at center location, then set z location */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (5000-lift.position));
-				
-				WAIT_Waitms(100);
+				ROB_MoveToZ(zTargetSurface - data.nof_processed_blocks * zBlockHeight);
+				WAIT_Waitms(500);
 				data.state = BLOCK_RELEASED;
 			}
 			break;
@@ -105,8 +109,11 @@ void BLOCK_PickPlace_Process(void) {
 				HW_VALVE(FALSE);
 				
 				// set Z target
-				MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
+				//MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+1) * zBlockHeight);
+				
 				data.state = BLOCK_NEXT;
+				data.nof_processed_blocks++;
 			}
 			break;
 

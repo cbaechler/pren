@@ -160,7 +160,8 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			//MOT_MoveSteps(&lift, SER_GetData16(4));
         			SER_SendPacket('Q');
         			break;
-        			
+        		
+        		/*
         		case 'm': 
         			accel = SER_GetData16(1);
 					decel = SER_GetData16(3);
@@ -185,12 +186,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 						default: 
 							break;
         			}
-        			break;
+        			break;*/
 					
 				case 'd': 
-					//SER_AddData16(rotary.step_count);
-					//SER_AddData16(rotary.step_delay);
-					//SER_AddData16((uint16_t) ROB_GetStateArray());
 					SER_AddData16((uint16_t) MOT_GetState(&rotary));
 					SER_AddData16((uint16_t) MOT_GetState(&knee));
 					SER_AddData16((uint16_t) MOT_GetState(&lift));
@@ -199,7 +197,6 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					SER_AddData16(knee.position);
                     SER_AddData16(lift.position);                    
 					SER_AddData16((uint16_t) BLOCK_GetSize());
-					//SER_AddData16((uint16_t) ROB_GetRunMode());
 					SER_SendPacket('d');
 					break;
         				

@@ -13,11 +13,7 @@
 #include "Robot.h"
 #include "BlockStack.h"
 #include "Motors.h"
-#include "LED_RED.h"
 #include "WAIT.h"
-#include "M1_MODE0.h"
-#include "M1_MODE1.h"
-#include "M1_MODE2.h"
 #include "VALVE.h"
 #include "LED_RED.h"
 #include "LED_BLUE.h"
@@ -51,10 +47,21 @@ uint16_t ROB_GetStateArray(void) {
 	return (uint16_t) MOT_GetState(&lift);
 }
 
-void ROB_MoveTo(uint16_t x, uint16_t y) {
+void ROB_MoveToXY(uint16_t x, uint16_t y) {
 	MOT_MoveSteps(&rotary, (int16_t) (x-rotary.position));
 	MOT_MoveSteps(&knee,   (int16_t) (y-knee.position));
 }
+
+void ROB_MoveToXYZ(uint16_t x, uint16_t y, uint16_t z) {
+	MOT_MoveSteps(&rotary, (int16_t) (x-rotary.position));
+	MOT_MoveSteps(&knee,   (int16_t) (y-knee.position));
+	MOT_MoveSteps(&lift,   (int16_t) (z-lift.position));
+}
+
+void ROB_MoveToZ(uint16_t z) {
+	MOT_MoveSteps(&lift,   (int16_t) (z-lift.position));
+}
+
 
 /*bool ROB_CheckSystemValidity(void) {
 

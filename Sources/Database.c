@@ -15,6 +15,7 @@
 #include "Application.h"
 #include "Database.h"
 #include "Motors.h"
+#include "BlockStack.h"
 #include "Serial.h"
 #include "NVM.h"
 
@@ -32,7 +33,10 @@ void DB_Init(void) {
 	DB_RegisterVar(DB_MOT_ROTARY, &(rotary.p), MOT, TRUE);
 	DB_RegisterVar(DB_MOT_KNEE, &(knee.p), MOT, TRUE);
 	DB_RegisterVar(DB_MOT_LIFT, &(lift.p), MOT, TRUE);
-	
+	DB_RegisterVar(DB_BLOCK_ZBLOCKHEIGHT, &(zBlockHeight), U16, TRUE);
+	DB_RegisterVar(DB_BLOCK_ZTARGETSURFACE, &(zTargetSurface), U16, TRUE);
+	DB_RegisterVar(DB_BLOCK_ZGROUNDSURFACE, &(zGroundSurface), U16, TRUE);
+		
 	// Load values of registered globals from NVM
 	DB_LoadNVM();
 }
