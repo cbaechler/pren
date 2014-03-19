@@ -9,21 +9,26 @@
 #define SERIAL_H_
 
 /* Define protocol */
-#define SER_START 			'['
-#define SER_END				']'
+#define SER_START 				'['
+#define SER_END					']'
 
-#define SER_MODE			'M'
-#define SER_BLOCK_ARRAY		'A'
-#define SER_RUN				'R'
-#define SER_PICK_BLOCK		'P'
-#define SER_RELEASE_BLOCK	'Q'
-#define SER_SET_POSITION	'S'
-#define SER_GET_POSITION	'T'
-#define SER_GET_VERSION		'V'
-#define SER_ZERO_POSITION	'Z'
-#define SER_READ_VARIABLE	'r'
-#define SER_SAVE_NVM 		's'
-#define SER_WRITE_VARIABLE	'w'
+#define SER_MODE				'M'
+#define SER_RUN					'R'
+
+#define SER_PICK_BLOCK			'P'
+#define SER_RELEASE_BLOCK		'Q'
+#define SER_SET_POSITION		'S'
+#define SER_GET_POSITION		'T'
+#define SER_GET_VERSION			'V'
+#define SER_ZERO_POSITION		'Z'
+
+#define SER_PUSH_BLOCK_ARRAY	'A'
+#define SER_PUSH_BLOCK_SINGLE	'B'
+
+#define SER_DEBUG_PACKET		'd'
+#define SER_READ_VARIABLE		'r'
+#define SER_SAVE_NVM 			's'
+#define SER_WRITE_VARIABLE		'w'
 
 #define SER_DEBUGBUFFER_LENGTH	30
 

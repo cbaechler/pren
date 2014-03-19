@@ -106,9 +106,7 @@ static void APP_BlueLedOff(void *p) {
  *  \param event  Event handle.
  */
 static void APP_HandleEvent(EVNT_Handle event) {
-	uint16_t accel; 
-	uint16_t decel; 
-	uint16_t speed;
+	uint8_t i;
 	BLOCK_Object block;
 	
     switch(event) {
@@ -128,11 +126,121 @@ static void APP_HandleEvent(EVNT_Handle event) {
         	LED_BLUE_On();
         	DB_SaveNVM();
         	TRG_SetTrigger(TRG_BLUE_LED_OFF, 1000, APP_BlueLedOff, NULL);
-        	//LED_BLUE_Off();
         	break;
 
         case EVNT_SERIAL_CMD:
         	switch(*SER_GetCommand()) {	
+                /** Main Commands **/
+                case SER_MODE:
+                    ROB_SetRunMode(SER_GetData8(0));
+                    SER_SendPacket(SER_MODE);
+                    break;
+
+                case SER_RUN:
+                    ROB_Run();
+                    SER_SendPacket(SER_RUN);
+                    break;
+
+                case SER_PUSH_BLOCK_SINGLE:
+                    block.x = SER_GetData16(0);
+                    block.y = SER_GetData16(2);
+                    BLOCK_Push(block);
+                    SER_SendPacket(SER_PUSH_BLOCK_SINGLE);
+                    break;
+
+                case SER_PUSH_BLOCK_ARRAY:
+                    for(i=0; i<((*SER_GetLength())-5)/4; i++) {
+                        block.x = SER_GetData16(4*i);
+                        block.y = SER_GetData16(4*i+2);
+                        BLOCK_Push(block);
+                    }
+                    SER_SendPacket(SER_PUSH_BLOCK_ARRAY);           
+                    break;
+
+                case SER_GET_POSITION:
+                    SER_AddData16(rotary.position);
+                    SER_AddData16(knee.position);
+                    SER_AddData16(lift.position);
+                    SER_SendPacket(SER_GET_POSITION);
+                    break;
+				
+				/** Configuration Commands **/
+				case SER_READ_VARIABLE: 
+					SER_AddData8(SER_GetData8(0));
+					switch(DB_GetType(SER_GetData8(0))) {
+						case U8: {
+							SER_AddData8(*((uint8_t*) DB_GetVar(SER_GetData8(0))));
+							break;
+						}
+						case U16: {
+							SER_AddData16(*((uint16_t*) DB_GetVar(SER_GetData8(0))));
+							break;
+						}
+						case MOT: {
+							MOT_PubData* t = (MOT_PubData*) DB_GetVar(SER_GetData8(0));
+							SER_AddData16(t->accel);
+							SER_AddData16(t->decel);
+							SER_AddData16(t->speed);
+							break;
+						}
+						case T_DBGBUFFER: {
+							uint8_t i;
+							for(i=0; i<=SER_DEBUGBUFFER_LENGTH; i++) {
+								SER_AddData8(debugBuffer[i]);
+							}
+							break;
+						}
+					}
+					
+					SER_SendPacket(SER_WRITE_VARIABLE);
+					break;
+					
+				case SER_WRITE_VARIABLE: 
+					switch(DB_GetType(SER_GetData8(0))) {
+						case U8: {
+							(*(uint8_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData8(1);
+							break;
+						}
+						case U16: {
+							(*(uint16_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData16(1);
+							break;
+						}
+						case MOT: {
+							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->accel = SER_GetData16(1);	
+							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->decel = SER_GetData16(3);
+							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->speed = SER_GetData16(5);
+							break;
+						}
+						case T_DBGBUFFER: {
+							// we're using this just do delete variable content...
+							SER_ResetDebugBuffer();
+							DB_SaveNVM();
+							break;
+						}
+					}
+	
+					SER_SendPacket(SER_WRITE_VARIABLE);            	
+					break;
+					
+				case SER_SAVE_NVM:
+					DB_SaveNVM();
+					SER_SendPacket(SER_SAVE_NVM);
+					break;     	
+				
+				case SER_DEBUG_PACKET: 
+					SER_AddData16((uint16_t) MOT_GetState(&rotary));
+					SER_AddData16((uint16_t) MOT_GetState(&knee));
+					SER_AddData16((uint16_t) MOT_GetState(&lift));
+					SER_AddData16(rotary.position);
+					SER_AddData16(knee.position);
+					SER_AddData16(lift.position);                    
+					SER_AddData16((uint16_t) BLOCK_GetSize());
+					SER_SendPacket(SER_DEBUG_PACKET);
+					break;
+
+        	
+				/*********** OLD COMMANDS DOWN HERE ***********/
+				/*
                 case '1':
                     LED_RED_On();
                     //DB_SaveNVM();
@@ -143,14 +251,14 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     LED_RED_Off();
                     //DB_SaveNVM();
                     SER_SendPacket('2');
-                    break;
+                    break;*/
                     
+                /*
         		case 'P':
         			SER_AddData16(MOT_Process(&rotary));
         			SER_AddData16(MOT_Process(&knee));
         			SER_AddData16(MOT_Process(&lift));
         			SER_SendPacket('D');
-        			
         			break;
         			
         		case 'Q':
@@ -159,7 +267,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			MOT_MoveSteps(&lift,   (int16_t) (SER_GetData16(4)-lift.position));
         			//MOT_MoveSteps(&lift, SER_GetData16(4));
         			SER_SendPacket('Q');
-        			break;
+        			break;*/
         		
         		/*
         		case 'm': 
@@ -188,29 +296,8 @@ static void APP_HandleEvent(EVNT_Handle event) {
         			}
         			break;*/
 					
-				case 'd': 
-					SER_AddData16((uint16_t) MOT_GetState(&rotary));
-					SER_AddData16((uint16_t) MOT_GetState(&knee));
-					SER_AddData16((uint16_t) MOT_GetState(&lift));
-					
-					SER_AddData16(rotary.position);
-					SER_AddData16(knee.position);
-                    SER_AddData16(lift.position);                    
-					SER_AddData16((uint16_t) BLOCK_GetSize());
-					SER_SendPacket('d');
-					break;
-        				
-					
-				case 'a':	// push 
-					MOT_SetStepMode(&rotary, MOT_STEP_2);
-					block.x = SER_GetData16(0);
-					block.y = SER_GetData16(2);
-					BLOCK_Push(block);
-					//BLOCK_Push(SER_GetData8(0));
-                    //SER_AddData8(*SER_GetLength());
-					SER_SendPacket('a');
-					break;
-					
+
+				/*	
 				case 'b': 	// pop
 					MOT_SetStepMode(&rotary, MOT_STEP_16);
 					block = BLOCK_Pop();
@@ -219,35 +306,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					
 					//SER_AddData8(BLOCK_Pop());
 					SER_SendPacket('b');
-					break;
+					break;*/
 					
-                case SER_MODE:
-                    ROB_SetRunMode(SER_GetData8(0));
-                    break;
+                
 
-                case SER_RUN:
-                	ROB_SetRunMode(ROB_PICKPLACE);
-                	SER_SendPacket(SER_RUN);
-                    //ROB_Run();
-                    break;
 
-                case SER_BLOCK_ARRAY:
-                	/*
-                    pack = ((*SER_GetLength())-5)/sizeof(BLOCK_Object);
-                    for(i=0; i<pack; i++) {
-                    	BLOCK_Push(SER_GetData8(i));
-                    }
-                    SER_SendPacket(SER_BLOCK_ARRAY);
-                	*/
-/*
-                	use size_of(BLOCK_Object) here.
-                	(get length - constant) modulo num_bytes_per_block
-                	for loop, for each block
-                		get alpha, beta from serial packet
-                		add block to list
-                	next block
-                	send answer packet   */             	
-                    break;
 
                 
 /*
@@ -267,75 +330,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 
 */
-                case SER_GET_POSITION:
-                	//return current position of the arm (alpha, beta, delta)
-                	SER_AddData16(rotary.position);
-                	SER_AddData16(knee.position);
-                	SER_SendPacket(SER_GET_POSITION);
-                    break;
-                    
-                case SER_READ_VARIABLE: 
-                	SER_AddData8(SER_GetData8(0));
-                	switch(DB_GetType(SER_GetData8(0))) {
-						case U8: {
-							SER_AddData8(*((uint8_t*) DB_GetVar(SER_GetData8(0))));
-							break;
-						}
-						case U16: {
-							SER_AddData16(*((uint16_t*) DB_GetVar(SER_GetData8(0))));
-							break;
-						}
-						case MOT: {
-                            MOT_PubData* t = (MOT_PubData*) DB_GetVar(SER_GetData8(0));
-							SER_AddData16(t->accel);
-                            SER_AddData16(t->decel);
-                            SER_AddData16(t->speed);
-                            break;
-						}
-						case T_DBGBUFFER: {
-							uint8_t i;
-							for(i=0; i<=SER_DEBUGBUFFER_LENGTH; i++) {
-								SER_AddData8(debugBuffer[i]);
-							}
-							break;
-						}
-					}
-					
-					SER_SendPacket(SER_WRITE_VARIABLE);
-                	break;
-                	
-                case SER_WRITE_VARIABLE: 
-                	switch(DB_GetType(SER_GetData8(0))) {
-                		case U8: {
-                			(*(uint8_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData8(1);
-                			break;
-                		}
-                		case U16: {
-							(*(uint16_t*) DB_GetVar(SER_GetData8(0))) = SER_GetData16(1);
-							break;
-						}
-                		case MOT: {
-                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->accel = SER_GetData16(1);	
-                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->decel = SER_GetData16(3);
-                			((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->speed = SER_GetData16(5);
-							break;
-						}
-                		case T_DBGBUFFER: {
-                			// we're using this just do delete variable content...
-                			SER_ResetDebugBuffer();
-                			DB_SaveNVM();
-                			break;
-                		}
-                	}
-
-                	SER_SendPacket(SER_WRITE_VARIABLE);            	
-                	break;
-                	
-				case SER_SAVE_NVM:
-					DB_SaveNVM();
-					SER_SendPacket(SER_SAVE_NVM);
-					break;
-                    
+                
                     
 /*
                 case SER_GET_VERSION:
