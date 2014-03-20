@@ -43,4 +43,5 @@ void BLOCK_Push(BLOCK_Object obj);
 BLOCK_Object BLOCK_Pop(void);
 BLOCK_Object BLOCK_GetSingle(uint8_t index);
 uint8_t BLOCK_GetSize(void);
+uint8_t BLOCK_GetState(void);
 void BLOCK_Clear(void);

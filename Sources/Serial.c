@@ -15,7 +15,7 @@
 #include "Serial.h"
 #include "DBG.h"
 
-#define SER_DEBUG 
+//#define SER_DEBUG 
 
 static SER_FSMData data = {
 	SER_FSM_START,

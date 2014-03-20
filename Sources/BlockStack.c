@@ -29,6 +29,10 @@ void BLOCK_Init(void) {
 	BLOCK_Clear();
 }
 
+uint8_t BLOCK_GetState(void) {
+	return data.state;
+}
+
 void BLOCK_StartPickPlace(void) {
 	data.nof_processed_blocks = 0;
 	data.started = TRUE;
@@ -72,7 +76,7 @@ void BLOCK_PickPlace_Process(void) {
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
 				ROB_MoveToZ(zGroundSurface - zBlockHeight);				// go down to the block
-				WAIT_Waitms(500);
+				//WAIT_Waitms(500);
 				data.state = BLOCK_PICKED;
 			}	
 			break;
@@ -96,7 +100,7 @@ void BLOCK_PickPlace_Process(void) {
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
 				ROB_MoveToZ(zTargetSurface - data.nof_processed_blocks * zBlockHeight);
-				WAIT_Waitms(500);
+				//WAIT_Waitms(500);
 				data.state = BLOCK_RELEASED;
 			}
 			break;

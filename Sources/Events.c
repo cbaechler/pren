@@ -100,8 +100,7 @@ void DBG_OnError(void)
 */
 void DBG_OnRxChar(void)
 {
-  SER_Process();
-  //SER_ReceiveChar();
+	SER_Process();
 }
 
 /*

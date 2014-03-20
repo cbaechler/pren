@@ -44,6 +44,7 @@ void APP_Init(void) {
     TRG_Init();
     SER_Init();
     MOT_Init();
+    ROB_Init();
 }
 
 /*! \brief Application main loop.
@@ -64,7 +65,7 @@ void APP_Loop(void) {
         EVNT_HandleEvent(APP_HandleEvent);
 
         // Task 2: Handle Picking 
-        ROB_Run();
+        ROB_Process();
         
         // Further Tasks...
     }
@@ -78,6 +79,8 @@ static void APP_Blink(void *p) {
 
 static void APP_KeyPoll(void *p) {
 	static uint8_t debounce_cnt;
+	
+	//ROB_Process();
 	
 	if(!SW1_GetVal()) {
 		debounce_cnt++;
@@ -137,7 +140,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     break;
 
                 case SER_RUN:
-                    ROB_Run();
+                    ROB_Start();
                     SER_SendPacket(SER_RUN);
                     break;
 
@@ -233,8 +236,10 @@ static void APP_HandleEvent(EVNT_Handle event) {
 					SER_AddData16((uint16_t) MOT_GetState(&lift));
 					SER_AddData16(rotary.position);
 					SER_AddData16(knee.position);
-					SER_AddData16(lift.position);                    
+					SER_AddData16(lift.position);
 					SER_AddData16((uint16_t) BLOCK_GetSize());
+                    SER_AddData16((uint16_t) ROB_GetRunMode());
+                    SER_AddData16((uint16_t) BLOCK_GetState());
 					SER_SendPacket(SER_DEBUG_PACKET);
 					break;
 
@@ -345,6 +350,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 */
                 default:
                 	// send error message
+                	SER_SendPacket('E');
                     break;
         	}
 

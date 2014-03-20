@@ -23,9 +23,10 @@
 #include "LED_ER.h"
 
 static ROB_RunMode runmode;
+static bool running;
 
 void ROB_Init(void) {
-	runmode = ROB_INIT;
+	runmode = ROB_IDLE;
 }
 
 void ROB_SetRunMode(ROB_RunMode mode) {
@@ -99,45 +100,52 @@ void HW_LED(uint8_t led, bool state) {
 	}
 }
 
-void ROB_Run(void) {
-	switch(runmode) {
-		case ROB_INIT:
-			/* initialize the robot, startup and system test, go to zero pos */
-			rotary.position = 0;
-			knee.position   = 0;
-			lift.position   = 25000;
+void ROB_Start(void) {
+	running = TRUE;
+}
 
-			/* move each axis until MOTx_LIM is reached */
-			
-			runmode = ROB_IDLE;
-			break;
+void ROB_Process(void) {
+	if(running) {
+		switch(runmode) {
+			case ROB_INIT:
+				/* initialize the robot, startup and system test, go to zero pos */
+				rotary.position = 0;
+				knee.position   = 0;
+				lift.position   = 0;
 
-		case ROB_COLLECT:
-			break;
-
-		case ROB_PICKPLACE:
-			BLOCK_StartPickPlace();
-			runmode = ROB_PICKPLACE_PROCESS;
-			break;
-
-		case ROB_PICKPLACE_PROCESS:
-			BLOCK_PickPlace_Process();
-			if(BLOCK_PickPlace_GetState() == BLOCK_IDLE) {
+				/* move each axis until MOTx_LIM is reached */
+				
 				runmode = ROB_IDLE;
-			}
-			break;
+				break;
 
-		case ROB_DEBUG:
-			break;
+			case ROB_COLLECT:
+				break;
 
-		case ROB_SCAN:
-			break;
-			
-		case ROB_IDLE:
-			break;
+			case ROB_PICKPLACE:
+				BLOCK_StartPickPlace();
+				runmode = ROB_PICKPLACE_PROCESS;
+				break;
 
-		default:
-			break;
+			case ROB_PICKPLACE_PROCESS:
+				BLOCK_PickPlace_Process();
+				if(BLOCK_PickPlace_GetState() == BLOCK_IDLE) {
+					runmode = ROB_IDLE;
+				}
+				break;
+
+			case ROB_DEBUG:
+				break;
+
+			case ROB_SCAN:
+				break;
+				
+			case ROB_IDLE:
+				running = FALSE;
+				break;
+
+			default:
+				break;
+		}
 	}
 }
 
