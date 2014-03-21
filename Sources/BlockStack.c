@@ -85,7 +85,7 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait for the lift to be lowered, switch vaccuum on and move to center */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// vacuum on
-				HW_LED(RED, TRUE);
+				//HW_LED(RED, TRUE);
 				HW_VALVE(TRUE);
 
 				// Move to center
@@ -109,7 +109,7 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait for the lift to be lowered, switch vaccum off and move arm up */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// vacuum off
-				HW_LED(RED, FALSE);
+				//HW_LED(RED, FALSE);
 				HW_VALVE(FALSE);
 				
 				// set Z target

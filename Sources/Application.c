@@ -117,7 +117,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			LED_BLUE_On();
 			WAIT_Waitms(500);
 			LED_BLUE_Off();
-			TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
+			//TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 			TRG_SetTrigger(TRG_KEY_POLL, 10, APP_KeyPoll, NULL);
             break;
             
@@ -245,7 +245,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 
         	
 				/*********** OLD COMMANDS DOWN HERE ***********/
-				/*
+				
                 case '1':
                     LED_RED_On();
                     //DB_SaveNVM();
@@ -256,7 +256,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     LED_RED_Off();
                     //DB_SaveNVM();
                     SER_SendPacket('2');
-                    break;*/
+                    break;
                     
                 /*
         		case 'P':

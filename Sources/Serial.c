@@ -14,6 +14,7 @@
 #include "Event.h"
 #include "Serial.h"
 #include "DBG.h"
+#include "Robot.h"
 
 //#define SER_DEBUG 
 
@@ -52,6 +53,7 @@ void SER_SendChar(uint8_t ch) {
  */
 void SER_SetHandled(void) {
 	data.state = SER_FSM_START;
+	//HW_LED(BLUE, FALSE);
 }
 
 /*! \brief Returns the length of the packet.
@@ -126,7 +128,7 @@ void SER_SendPacket(uint8_t command) {
 	data.output_packet.length = data.output_packet.data_index + 5;
 	data.output_packet.command = command;
 	data.output_packet.checksum = SER_BuildChecksum();
-	
+
 	SER_SendChar(SER_START);
 	SER_SendChar(data.output_packet.length);
 	SER_SendChar(data.output_packet.command);
@@ -162,6 +164,7 @@ void SER_Process(void) {
 	switch(data.state) {
 		case SER_FSM_START:
 			if(*inp == SER_START) {
+				//HW_LED(GREEN, TRUE);
 				data.input_packet.data_index = 0;
 				data.output_packet.data_index = 0;
 				data.state = SER_FSM_LENGTH;
@@ -203,6 +206,8 @@ void SER_Process(void) {
 			if(*inp == SER_END) {
 				EVNT_SetEvent(EVNT_SERIAL_CMD);
 				data.state = SER_FSM_BUSY;
+				//HW_LED(GREEN, FALSE);
+				//HW_LED(BLUE, TRUE);
 			}
 			else {
 				data.state = SER_FSM_START;
