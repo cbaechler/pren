@@ -284,41 +284,6 @@ void NVM_OnWriteEnd(void)
   /* Write your code here ... */
 }
 
-/*
-** ===================================================================
-**     Event       :  DBG_OnFullRxBuf (module Events)
-**
-**     Component   :  DBG [AsynchroSerial]
-**     Description :
-**         This event is called when the input buffer is full;
-**         i.e. after reception of the last character 
-**         that was successfully placed into input buffer.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void DBG_OnFullRxBuf(void)
-{
-  /* Write your code here ... */
-}
-
-/*
-** ===================================================================
-**     Event       :  DBG_OnFreeTxBuf (module Events)
-**
-**     Component   :  DBG [AsynchroSerial]
-**     Description :
-**         This event is called after the last character in output
-**         buffer is transmitted.
-**     Parameters  : None
-**     Returns     : Nothing
-** ===================================================================
-*/
-void DBG_OnFreeTxBuf(void)
-{
-  /* Write your code here ... */
-}
-
 /* END Events */
 
 #ifdef __cplusplus
