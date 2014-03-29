@@ -55,7 +55,7 @@ void MOT_Init(void) {
 	rotary.running = FALSE;
 	rotary.invert = FALSE;
 	rotary.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&rotary, MOT_STEP_4);
+	MOT_SetStepMode(&rotary, MOT_STEP_32);
 	MOT_CalcValues(&rotary, rotary.p.accel, rotary.p.decel, rotary.p.speed);
 	
 	// M2
@@ -63,7 +63,7 @@ void MOT_Init(void) {
 	knee.running = FALSE;
 	knee.invert = FALSE;
 	knee.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&knee, MOT_STEP_4);
+	MOT_SetStepMode(&knee, MOT_STEP_32);
 	MOT_CalcValues(&knee, knee.p.accel, knee.p.decel, knee.p.speed);
 
 	// M3
@@ -71,7 +71,7 @@ void MOT_Init(void) {
 	lift.running = FALSE;
 	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&lift, MOT_STEP_4);
+	MOT_SetStepMode(&lift, MOT_STEP_32);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
 	// Current Limit
@@ -212,6 +212,12 @@ uint8_t MOT_GetState(MOT_FSMData* m_) {
 	return result;
 }
 
+/*! \brief This is just a wrapper taht calls MOT_CalcValues(...).
+ */
+void MOT_RecalcValues(MOT_FSMData* m_) {
+	MOT_CalcValues(m_, m_->p.accel, m_->p.decel, m_->p.speed);
+}
+
 /*! \brief This will calculate the values for the motor to speed.
  *
  * \param m_	 Pointer to the motor object
@@ -324,7 +330,7 @@ uint16_t MOT_Process(MOT_FSMData* m_) {
 
 	OCR1A = m_->step_delay;
 	
-	if(m_->running) {
+	if((m_->running) && (m_->state != MOT_FSM_STOP)) {
 		if(m_->dir == CW) {
 			m_->position++;
 		}

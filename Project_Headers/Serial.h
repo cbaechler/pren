@@ -19,6 +19,7 @@
 #define SER_RELEASE_BLOCK		'Q'
 #define SER_SET_POSITION		'S'
 #define SER_GET_POSITION		'T'
+#define SER_MOVETO_POSITION		'Y'
 #define SER_GET_VERSION			'V'
 #define SER_ZERO_POSITION		'Z'
 

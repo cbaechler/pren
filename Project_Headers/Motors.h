@@ -83,8 +83,7 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 
 //! Number of (full)steps per round on stepper motor in use.
 #define FSPR 200
-#define SPR  FSPR
-//#define SPR (FSPR*32)	/* TODO: when chaning step mode... also change SPR, recalc! */
+#define SPR  (FSPR*32)
 
 // Maths constants
 #define ALPHA (2*3.14159/SPR)                    		// 2*pi/spr
@@ -100,6 +99,7 @@ void MOT_SetDirection(MOT_FSMData* m_, bool dir);
 bool MOT_GetFaultState(MOT_FSMData* m_);
 uint8_t MOT_GetState(MOT_FSMData* m_);
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);
+void MOT_RecalcValues(MOT_FSMData* m_);
 void MOT_MoveSteps(MOT_FSMData* m_, int16_t steps);
 uint16_t MOT_Process(MOT_FSMData* m_);
 

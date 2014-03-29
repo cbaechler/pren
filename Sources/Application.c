@@ -23,6 +23,13 @@
 #include "Serial.h"
 #include "WAIT.h"
 
+#include "M1_nRST.h"
+#include "M3_nRST.h"
+
+
+#include "LED_S1.h"
+#include "LED_S2.h"
+#include "LED_ER.h"
 #include "LED_RED.h"
 #include "LED_GREEN.h"
 #include "LED_BLUE.h"
@@ -57,9 +64,11 @@ void APP_Loop(void) {
 	LED_GREEN_On();
 	lift.position = 500;
 	LED_GREEN_Off();
-	
+	LED_S2_On();
 	EVNT_SetEvent(EVNT_INIT);
-			
+	
+	M1_nRST_SetVal();
+	M3_nRST_SetVal();
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
@@ -72,7 +81,11 @@ void APP_Loop(void) {
 }
 
 static void APP_Blink(void *p) {
-	LED_GREEN_Neg();
+	//LED_GREEN_Neg();
+	
+	LED_S1_Neg();
+	LED_S2_Neg();
+	LED_ER_Neg();
 	//SER_SendChar('5');
 	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 }
@@ -117,7 +130,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
 			LED_BLUE_On();
 			WAIT_Waitms(500);
 			LED_BLUE_Off();
-			//TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
+			TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 			TRG_SetTrigger(TRG_KEY_POLL, 10, APP_KeyPoll, NULL);
             break;
             
@@ -144,6 +157,11 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     SER_SendPacket(SER_RUN);
                     break;
 
+                case SER_MOVETO_POSITION:
+                    ROB_MoveToXYZ(SER_GetData16(0), SER_GetData16(2), SER_GetData16(4));
+                    SER_SendPacket(SER_MOVETO_POSITION);
+                    break;
+
                 case SER_PUSH_BLOCK_SINGLE:
                     block.x = SER_GetData16(0);
                     block.y = SER_GetData16(2);
@@ -166,7 +184,7 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     SER_AddData16(lift.position);
                     SER_SendPacket(SER_GET_POSITION);
                     break;
-				
+
 				/** Configuration Commands **/
 				case SER_READ_VARIABLE: 
 					SER_AddData8(SER_GetData8(0));
@@ -212,6 +230,9 @@ static void APP_HandleEvent(EVNT_Handle event) {
 							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->accel = SER_GetData16(1);	
 							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->decel = SER_GetData16(3);
 							((MOT_PubData*) DB_GetVar(SER_GetData8(0)))->speed = SER_GetData16(5);
+                            MOT_RecalcValues(&rotary);
+                            MOT_RecalcValues(&knee);
+                            MOT_RecalcValues(&lift);
 							break;
 						}
 						case T_DBGBUFFER: {
