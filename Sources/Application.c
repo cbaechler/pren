@@ -23,10 +23,6 @@
 #include "Serial.h"
 #include "WAIT.h"
 
-#include "M1_nRST.h"
-#include "M3_nRST.h"
-
-
 #include "LED_S1.h"
 #include "LED_S2.h"
 #include "LED_ER.h"
@@ -61,14 +57,10 @@ void APP_Init(void) {
  * of the components will be started in ProcessorExpert.c. 
  */
 void APP_Loop(void) {
-	LED_GREEN_On();
-	lift.position = 500;
-	LED_GREEN_Off();
+	lift.position = 0;
 	LED_S2_On();
 	EVNT_SetEvent(EVNT_INIT);
 	
-	M1_nRST_SetVal();
-	M3_nRST_SetVal();
     while(1) {
         // Task 1: Handle Events
         EVNT_HandleEvent(APP_HandleEvent);
@@ -81,20 +73,15 @@ void APP_Loop(void) {
 }
 
 static void APP_Blink(void *p) {
-	//LED_GREEN_Neg();
-	
 	LED_S1_Neg();
 	LED_S2_Neg();
 	LED_ER_Neg();
-	//SER_SendChar('5');
 	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
 }
 
 static void APP_KeyPoll(void *p) {
 	static uint8_t debounce_cnt;
-	
-	//ROB_Process();
-	
+
 	if(!SW1_GetVal()) {
 		debounce_cnt++;
 		if(debounce_cnt >= 100) {

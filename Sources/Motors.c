@@ -40,7 +40,7 @@
 
 #include "Database.h"
 
-uint16_t OCR1A;	/* emulate atmel register */
+uint16_t OCR1A;		/* emulate atmel register */
 
 MOT_FSMData rotary;	/* Drehachse */
 MOT_FSMData knee;	/* Knickgelenk */
@@ -56,6 +56,7 @@ void MOT_Init(void) {
 	rotary.invert = FALSE;
 	rotary.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&rotary, MOT_STEP_32);
+	MOT_SetResetState(&rotary, TRUE);
 	MOT_CalcValues(&rotary, rotary.p.accel, rotary.p.decel, rotary.p.speed);
 	
 	// M2
@@ -64,6 +65,7 @@ void MOT_Init(void) {
 	knee.invert = FALSE;
 	knee.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&knee, MOT_STEP_32);
+	MOT_SetResetState(&knee, TRUE);
 	MOT_CalcValues(&knee, knee.p.accel, knee.p.decel, knee.p.speed);
 
 	// M3
@@ -72,6 +74,7 @@ void MOT_Init(void) {
 	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
 	MOT_SetStepMode(&lift, MOT_STEP_32);
+	MOT_SetResetState(&lift, TRUE);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
 	// Current Limit
