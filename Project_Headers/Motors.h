@@ -96,7 +96,7 @@ void MOT_Init(void);
 void MOT_SetILim(uint16_t i_max);
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode);
 void MOT_SetDirection(MOT_FSMData* m_, bool dir);
-void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode);
+void MOT_SetResetState(MOT_FSMData* m_, bool state);
 bool MOT_GetFaultState(MOT_FSMData* m_);
 uint8_t MOT_GetState(MOT_FSMData* m_);
 void MOT_CalcValues(MOT_FSMData* m_, uint16_t accel, uint16_t decel, uint16_t speed);
