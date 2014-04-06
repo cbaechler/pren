@@ -63,7 +63,6 @@ void ROB_MoveToZ(uint16_t z) {
 	MOT_MoveSteps(&lift,   (int16_t) (z-lift.position));
 }
 
-
 /*bool ROB_CheckSystemValidity(void) {
 
 }*/

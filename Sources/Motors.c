@@ -73,7 +73,7 @@ void MOT_Init(void) {
 	lift.running = FALSE;
 	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&lift, MOT_STEP_32);
+	MOT_SetStepMode(&lift, MOT_STEP_16);
 	MOT_SetResetState(&lift, TRUE);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
