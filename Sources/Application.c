@@ -30,6 +30,7 @@
 #include "LED_GREEN.h"
 #include "LED_BLUE.h"
 #include "SW1.h"
+#include "VALVE.h"
 
 /* local prototypes (static functions) */
 static void APP_HandleEvent(EVNT_Handle event);
@@ -76,7 +77,7 @@ static void APP_Blink(void *p) {
 	LED_S1_Neg();
 	LED_S2_Neg();
 	LED_ER_Neg();
-	TRG_SetTrigger(TRG_LED_BLINK, 500, APP_Blink, NULL);
+	TRG_SetTrigger(TRG_LED_BLINK, 1000, APP_Blink, NULL);
 }
 
 static void APP_KeyPoll(void *p) {
@@ -191,6 +192,13 @@ static void APP_HandleEvent(EVNT_Handle event) {
 							SER_AddData16(t->speed);
 							break;
 						}
+						case POS: {
+							BLOCK_Object* obj = (BLOCK_Object*) DB_GetVar(SER_GetData8(0));
+							SER_AddData16(obj->x);
+							SER_AddData16(obj->y);
+							SER_AddData16(obj->h);
+							break;
+						}
 						case T_DBGBUFFER: {
 							uint8_t i;
 							for(i=0; i<=SER_DEBUGBUFFER_LENGTH; i++) {
@@ -222,6 +230,12 @@ static void APP_HandleEvent(EVNT_Handle event) {
                             MOT_RecalcValues(&lift);
 							break;
 						}
+						case POS: {
+							((BLOCK_Object*) DB_GetVar(SER_GetData8(0)))->x = SER_GetData16(1);
+							((BLOCK_Object*) DB_GetVar(SER_GetData8(0)))->y = SER_GetData16(3);
+							((BLOCK_Object*) DB_GetVar(SER_GetData8(0)))->h = SER_GetData16(5);
+							break;
+						}
 						case T_DBGBUFFER: {
 							// we're using this just do delete variable content...
 							SER_ResetDebugBuffer();
@@ -250,112 +264,18 @@ static void APP_HandleEvent(EVNT_Handle event) {
                     SER_AddData16((uint16_t) BLOCK_GetState());
 					SER_SendPacket(SER_DEBUG_PACKET);
 					break;
-
         	
 				/*********** OLD COMMANDS DOWN HERE ***********/
-				
                 case '1':
                     LED_RED_On();
-                    //DB_SaveNVM();
                     SER_SendPacket('1');
                     break;
 
                 case '2':
                     LED_RED_Off();
-                    //DB_SaveNVM();
                     SER_SendPacket('2');
                     break;
                     
-                /*
-        		case 'P':
-        			SER_AddData16(MOT_Process(&rotary));
-        			SER_AddData16(MOT_Process(&knee));
-        			SER_AddData16(MOT_Process(&lift));
-        			SER_SendPacket('D');
-        			break;
-        			
-        		case 'Q':
-        			//MOT_MoveSteps(&rotary, SER_GetData16(0));
-        			//MOT_MoveSteps(&knee, SER_GetData16(2));
-        			MOT_MoveSteps(&lift,   (int16_t) (SER_GetData16(4)-lift.position));
-        			//MOT_MoveSteps(&lift, SER_GetData16(4));
-        			SER_SendPacket('Q');
-        			break;*/
-        		
-        		/*
-        		case 'm': 
-        			accel = SER_GetData16(1);
-					decel = SER_GetData16(3);
-					speed = SER_GetData16(5);
-        			        			
-        			switch(SER_GetData8(0)) {
-						case '0':
-							MOT_CalcValues(&rotary, accel, decel, speed);
-							SER_SendPacket('m');
-							break;
-							
-						case '1':
-							MOT_CalcValues(&knee, accel, decel, speed);
-							SER_SendPacket('m');
-							break;
-							
-						case '2':
-							MOT_CalcValues(&lift, accel, decel, speed);
-							SER_SendPacket('m');
-							break;
-							
-						default: 
-							break;
-        			}
-        			break;*/
-					
-
-				/*	
-				case 'b': 	// pop
-					MOT_SetStepMode(&rotary, MOT_STEP_16);
-					block = BLOCK_Pop();
-					SER_AddData16(block.x);
-					SER_AddData16(block.y);
-					
-					//SER_AddData8(BLOCK_Pop());
-					SER_SendPacket('b');
-					break;*/
-					
-                
-
-
-
-                
-/*
-                case SER_PICK_BLOCK:
-                	enable vaccuum
-                    break;
-
-                case SER_RELEASE_BLOCK:
-                	disable vaccuum
-                    break;
-
-                case SER_SET_POSITION:
-                	read new position from serial packet
-                	set the steps
-                	wait for end of move
-                	send answer packet
-                    break;
-
-*/
-                
-                    
-/*
-                case SER_GET_VERSION:
-                	return the current version of the firmware
-                    break;
-
-                case SER_ZERO_POSITION:
-                	slowly drive to the limits
-                	set null-pos in motor registers
-                	send answer packet
-                    break;
-*/
                 default:
                 	// send error message
                 	SER_SendPacket('E');

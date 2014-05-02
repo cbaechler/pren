@@ -11,6 +11,7 @@
 #include "Math.h"
 #include "Motors.h"
 #include "ILIM.h"
+#include "WAIT.h"
 
 #include "M1_MODE0.h"
 #include "M1_MODE1.h"
@@ -19,6 +20,7 @@
 #include "M1_NRST.h"
 #include "M1_DIR.h"
 #include "M1_LIM.h"
+#include "M1_STEP.h"
 
 #include "M2_MODE0.h"
 #include "M2_MODE1.h"
@@ -27,6 +29,7 @@
 #include "M2_NRST.h"
 #include "M2_DIR.h"
 #include "M2_LIM.h"
+#include "M2_STEP.h"
 
 #include "M3_MODE0.h"
 #include "M3_MODE1.h"
@@ -35,6 +38,7 @@
 #include "M3_NRST.h"
 #include "M3_DIR.h"
 #include "M3_LIM.h"
+#include "M3_STEP.h"
 
 #include "LED_RED.h"
 
@@ -95,6 +99,28 @@ void MOT_SetILim(uint16_t i_max) {
 	tmp /= 2;
 	val = (uint16_t) (tmp);
 	ILIM_SetValue(ILIM_Ptr, val);
+}
+
+void MOT_MoveToLim(MOT_FSMData* m_, uint8_t delay, bool dir) {
+	MOT_SetDirection(m_, dir);
+	
+	switch(m_->index) {
+		case ROTARY:
+			// TODO: set correct pins
+			break;
+			
+		case KNEE:
+			// TODO: set correct pins
+			break;
+			
+		case LIFT: 
+			// TODO: set correct pins
+			while(M1_LIM_GetVal()) {
+				M3_STEP_NegVal();
+				WAIT_Waitms(delay);
+			}
+			break;
+	}
 }
 
 /*! \brief Sets mode pins for the specified step mode (full-, half-, quarter, ... step).

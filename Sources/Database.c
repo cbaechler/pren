@@ -36,6 +36,9 @@ void DB_Init(void) {
 	DB_RegisterVar(DB_BLOCK_ZBLOCKHEIGHT, &(zBlockHeight), U16, TRUE);
 	DB_RegisterVar(DB_BLOCK_ZTARGETSURFACE, &(zTargetSurface), U16, TRUE);
 	DB_RegisterVar(DB_BLOCK_ZGROUNDSURFACE, &(zGroundSurface), U16, TRUE);
+	DB_RegisterVar(DB_BLOCK_LIMPOS, &(lim_position), POS, TRUE);
+	DB_RegisterVar(DB_BLOCK_HOMEPOS, &(home_position), POS, TRUE);
+	DB_RegisterVar(DB_BLOCK_STACKPOS, &(stack_position), POS, TRUE);
 		
 	// Load values of registered globals from NVM
 	DB_LoadNVM();
@@ -58,6 +61,7 @@ uint8_t DB_GetTypeSize(DB_DataType type) {
 		case U8: 	return sizeof(uint8_t);
 		case U16:	return sizeof(uint16_t);
 		case MOT:	return sizeof(MOT_PubData);
+		case POS:	return sizeof(BLOCK_Object);
 		case T_DBGBUFFER: return SER_DEBUGBUFFER_LENGTH;
 	}
 	

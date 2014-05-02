@@ -94,6 +94,7 @@ extern MOT_FSMData lift;	/* Hebemechanismus */
 
 void MOT_Init(void);
 void MOT_SetILim(uint16_t i_max);
+void MOT_MoveToLim(MOT_FSMData* m_, uint8_t delay, bool dir);
 void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode);
 void MOT_SetDirection(MOT_FSMData* m_, bool dir);
 void MOT_SetResetState(MOT_FSMData* m_, bool state);

@@ -9,6 +9,9 @@ typedef enum {		/*   ID   Description        */
 	DB_BLOCK_ZBLOCKHEIGHT,
 	DB_BLOCK_ZTARGETSURFACE,
 	DB_BLOCK_ZGROUNDSURFACE,
+	DB_BLOCK_LIMPOS,
+	DB_BLOCK_HOMEPOS,
+	DB_BLOCK_STACKPOS,
 	DB_NOF_VARS		/*!< Sentinel, must be last! */
 } DB_VarID;
 
@@ -16,6 +19,7 @@ typedef enum {
 	U8, 
 	U16, 
 	MOT,
+	POS,
 	T_DBGBUFFER
 } DB_DataType;
 

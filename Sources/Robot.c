@@ -63,10 +63,6 @@ void ROB_MoveToZ(uint16_t z) {
 	MOT_MoveSteps(&lift,   (int16_t) (z-lift.position));
 }
 
-/*bool ROB_CheckSystemValidity(void) {
-
-}*/
-
 void HW_VALVE(bool state) {
 	VALVE_PutVal(state);
 }
@@ -108,12 +104,21 @@ void ROB_Process(void) {
 		switch(runmode) {
 			case ROB_INIT:
 				/* initialize the robot, startup and system test, go to zero pos */
-				rotary.position = 0;
-				knee.position   = 0;
-				lift.position   = 0;
-
-				/* move each axis until MOTx_LIM is reached */
+				MOT_MoveToLim(&lift, 1, CCW);	// add the other motors
 				
+				/* set the positions that describe limit position */
+				rotary.position = lim_position.x;
+				knee.position = lim_position.y;
+				lift.position = lim_position.h;		
+				
+				/* go to HOME position */
+				BLOCK_MoveToBlockPos(home_position);
+				ROB_MoveToZ(0);
+				
+				/* wait until HOME reached */
+				while(ROB_Moving());
+				
+				/* now we are ready to win */
 				runmode = ROB_IDLE;
 				break;
 
