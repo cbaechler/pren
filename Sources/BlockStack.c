@@ -97,7 +97,7 @@ void BLOCK_PickPlace_Process(void) {
 				HW_VALVE(TRUE);
 
 				// Move up
-				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+1) * zBlockHeight);
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+2) * zBlockHeight);
 				data.state = BLOCK_CENTER;
 			}
 			break;
@@ -114,7 +114,7 @@ void BLOCK_PickPlace_Process(void) {
 			/* wait until arm is at stack location, then set z location */
 			if(!(ROB_Moving())) {					// wait for the last move to be finished
 				// set Z target
-				ROB_MoveToZ(zTargetSurface - data.nof_processed_blocks * zBlockHeight);
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+1) * zBlockHeight);
 				//WAIT_Waitms(500);
 				data.state = BLOCK_RELEASED;
 			}
@@ -128,7 +128,7 @@ void BLOCK_PickPlace_Process(void) {
 				
 				// set Z target
 				//MOT_MoveSteps(&lift,   (int16_t) (25000-lift.position));
-				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+1) * zBlockHeight);
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+2) * zBlockHeight);
 				
 				data.state = BLOCK_NEXT;
 				data.nof_processed_blocks++;

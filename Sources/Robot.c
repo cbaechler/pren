@@ -112,11 +112,11 @@ void ROB_Process(void) {
 				lift.position = lim_position.h;		
 				
 				/* go to HOME position */
-				BLOCK_MoveToBlockPos(home_position);
-				ROB_MoveToZ(0);
+				//BLOCK_MoveToBlockPos(home_position);
+				//ROB_MoveToZ(0);
 				
 				/* wait until HOME reached */
-				while(ROB_Moving());
+				//while(ROB_Moving());
 				
 				/* now we are ready to win */
 				runmode = ROB_IDLE;
