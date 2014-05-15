@@ -77,7 +77,7 @@ void MOT_Init(void) {
 	lift.running = FALSE;
 	lift.invert = FALSE;
 	lift.state = MOT_FSM_STOP;
-	MOT_SetStepMode(&lift, MOT_STEP_16);
+	MOT_SetStepMode(&lift, MOT_STEP_4);
 	MOT_SetResetState(&lift, TRUE);
 	MOT_CalcValues(&lift, lift.p.accel, lift.p.decel, lift.p.speed);
 	
@@ -106,16 +106,21 @@ void MOT_MoveToLim(MOT_FSMData* m_, uint8_t delay, bool dir) {
 	
 	switch(m_->index) {
 		case ROTARY:
-			// TODO: set correct pins
+			while(M1_LIM_GetVal()) {
+				M1_STEP_NegVal();
+				WAIT_Waitms(delay);
+			}
 			break;
 			
 		case KNEE:
-			// TODO: set correct pins
+			while(M2_LIM_GetVal()) {
+				M2_STEP_NegVal();
+				WAIT_Waitms(delay);
+			}
 			break;
 			
 		case LIFT: 
-			// TODO: set correct pins
-			while(M1_LIM_GetVal()) {
+			while(M3_LIM_GetVal()) {
 				M3_STEP_NegVal();
 				WAIT_Waitms(delay);
 			}
@@ -162,7 +167,7 @@ void MOT_SetStepMode(MOT_FSMData* m_, uint8_t step_mode) {
 void MOT_SetDirection(MOT_FSMData* m_, bool dir) {
 	m_->dir = dir;
 	switch(m_->index) {
-		case ROTARY:	return M1_DIR_PutVal(dir);			break;
+		case ROTARY:	return M1_DIR_PutVal(!dir);			break;
 		case KNEE:		return M2_DIR_PutVal(dir);			break;
 		case LIFT:		return M3_DIR_PutVal(dir);			break;
 	}

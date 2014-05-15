@@ -69,8 +69,8 @@ void BLOCK_PickPlace_Process(void) {
 				if(BLOCK_GetSize() > 0) {			// if there are blocks in blockstack
 					block = BLOCK_Pop();			// pop next block and set new target position
 					BLOCK_MoveToBlockPos(block);
-					ROB_MoveToZ(zGroundSurface - 2*zBlockHeight);
-					data.state = BLOCK_PICK;
+					ROB_MoveToZ(zGroundSurface - zBlockHeight);
+					data.state = BLOCK_PICKED;
 				}
 				else if(BLOCK_GetSize() == 0) {
 					BLOCK_MoveToBlockPos(home_position);
@@ -97,14 +97,14 @@ void BLOCK_PickPlace_Process(void) {
 				HW_VALVE(TRUE);
 
 				// Move up
-				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+2) * zBlockHeight);
+				ROB_MoveToZ(zTargetSurface - (data.nof_processed_blocks+3) * zBlockHeight);
 				data.state = BLOCK_CENTER;
 			}
 			break;
 			
 		case BLOCK_CENTER:
 		 	/* wait for the lift to have min height of block stack size, then go to stack location */
-			if(lift.position > data.nof_processed_blocks * zBlockHeight) {
+			if(lift.position < (zTargetSurface - (data.nof_processed_blocks+2) * zBlockHeight)) {
 				BLOCK_MoveToBlockPos(stack_position);
 				data.state = BLOCK_RELEASE;
 			}

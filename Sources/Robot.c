@@ -104,7 +104,11 @@ void ROB_Process(void) {
 		switch(runmode) {
 			case ROB_INIT:
 				/* initialize the robot, startup and system test, go to zero pos */
-				MOT_MoveToLim(&lift, 1, CCW);	// add the other motors
+				MOT_MoveToLim(&rotary, 4, CW);
+				MOT_MoveToLim(&knee, 2, CW);
+				MOT_MoveToLim(&lift, 2, CCW);
+				
+				//MOT_MoveToLim(&lift, 1, CCW);	// add the other motors
 				
 				/* set the positions that describe limit position */
 				rotary.position = lim_position.x;
