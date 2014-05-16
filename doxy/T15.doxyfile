@@ -26,7 +26,7 @@ DOXYFILE_ENCODING = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME = FRDM Team 13
+PROJECT_NAME = PREN Team 15
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -81,7 +81,7 @@ OUTPUT_LANGUAGE = English
 # the file and class documentation (similar to JavaDoc).
 # Set to NO to disable this.
 
-BRIEF_MEMBER_DESC = YES
+BRIEF_MEMBER_DESC = NO
 
 # If the REPEAT_BRIEF tag is set to YES (the default) Doxygen will prepend
 # the brief description of a member or function before the detailed description.
@@ -857,7 +857,7 @@ HTML_FILE_EXTENSION = .html
 # have to redo this when upgrading to a newer version of doxygen or when
 # changing the value of configuration settings such as GENERATE_TREEVIEW!
 
-HTML_HEADER = 
+HTML_HEADER = ./header.html
 
 # The HTML_FOOTER tag can be used to specify a personal HTML footer for
 # each generated HTML page. If it is left blank doxygen will generate a
@@ -872,7 +872,7 @@ HTML_FOOTER = ./footer.html
 # the style sheet file to the HTML output directory, so don't put your own
 # stylesheet in the HTML output directory as well, or it will be erased!
 
-HTML_STYLESHEET = 
+HTML_STYLESHEET = ./qmi.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
