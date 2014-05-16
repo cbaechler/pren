@@ -3,6 +3,8 @@
  * \brief Trigger Module implementation.
  * \author Christoph Bächler
  * \date 12.11.2013
+ *
+ * This implementation is based on code from INTRO (Erich Styger).
  */
 
 #include "Trigger.h"

@@ -4,7 +4,8 @@
  * \author Christoph Bächler
  * \date 11.11.2013
  *
- * This module contains event structure.
+ * This module contains event structure. Code source is based on 
+ * the event handler code from INTRO (Erich Styger). 
  */
 
 #include "PE_Types.h"
