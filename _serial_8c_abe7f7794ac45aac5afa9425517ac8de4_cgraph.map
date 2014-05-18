@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_serial_8c.html#a423550162fe727ee02057182640a4e20" title="Calculates and returns the checksum of the packet." alt="" coords="181,5,328,32"/>
+<area shape="rect" id="node5" href="$_serial_8c.html#ac6bfbd5235c936168f071e194824f132" title="Sends a single char to the uart." alt="" coords="198,56,311,83"/>
+</map>

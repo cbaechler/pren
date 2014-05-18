@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_motors_8c.html#ae95ce1bf42dce323500fced8ffcb6210" title="Sets mode pins for the specified step mode (full&#45;, half&#45;, quarter, ... step)." alt="" coords="132,5,268,32"/>
+<area shape="rect" id="node5" href="$_motors_8c.html#a5639aa95ad9831b7a5430aed217ac940" title="Sets the reset state of the motor driver." alt="" coords="129,56,271,83"/>
+<area shape="rect" id="node7" href="$_motors_8c.html#a00b27cc75d746cac939b8f5d2b358fec" title="This will calculate the values for the motor to speed." alt="" coords="139,107,261,133"/>
+<area shape="rect" id="node9" href="$_motors_8c.html#a99d43cd8f2c1edb460dd8547dbd7de8e" title="MOT_SetILim" alt="" coords="149,157,251,184"/>
+</map>

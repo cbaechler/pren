@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_robot_8c.html#a280784e699a794f42aba1208ce573a01" title="ROB_MoveToXY" alt="" coords="227,31,344,57"/>
+<area shape="rect" id="node5" href="$_motors_8c.html#aca0832cce2a51f0b133e8394b4c7abfe" title="This tells the motor to drive any number of steps." alt="" coords="393,31,514,57"/>
+<area shape="rect" id="node7" href="$_motors_8c.html#a422d9cb8666ace45b9170412307fd7ce" title="Sets the direction pin to the specified direction (CW, CCW)." alt="" coords="563,5,691,32"/>
+<area shape="rect" id="node9" href="$_math_8c.html#a05ff93b37a21b4240aa79002664a1584" title="Square root routine." alt="" coords="583,56,670,83"/>
+</map>

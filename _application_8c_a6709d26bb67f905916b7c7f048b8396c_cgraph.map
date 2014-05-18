@@ -1,0 +1,23 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_event_8c.html#a9e8bd9a8d205596d9fea85ccf7ff31d7" title="EVNT_SetEvent" alt="" coords="149,5,264,32"/>
+<area shape="rect" id="node5" href="$_event_8c.html#aee8ee193fe0c4b44b7e848acb5cf60af" title="EVNT_HandleEvent" alt="" coords="139,56,274,83"/>
+<area shape="rect" id="node11" href="$_robot_8c.html#a004a430d46e45da7f409eff574f149bc" title="ROB_Process" alt="" coords="154,183,259,209"/>
+<area shape="rect" id="node7" href="$_event_8c.html#ad5c5faecf40ab7e46ebc2405a2bf4b5d" title="EVNT_EventIsSet" alt="" coords="356,5,481,32"/>
+<area shape="rect" id="node9" href="$_event_8c.html#afbd1aae8cddcda24011c77c9dd425212" title="EVNT_ClearEvent" alt="" coords="356,56,481,83"/>
+<area shape="rect" id="node13" href="$_motors_8c.html#a2cb3de39bf6a68c277b2b34c0cb83e32" title="MOT_MoveToLim" alt="" coords="963,145,1085,172"/>
+<area shape="rect" id="node17" href="$_block_stack_8c.html#a9b3cb88c424e4123d1165877db3b3591" title="BLOCK_StartPickPlace" alt="" coords="339,183,499,209"/>
+<area shape="rect" id="node19" href="$_block_stack_8c.html#a1c14de229e909a7b94b05bfc9a3ed468" title="Pick and Place routine." alt="" coords="325,247,512,273"/>
+<area shape="rect" id="node45" href="$_block_stack_8c.html#af6beff0cdcc666425322fff60b68630f" title="BLOCK_PickPlace_GetState" alt="" coords="323,297,514,324"/>
+<area shape="rect" id="node15" href="$_motors_8c.html#a422d9cb8666ace45b9170412307fd7ce" title="Sets the direction pin to the specified direction (CW, CCW)." alt="" coords="1133,221,1261,248"/>
+<area shape="rect" id="node21" href="$_robot_8c.html#ac2098731a2123c8c3c36025b9afa5f60" title="ROB_Moving" alt="" coords="601,157,698,184"/>
+<area shape="rect" id="node23" href="$_block_stack_8c.html#af326dd8371c45546cc2fbdb8085d20c0" title="BLOCK_GetSize" alt="" coords="589,208,709,235"/>
+<area shape="rect" id="node25" href="$_block_stack_8c.html#a5caad506f19b1ce1d0f0997df1de609a" title="BLOCK_Pop" alt="" coords="601,259,697,285"/>
+<area shape="rect" id="node31" href="$_block_stack_8c.html#aa62e141341b8759679fbc091d85bae37" title="BLOCK_MoveToBlockPos" alt="" coords="563,309,736,336"/>
+<area shape="rect" id="node40" href="$_robot_8c.html#aecce8bf987391c1eac46e005ab560237" title="ROB_MoveToZ" alt="" coords="795,360,903,387"/>
+<area shape="rect" id="node43" href="$_robot_8c.html#ada7df898a555bcd59086885f7f97f884" title="HW_VALVE" alt="" coords="602,411,697,437"/>
+<area shape="rect" id="node27" href="$_block_stack_8c.html#a494a68a4c7401029000ed90f5b2e7afc" title="BLOCK_IsEmtpy" alt="" coords="789,208,910,235"/>
+<area shape="rect" id="node29" href="$_block_stack_8c.html#a81d93f5cf73f9c87f68644eba094758c" title="BLOCK_GetSingle" alt="" coords="784,259,915,285"/>
+<area shape="rect" id="node33" href="$_robot_8c.html#a280784e699a794f42aba1208ce573a01" title="ROB_MoveToXY" alt="" coords="791,309,908,336"/>
+<area shape="rect" id="node35" href="$_motors_8c.html#aca0832cce2a51f0b133e8394b4c7abfe" title="This tells the motor to drive any number of steps." alt="" coords="963,309,1085,336"/>
+<area shape="rect" id="node38" href="$_math_8c.html#a05ff93b37a21b4240aa79002664a1584" title="Square root routine." alt="" coords="1154,309,1241,336"/>
+</map>

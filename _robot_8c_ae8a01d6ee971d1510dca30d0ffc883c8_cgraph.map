@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_motors_8c.html#aca0832cce2a51f0b133e8394b4c7abfe" title="This tells the motor to drive any number of steps." alt="" coords="179,31,301,57"/>
+<area shape="rect" id="node5" href="$_motors_8c.html#a422d9cb8666ace45b9170412307fd7ce" title="Sets the direction pin to the specified direction (CW, CCW)." alt="" coords="349,5,477,32"/>
+<area shape="rect" id="node7" href="$_math_8c.html#a05ff93b37a21b4240aa79002664a1584" title="Square root routine." alt="" coords="370,56,457,83"/>
+</map>

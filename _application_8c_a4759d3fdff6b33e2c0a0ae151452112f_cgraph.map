@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_database_8c.html#a8e3714ab9820eae118f6f74ad3edffd4" title="DB_Init" alt="" coords="136,31,200,57"/>
+<area shape="rect" id="node11" href="$_event_8c.html#a4fcb9c4c59bc8cbf76f074be0efc38ff" title="EVNT_Init" alt="" coords="128,81,208,108"/>
+<area shape="rect" id="node13" href="$_trigger_8c.html#a846482abe03d87a5fa60be2ea3e6d597" title="TRG_Init" alt="" coords="132,132,204,159"/>
+<area shape="rect" id="node15" href="$_serial_8c.html#a6239b20c9f8948c6045d72ecce00054d" title="SER_Init" alt="" coords="131,183,205,209"/>
+<area shape="rect" id="node17" href="$_motors_8c.html#ac1fc9006fab232214b43aac2e9f0816b" title="MOT_Init" alt="" coords="131,233,205,260"/>
+<area shape="rect" id="node27" href="$_robot_8c.html#abcc532aa26262d0e9488043cfacd56ce" title="ROB_Init" alt="" coords="131,284,205,311"/>
+<area shape="rect" id="node5" href="$_database_8c.html#adfd44637ef4ff8af0dbd77dba607d290" title="DB_RegisterVar" alt="" coords="271,5,385,32"/>
+<area shape="rect" id="node7" href="$_database_8c.html#a0920a47d8e19cb6893c7c79b56381602" title="DB_LoadNVM" alt="" coords="276,56,380,83"/>
+<area shape="rect" id="node9" href="$_database_8c.html#a83d9edfe169661597af15d5701052542" title="DB_GetTypeSize" alt="" coords="448,56,571,83"/>
+<area shape="rect" id="node19" href="$_motors_8c.html#ae95ce1bf42dce323500fced8ffcb6210" title="Sets mode pins for the specified step mode (full&#45;, half&#45;, quarter, ... step)." alt="" coords="260,157,396,184"/>
+<area shape="rect" id="node21" href="$_motors_8c.html#a5639aa95ad9831b7a5430aed217ac940" title="Sets the reset state of the motor driver." alt="" coords="257,208,399,235"/>
+<area shape="rect" id="node23" href="$_motors_8c.html#a00b27cc75d746cac939b8f5d2b358fec" title="This will calculate the values for the motor to speed." alt="" coords="267,259,389,285"/>
+<area shape="rect" id="node25" href="$_motors_8c.html#a99d43cd8f2c1edb460dd8547dbd7de8e" title="MOT_SetILim" alt="" coords="277,309,379,336"/>
+</map>
